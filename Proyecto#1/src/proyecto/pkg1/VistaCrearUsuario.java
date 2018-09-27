@@ -232,7 +232,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                 }
             }
             if(cont > 0){
-                
+                //probando commit
             }
         }
     }//GEN-LAST:event_btnCrearusuarioActionPerformed
