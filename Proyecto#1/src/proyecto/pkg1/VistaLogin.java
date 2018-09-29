@@ -38,6 +38,11 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel1.setText("Login");
 
         btnIngreso.setText("Ingresar");
+        btnIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresoActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
 
@@ -75,6 +80,10 @@ public class VistaLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIngresoActionPerformed
 
     /**
      * @param args the command line arguments
