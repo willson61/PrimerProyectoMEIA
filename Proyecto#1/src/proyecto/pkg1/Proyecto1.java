@@ -25,6 +25,7 @@ public class Proyecto1 {
     static File descBitacoraUsuario = new File("C:\\MEIA\\desc_Bitacora_Usuario.txt");
     static File maestroUsuario = new File("C:\\MEIA\\maestro_Usuario.txt");
     static File descMaestroUsuario = new File("C:\\MEIA\\desc_Maestro_Usuario.txt");
+    static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");
     
     public static void main(String[] args) {
         VistaLogin main = new VistaLogin();

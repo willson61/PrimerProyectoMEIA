@@ -677,19 +677,19 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         {
             ficheroImagen = dialogo.getSelectedFile();
             rutaArchivo = ficheroImagen.getPath();
-            labelPathFoto.setText(rutaArchivo);
             String name = ficheroImagen.getName();
             rutaFoto.mkdirs();
             File foto = new File(rutaFoto, name);
             try{
-                copyFileUsingStream(ficheroImagen, foto);
+                copiarArchivo(ficheroImagen, foto);
             }catch(Exception e){
                 e.printStackTrace();
             }
+            labelPathFoto.setText(foto.getPath());
         }
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
     
-    private static void copyFileUsingStream(File source, File dest) throws IOException {
+    private static void copiarArchivo(File source, File dest) throws IOException {
     InputStream is = null;
     OutputStream os = null;
     try {
