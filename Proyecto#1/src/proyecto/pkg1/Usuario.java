@@ -6,6 +6,7 @@
 package proyecto.pkg1;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -105,4 +106,20 @@ public class Usuario {
     }
     
     
+}
+class StringComparator  implements Comparator<Usuario> {
+    
+    @Override  
+    public int compare(Usuario obj1, Usuario obj2) {
+        if (String.valueOf(obj1.getNombreDeUsuario()).equals(String.valueOf(obj2.getNombreDeUsuario()))) {
+            return 0;
+        }
+        if (String.valueOf(obj1.getNombreDeUsuario()).equals("")) {
+            return -1;
+        }
+        if (String.valueOf(obj2.getNombreDeUsuario()).equals("")) {
+            return 1;
+        }
+        return String.valueOf(obj1.getNombreDeUsuario()).compareTo(String.valueOf(obj2.getNombreDeUsuario()));
+    }
 }

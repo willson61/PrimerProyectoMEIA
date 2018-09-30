@@ -7,10 +7,27 @@ package proyecto.pkg1;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -21,14 +38,23 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     /**
      * Creates new form VistaCrearUsuario
      */
-    public VistaCrearUsuario() {
-        initComponents();
-    }
     
     File archivo1 = new File("C:\\MEIA\\puntuacion.txt");
     File archivo2 = new File("C:\\MEIA\\resultado.txt");
+    File rutaFoto = new File("C:\\MEIA\\Imagenes");
     static ArrayList<Integer> valores = new ArrayList<Integer>();
     static ArrayList<Integer> criterio = new ArrayList<Integer>();
+    public static boolean firstUser = false;
+    public static String admin;
+    
+    public VistaCrearUsuario() {
+        initComponents();
+        if(firstUser){
+            chbAdministrador.setSelected(true);
+            chbAdministrador.setEnabled(false);
+            chbUsuario.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,6 +116,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         labelFoto.setText("Foto:");
 
         btnBuscarFoto.setText("Buscar");
+        btnBuscarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarFotoActionPerformed(evt);
+            }
+        });
 
         btnCrearusuario.setText("Crear");
         btnCrearusuario.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +235,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     private void btnCrearusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearusuarioActionPerformed
         String errorMessage = "";
         int cont = 0;
-        if((txtUsuario.getText() == null) || (txtNombre.getText() == null) || (txtApellido.getText() == null) || (txtContraseña.getPassword().length == 0) || (txtCorreo.getText() == null) || (txtFechaNacimiento.getText() == null) || (txtTelefono.getText() == null) || ((chbAdministrador.isSelected()) && (chbUsuario.isSelected())) || (labelPathFoto.getText() == null)){
+        if((txtUsuario.getText().equals("")) || (txtNombre.getText().equals("")) || (txtApellido.getText().equals("")) || (txtContraseña.getPassword().length == 0) || (txtCorreo.getText().equals("")) || (txtFechaNacimiento.getText().equals("")) || (txtTelefono.getText().equals("")) || ((chbAdministrador.isSelected()) && (chbUsuario.isSelected())) || (labelPathFoto.getText().equals(""))){
             JOptionPane.showMessageDialog(null, "Alguno de los campos en la creacion de usuario se encuentra vacio, por favor revise que haya llenado todos los campos", "InfoBox: " + "Error en creacion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         else{
@@ -221,22 +252,459 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                 us.setNombreDeUsuario(txtUsuario.getText().toCharArray());
             }
             else{
-                
+                cont++;
+                errorMessage += "\nEl tamaño del nombre de usuario a excedido la longitud de 20 caracteres";
             }
             if(!(txtApellido.getText().toCharArray().length > 30)){
                 us.setApellido(txtApellido.getText().toCharArray());
+            }
+            else{
+                cont++;
+                errorMessage += "\nEl tamaño del apellido a excedido la longitud de 30 caracteres";
             }
             if(!(txtContraseña.getPassword().length > 40)){
                 if(!(calcularSeguridad(txtContraseña.getPassword()).equals("Contraseña Insegura"))){
                     us.setPassword(txtContraseña.getPassword());
                 }
+                else{
+                    cont++;
+                errorMessage += "\nEl de seguridad de la contraseña es demasiado bajo (Contraseña Insegura)";
+                }
             }
+            else{
+                cont++;
+                errorMessage += "\nEl tamaño de la contraseña a excedido la longitud de 40 caracteres";
+            }
+            if(!(txtCorreo.getText().toCharArray().length > 40)){
+                us.setCorreoAlterno(txtCorreo.getText().toCharArray());
+            }
+            else{
+                cont++;
+                errorMessage += "\nEl tamaño del correo a excedido la longitud de 40 caracteres";
+            }
+            if(!(txtTelefono.getText().length() > 8)){
+                try{
+                    us.setTelefono(Integer.parseInt(txtTelefono.getText()));
+                }catch(Exception e){
+                    e.printStackTrace();
+                    cont++;
+                    errorMessage += "\nEl numero de telefono contiene caracteres erroneos";
+                }
+            }
+            else{
+                cont++;
+                errorMessage += "\nEl numero de telefono no se ha ingresado";
+            }
+            if((chbAdministrador.isSelected() == true) && (chbUsuario.isSelected() == true)){
+                cont++;
+                errorMessage += "\nNo ha seleccionado ";
+            }
+            else{
+                if(chbAdministrador.isSelected()){
+                    us.rol = true;
+                }
+                if(chbUsuario.isSelected()){
+                    us.rol = false;
+                }
+            }
+            if(!(labelPathFoto.getText().toCharArray().length > 200)){
+                us.setPathFotografia(labelPathFoto.getText().toCharArray());
+            }
+            else{
+                cont++;
+                errorMessage += "\nEl tamaño de la ubicacion de la fotografia a excedido la longitud de 200 caracteres";
+            }
+            try{
+                us.setFechaNacimiento(date.parse(txtFechaNacimiento.getText()));
+            }catch(Exception e){
+                cont++;
+                errorMessage += "\nEl fomrato de fecha ingresada es incorrecto";
+            }
+            us.setEstatus(true);
             if(cont > 0){
-                //probando commit
+                JOptionPane.showMessageDialog(null, errorMessage, "InfoBox: " + "Error en creacion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(existeUsuario(String.valueOf(us.getNombreDeUsuario()))){
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario ingresado ya existe dentro de los usuarios almacenados", "InfoBox: " + "Error en creacion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                Date ahora = new Date();
+                if(firstUser){
+                    admin = String.valueOf(us.getNombreDeUsuario());
+                    try{
+                        escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
+                        escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario("bitacora_Usuario", ahora, admin, ahora, admin, 1, 1, 0, 5));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    firstUser = false;
+                }
+                else{
+                    try{
+                        DescUsuario des = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                        if(des.getNumRegistros() < des.getMaxReorganizacion()){
+                            escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
+                            PrintWriter writer = new PrintWriter(Proyecto1.descBitacoraUsuario);
+                            writer.print("");
+                            writer.close();
+                            escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(des.getNombreSimbolico(), des.getFechaCreacion(), des.getUsuarioCreacion(), new Date(), admin, des.getNumRegistros() + 1, des.getRegistrosActivos() + 1, des.getRegistrosInactivos(), des.getMaxReorganizacion()));
+                            
+                        }
+                        else{
+                            LinkedList<Usuario> bitUsuario = leerUsuarios(Proyecto1.bitacoraUsuario);
+                            LinkedList<Usuario> masUsuario = leerUsuarios(Proyecto1.maestroUsuario);
+                            int contA = 0;
+                            int contI = 0;
+                            LinkedList<Usuario> nuevoMasUsuario = new LinkedList<>();
+                            if(masUsuario.size() > 0){
+                                for(int i = 0; i < bitUsuario.size(); i++){
+                                    nuevoMasUsuario.add(bitUsuario.get(i));
+                                    if(bitUsuario.get(i).isEstatus()){
+                                        contA++;
+                                    }
+                                    else{
+                                        contI++;
+                                    }
+                                }
+                                for(int i = 0; i < masUsuario.size(); i++){
+                                    nuevoMasUsuario.add(masUsuario.get(i));
+                                    if(masUsuario.get(i).isEstatus()){
+                                        contA++;
+                                    }
+                                    else{
+                                        contI++;
+                                    }
+                                }
+                                Collections.sort(nuevoMasUsuario, new StringComparator());
+                                limpiarArchivo(Proyecto1.maestroUsuario);
+                                for(int i = 0; i < nuevoMasUsuario.size(); i++){
+                                    escribirUsuarioBitacora(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
+                                }
+                                DescUsuario desM = leerDescriptor(Proyecto1.descMaestroUsuario);
+                                limpiarArchivo(Proyecto1.descMaestroUsuario);
+                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), admin, desM.getNumRegistros() + bitUsuario.size(), contA, contI, desM.getMaxReorganizacion()));
+                                limpiarArchivo(Proyecto1.bitacoraUsuario);
+                                DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                                limpiarArchivo(Proyecto1.descBitacoraUsuario);
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 0, 0, 0, desB.getMaxReorganizacion()));
+                            }
+                            else{
+                                Date ahora2 = new Date();
+                                for(int i = 0; i < bitUsuario.size(); i++){
+                                    nuevoMasUsuario.add(bitUsuario.get(i));
+                                    if(bitUsuario.get(i).isEstatus()){
+                                        contA++;
+                                    }
+                                    else{
+                                        contI++;
+                                    }
+                                }
+                                Collections.sort(nuevoMasUsuario, new StringComparator());
+                                for(int i = 0; i < nuevoMasUsuario.size(); i++){
+                                    escribirUsuarioBitacora(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
+                                }
+                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario("maestro_Usuario", ahora2, admin, ahora2, admin, nuevoMasUsuario.size(), contA, contI, -1));
+                                limpiarArchivo(Proyecto1.bitacoraUsuario);
+                                DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                                limpiarArchivo(Proyecto1.descBitacoraUsuario);
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 0, 0, 0, desB.getMaxReorganizacion()));
+                            }
+                        }
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                dispose();
+                VistaLogin v = new VistaLogin();
+                v.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Usuario creado Exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnCrearusuarioActionPerformed
+
+    public boolean existeUsuario(String usuario){
+        boolean val = false;
+        BufferedReader br = null;
+	FileReader fr = null;
+        BufferedReader br2 = null;
+	FileReader fr2 = null;
+	try {
+            fr = new FileReader(Proyecto1.bitacoraUsuario);
+            br = new BufferedReader(fr);
+            StringBuilder texto = new StringBuilder();
+            int line = 0;
+            while ((line = br.read()) != -1) {
+                char valu = (char)line;
+                texto.append(valu);
+            }
+            if(texto.toString().contains(usuario)){
+                val = true;
+                return val;
+            }
+            fr.close();
+            br.close();
+            texto = new StringBuilder();
+            fr2 = new FileReader(Proyecto1.maestroUsuario);
+            br2 = new BufferedReader(fr2);
+            line = 0;
+            while ((line = br2.read()) != -1) {
+                char valu = (char)line;
+                texto.append(valu);
+            }
+            if(texto.toString().contains(usuario)){
+                val = true;
+                return val;
+            }
+            fr2.close();
+            br2.close();
+	} catch (IOException e) {
+            e.printStackTrace();
+	}
+        return val;
+    }
     
+    public void limpiarArchivo(File archivo)throws IOException{
+        PrintWriter writer = new PrintWriter(archivo);
+        writer.print("");
+        writer.close();
+    }
+    
+    public DescUsuario leerDescriptor(File archivo) throws IOException{
+        DescUsuario desc = null;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(archivo);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.equals("")){
+            return desc;
+        }
+        else{
+            try{
+                String[] contenido = texto.toString().split("\\|");
+                desc.setNombreSimbolico(contenido[0]);
+                desc.setFechaCreacion(date.parse(contenido[1]));
+                desc.setUsuarioCreacion(contenido[2]);
+                desc.setFechaModificacion(date.parse(contenido[3]));
+                desc.setUsuarioModificacion(contenido[4]);
+                desc.setNumRegistros(Integer.parseInt(contenido[5]));
+                desc.setRegistrosActivos(Integer.parseInt(contenido[6]));
+                desc.setRegistrosInactivos(Integer.parseInt(contenido[7]));
+                desc.setMaxReorganizacion(Integer.parseInt(contenido[8]));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return desc;
+        }
+    }
+    
+    public LinkedList<Usuario> leerUsuarios(File fileName) throws IOException{
+        LinkedList<Usuario> us = new LinkedList<>();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return us;
+        }
+        else{
+            String[] contenido = texto.toString().split("\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] usuario = contenido[i].split("\\|");
+                    Usuario usu = null;
+                    usu.setNombreDeUsuario(quitarExtra(usuario[0]).toCharArray());
+                    usu.setNombre(quitarExtra(usuario[1]).toCharArray());
+                    usu.setApellido(quitarExtra(usuario[2]).toCharArray());
+                    usu.setPassword(quitarExtra(usuario[3]).toCharArray());
+                    if(usuario[4].equals("1")){
+                        usu.setRol(true);
+                    }
+                    else{
+                        usu.setRol(false);
+                    }
+                    usu.setFechaNacimiento(date.parse(usuario[5]));
+                    usu.setCorreoAlterno(quitarExtra(usuario[6]).toCharArray());
+                    usu.setTelefono(Integer.parseInt(usuario[7]));
+                    usu.setPathFotografia(quitarExtra(usuario[8]).toCharArray());
+                    if(usuario[9].equals("1")){
+                        usu.setEstatus(true);
+                    }
+                    else{
+                        usu.setEstatus(false);
+                    }
+                    us.add(usu);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return us;
+        }
+    }
+    
+    public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
+        String texto = "";
+        String div = "|";
+        texto += des.getNombreSimbolico();
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        texto += date.format(des.getFechaCreacion());
+        texto += div;
+        texto += des.getUsuarioCreacion();
+        texto += div;
+        texto += date.format(des.getFechaModificacion());
+        texto += div;
+        texto += des.getUsuarioModificacion();
+        texto += div;
+        texto += des.getNumRegistros();
+        texto += div;
+        texto += des.getRegistrosActivos();
+        texto += div;
+        texto += des.getRegistrosInactivos();
+        texto += div;
+        texto += des.getMaxReorganizacion();
+        FileOutputStream fos = new FileOutputStream(archivo, true);
+        fos.write(texto.getBytes());
+        fos.flush();
+        fos.close();
+    }
+    
+    public String completarTexto(String texto, int limite){
+        while(texto.length() < limite){
+            texto += "~";
+        }
+        return texto;
+    }
+    
+    public String quitarExtra(String texto){
+        int cont = 0;
+        for(int i = 0; i < texto.length(); i++){
+            if(texto.charAt(i) == '~'){
+                cont++;
+            }
+        }
+        int pos = texto.length() - cont;
+        texto = texto.substring(0, pos);
+        return texto;
+    }
+    
+    public String encriptarContraseña(String source){
+        String md5 = null;
+        try{
+            MessageDigest mdEnc = MessageDigest.getInstance("MD5");
+            mdEnc.update(source.getBytes(), 0, source.length());
+            md5 = new BigInteger(1, mdEnc.digest()).toString(16);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return md5;
+    }
+    
+    public void escribirUsuarioBitacora(File archivo, Usuario s) throws IOException{
+        String texto = "";
+        String div = "|";
+        String fin = "\n";
+        String txtCompleto = "";
+        texto += completarTexto(String.valueOf(s.getNombreDeUsuario()), 20);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getNombre()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getApellido()), 30);
+        texto += div;
+        texto += completarTexto(encriptarContraseña(String.valueOf(s.getPassword())), 30);
+        texto += div;
+        if(s.isRol()){
+            //Es un Admimnistrador
+            texto += "1";
+        }
+        else{
+            //Es un usuario
+            texto += "0";
+        }
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        texto += date.format(s.getFechaNacimiento());
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getCorreoAlterno()), 40);
+        texto += div;
+        texto += s.getTelefono();
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getPathFotografia()), 200);
+        texto += div;
+        if(s.isEstatus()){
+            //Esta activo
+            texto += "1";
+        }
+        else{
+            //Esta Inactivo
+            texto += "0";
+        }
+        texto += fin;
+        if(archivo.exists()){
+            FileOutputStream fos = new FileOutputStream(archivo, true);
+            fos.write(texto.getBytes());
+            fos.flush();
+            fos.close();
+        }
+    }
+    
+    private void btnBuscarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoActionPerformed
+        JFileChooser dialogo = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagen files", ImageIO.getReaderFileSuffixes());
+        File ficheroImagen;
+        String rutaArchivo;
+        dialogo.setFileFilter(filtro);
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) 
+        {
+            ficheroImagen = dialogo.getSelectedFile();
+            rutaArchivo = ficheroImagen.getPath();
+            labelPathFoto.setText(rutaArchivo);
+            String name = ficheroImagen.getName();
+            rutaFoto.mkdirs();
+            File foto = new File(rutaFoto, name);
+            try{
+                copyFileUsingStream(ficheroImagen, foto);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnBuscarFotoActionPerformed
+    
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+    InputStream is = null;
+    OutputStream os = null;
+    try {
+        is = new FileInputStream(source);
+        os = new FileOutputStream(dest);
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = is.read(buffer)) > 0) {
+            os.write(buffer, 0, length);
+        }
+    } finally {
+        is.close();
+        os.close();
+    }
+}
     
     public void leerArchivo(){
         FileReader puntuacion;
@@ -287,6 +755,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     }
     
     public String calcularSeguridad(char[] password){
+        leerArchivo();
         String contraseña = "";
         for(int i = 0; i < password.length; i++){
             contraseña += Character.toString(password[i]);

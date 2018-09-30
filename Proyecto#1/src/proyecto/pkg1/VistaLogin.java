@@ -5,6 +5,14 @@
  */
 package proyecto.pkg1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sthephan
@@ -16,6 +24,103 @@ public class VistaLogin extends javax.swing.JFrame {
      */
     public VistaLogin() {
         initComponents();
+    }
+    
+    
+    
+    public static String leerArchivo(File fileName) throws IOException{
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        return texto.toString();
+    }
+    
+    public String quitarExtra(String texto){
+        int cont = 0;
+        for(int i = 0; i < texto.length(); i++){
+            if(texto.charAt(i) == '~'){
+                cont++;
+            }
+        }
+        int pos = texto.length() - cont;
+        texto = texto.substring(0, pos);
+        return texto;
+    }
+    
+    public String encriptarContraseña(String source){
+        String md5 = null;
+        try{
+            MessageDigest mdEnc = MessageDigest.getInstance("MD5");
+            mdEnc.update(source.getBytes(), 0, source.length());
+            md5 = new BigInteger(1, mdEnc.digest()).toString(16);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return md5;
+    }
+    
+    public Usuario buscarUsuario(String usuario){
+        Usuario val = new Usuario();
+        BufferedReader br = null;
+	FileReader fr = null;
+        BufferedReader br2 = null;
+	FileReader fr2 = null;
+	try {
+            fr = new FileReader(Proyecto1.bitacoraUsuario);
+            br = new BufferedReader(fr);
+            StringBuilder texto = new StringBuilder();
+            int line = 0;
+            while ((line = br.read()) != -1) {
+                char valu = (char)line;
+                texto.append(valu);
+            }
+            if(texto.toString().contains(usuario)){
+                String[] cont = texto.toString().split("\n");
+                for(int i = 0; i < cont.length; i++){
+                    String[] data = cont[i].split("\\|");
+                    if(quitarExtra(data[0]).equals(usuario)){
+                        val.setNombreDeUsuario(quitarExtra(data[0]).toCharArray());
+                        val.setPassword(quitarExtra(data[3]).toCharArray());
+                        return val;
+                    }
+                }
+            }
+            fr.close();
+            br.close();
+            texto = new StringBuilder();
+            fr2 = new FileReader(Proyecto1.maestroUsuario);
+            br2 = new BufferedReader(fr2);
+            line = 0;
+            while ((line = br2.read()) != -1) {
+                char valu = (char)line;
+                texto.append(valu);
+            }
+            if(texto.toString().contains(usuario)){
+                String[] cont = texto.toString().split("\n");
+                for(int i = 0; i < cont.length; i++){
+                    String[] data = cont[i].split("\\|");
+                    if(quitarExtra(data[0]).equals(usuario)){
+                        val.setNombreDeUsuario(quitarExtra(data[0]).toCharArray());
+                        val.setPassword(quitarExtra(data[3]).toCharArray());
+                        return val;
+                    }
+                }
+            }
+            fr2.close();
+            br2.close();
+	} catch (IOException e) {
+            e.printStackTrace();
+	}
+        return val;
     }
 
     /**
@@ -38,6 +143,11 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel1.setText("Login");
 
         btnIngreso.setText("Ingresar");
+        btnIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresoActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
 
@@ -75,6 +185,21 @@ public class VistaLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
+        if((txtNomUsuario.getText().equals("")) || (txtContraseña.getPassword().length == 0)){
+            JOptionPane.showMessageDialog(null, "Alguno de los campos de login se encuentra vacio, por favor ingreselos", "InfoBox: " + "Error en creacion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            Usuario us = buscarUsuario(txtNomUsuario.getText());
+            if(us != null){
+                String contr = encriptarContraseña(String.valueOf(txtContraseña.getPassword()));
+                if((txtNomUsuario.getText().equals(String.valueOf(us.getNombreDeUsuario()))) && (contr.equals(String.valueOf(us.getPassword())))){
+                    JOptionPane.showMessageDialog(null, "Login Exitoso!!", "InfoBox: " + "mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnIngresoActionPerformed
 
     /**
      * @param args the command line arguments
