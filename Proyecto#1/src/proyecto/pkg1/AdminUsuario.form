@@ -25,8 +25,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel4" pref="176" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jLabel6" max="32767" attributes="0"/>
+                  <Component id="jLabel4" alignment="0" pref="176" max="32767" attributes="0"/>
                   <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
@@ -34,10 +35,18 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="textField1" min="-2" pref="142" max="-2" attributes="0"/>
-                  <Component id="textField3" min="-2" pref="142" max="-2" attributes="0"/>
-                  <Component id="textField4" min="-2" pref="142" max="-2" attributes="0"/>
-                  <Component id="textField2" min="-2" pref="142" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtCorreoAlterno" max="32767" attributes="0"/>
+                      <Component id="txtTelefono" pref="142" max="32767" attributes="0"/>
+                      <Component id="txtFechaNacimiento" pref="142" max="32767" attributes="0"/>
+                      <Component id="txtContraseña" pref="142" max="32767" attributes="0"/>
+                      <Component id="btnFotografia" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="chbAdministrador" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="chbUsuario" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="62" max="32767" attributes="0"/>
           </Group>
@@ -49,26 +58,37 @@
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="textField1" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCorreoAlterno" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <Component id="textField2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtContraseña" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textField3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTelefono" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel4" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
-                  <Component id="textField4" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFechaNacimiento" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnFotografia" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="117" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Component id="chbAdministrador" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="74" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -99,24 +119,53 @@
         <Property name="text" type="java.lang.String" value="Cambiar fotograf&#xed;a:"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="textField1">
+    <Component class="java.awt.TextField" name="txtCorreoAlterno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="textField1"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+      </AccessibilityProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoAlternoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.TextField" name="txtContrase&#xf1;a">
       <Properties>
         <Property name="text" type="java.lang.String" value="textField1"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="textField2">
+    <Component class="java.awt.TextField" name="txtTelefono">
       <Properties>
         <Property name="text" type="java.lang.String" value="textField1"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="textField3">
+    <Component class="java.awt.TextField" name="txtFechaNacimiento">
       <Properties>
         <Property name="text" type="java.lang.String" value="textField1"/>
       </Properties>
     </Component>
-    <Component class="java.awt.TextField" name="textField4">
+    <Component class="java.awt.Button" name="btnFotografia">
       <Properties>
-        <Property name="text" type="java.lang.String" value="textField1"/>
+        <Property name="label" type="java.lang.String" value="button1"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+      </AccessibilityProperties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbAdministrador">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Activo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbUsuario">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Inactivo"/>
       </Properties>
     </Component>
   </SubComponents>

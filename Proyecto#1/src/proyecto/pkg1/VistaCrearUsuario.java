@@ -237,7 +237,6 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCrearusuarioActionPerformed
     
-    
     public void leerArchivo(){
         FileReader puntuacion;
         FileReader resultado;
