@@ -404,7 +404,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 Collections.sort(nuevoMasUsuario, new StringComparator());
                                 limpiarArchivo(Proyecto1.maestroUsuario);
                                 for(int i = 0; i < nuevoMasUsuario.size(); i++){
-                                    escribirUsuarioBitacora(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
+                                    escribirUsuarioMaster(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
                                 }
                                 DescUsuario desM = leerDescriptor(Proyecto1.descMaestroUsuario);
                                 limpiarArchivo(Proyecto1.descMaestroUsuario);
@@ -428,7 +428,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 }
                                 Collections.sort(nuevoMasUsuario, new StringComparator());
                                 for(int i = 0; i < nuevoMasUsuario.size(); i++){
-                                    escribirUsuarioBitacora(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
+                                    escribirUsuarioMaster(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
                                 }
                                 escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario("maestro_Usuario", ahora2, admin, ahora2, admin, nuevoMasUsuario.size(), contA, contI, -1));
                                 limpiarArchivo(Proyecto1.bitacoraUsuario);
@@ -741,6 +741,62 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     }
     
     /**
+     * Metodo que escribe una entrada a la bitacora maestra de usuarios
+     * @param archivo File al que se escribira la entrada
+     * @param s Usuario con la iformacion para la entrada
+     * @throws IOException 
+     */
+    public void escribirUsuarioMaster(File archivo, Usuario s) throws IOException{
+        String texto = "";
+        String div = "|";
+        String fin = "\r\n";
+        String txtCompleto = "";
+        texto += completarTexto(String.valueOf(s.getNombreDeUsuario()), 20);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getNombre()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getApellido()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getPassword()), 40);
+        texto += div;
+        if(s.isRol()){
+            //Es un Admimnistrador
+            texto += "1";
+        }
+        else{
+            //Es un usuario
+            texto += "0";
+        }
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        texto += date.format(s.getFechaNacimiento());
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getCorreoAlterno()), 40);
+        texto += div;
+        texto += s.getTelefono();
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getPathFotografia()), 200);
+        texto += div;
+        if(s.isEstatus()){
+            //Esta activo
+            texto += "1";
+        }
+        else{
+            //Esta Inactivo
+            texto += "0";
+        }
+        texto += fin;
+        if(archivo.exists()){
+            FileOutputStream fos = new FileOutputStream(archivo, true);
+            Writer wr = new OutputStreamWriter(fos, UTF8);
+            wr.write(texto);
+            wr.flush();
+            wr.close();
+            fos.close();
+        }
+    }
+    
+    /**
      * Boton de busqueda de foto en para usuario
      * @param evt 
      */
@@ -804,6 +860,8 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     public void leerParametrosContraseña(){
         FileReader puntuacion;
         FileReader resultado;
+        valores = new ArrayList<>();
+        criterio = new ArrayList<>();
             try{
                 puntuacion = new FileReader(archivo1);
                 BufferedReader lectura = new BufferedReader(puntuacion);

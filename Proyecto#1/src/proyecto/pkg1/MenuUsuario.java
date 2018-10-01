@@ -1109,6 +1109,8 @@ public class MenuUsuario extends javax.swing.JFrame {
     public void leerParametrosContraseña(){
         FileReader puntuacion;
         FileReader resultado;
+        valores = new ArrayList<>();
+        criterio = new ArrayList<>();
             try{
                 puntuacion = new FileReader(archivo1);
                 BufferedReader lectura = new BufferedReader(puntuacion);
