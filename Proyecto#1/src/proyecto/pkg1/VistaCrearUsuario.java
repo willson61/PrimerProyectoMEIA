@@ -40,9 +40,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class VistaCrearUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaCrearUsuario
-     */
     private static Charset UTF8 = Charset.forName("UTF-8");
     File archivo1 = new File("C:\\MEIA\\puntuacion.txt");
     File archivo2 = new File("C:\\MEIA\\resultado.txt");
@@ -145,6 +142,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         labelImage.setText("Aplicacion MEIA - Creacion de Usuario");
 
@@ -764,6 +766,14 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             labelPathFoto.setText(foto.getPath());
         }
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
+
+    /**
+     * Boton que cierra la ventana de creacion de usuario
+     * @param evt 
+     */
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
     
     /**
      * Metodo de copia de archivos 

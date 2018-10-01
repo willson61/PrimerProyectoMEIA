@@ -1174,7 +1174,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 if(!(txtNomUsuario.getText().equals(admin))){
                     usuarioBus = buscarUsuario(txtNomUsuario.getText());
                     if(usuarioBus.getNombreDeUsuario().length > 0){
-                        labelExiste.setText("El usuario buscado equiste");
+                        labelExiste.setText("El usuario buscado existe");
                         btnEditar.setVisible(true);
                         btnVer.setVisible(true);
                     }
