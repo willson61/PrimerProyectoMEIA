@@ -92,12 +92,18 @@ public class VistaLogin extends javax.swing.JFrame {
                 texto.append(valu);
             }
             if(texto.toString().contains(usuario)){
-                String[] cont = texto.toString().split("\n");
+                String[] cont = texto.toString().split("\\r?\\n");
                 for(int i = 0; i < cont.length; i++){
                     String[] data = cont[i].split("\\|");
                     if(quitarExtra(data[0]).equals(usuario)){
                         val.setNombreDeUsuario(quitarExtra(data[0]).toCharArray());
                         val.setPassword(quitarExtra(data[3]).toCharArray());
+                        if(Integer.parseInt(data[4]) == 1){
+                            val.setRol(true);
+                        }
+                        else{
+                            val.setRol(false);
+                        }
                         return val;
                     }
                 }
@@ -113,12 +119,18 @@ public class VistaLogin extends javax.swing.JFrame {
                 texto.append(valu);
             }
             if(texto.toString().contains(usuario)){
-                String[] cont = texto.toString().split("\n");
+                String[] cont = texto.toString().split("\\r?\\n");
                 for(int i = 0; i < cont.length; i++){
                     String[] data = cont[i].split("\\|");
                     if(quitarExtra(data[0]).equals(usuario)){
                         val.setNombreDeUsuario(quitarExtra(data[0]).toCharArray());
                         val.setPassword(quitarExtra(data[3]).toCharArray());
+                        if(Integer.parseInt(data[4]) == 1){
+                            val.setRol(true);
+                        }
+                        else{
+                            val.setRol(false);
+                        }
                         return val;
                     }
                 }
@@ -159,6 +171,11 @@ public class VistaLogin extends javax.swing.JFrame {
         });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,10 +229,33 @@ public class VistaLogin extends javax.swing.JFrame {
                 String contr = encriptarContraseña(String.valueOf(txtContraseña.getPassword()));
                 if((txtNomUsuario.getText().equals(String.valueOf(us.getNombreDeUsuario()))) && (contr.equals(String.valueOf(us.getPassword())))){
                     JOptionPane.showMessageDialog(null, "Login Exitoso!!", "InfoBox: " + "mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    if(us.isRol()){
+                        MenuAdmin.admin = String.valueOf(us.getNombreDeUsuario());
+                        dispose();
+                        MenuAdmin v = new MenuAdmin();
+                        v.setVisible(true);
+                    }
+                    else{
+                        MenuUsuario.user = String.valueOf(us.getNombreDeUsuario());
+                        dispose();
+                        MenuUsuario v = new MenuUsuario();
+                        v.setVisible(true);
+                    }
                 }
+                else{
+                    JOptionPane.showMessageDialog(null, "La contraseña no coincide con el usuario ingresado", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el usuario ingresado", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,7 @@
  */
 package proyecto.pkg1;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,8 +14,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
@@ -25,6 +29,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,7 +43,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     /**
      * Creates new form VistaCrearUsuario
      */
-    
+    private static Charset UTF8 = Charset.forName("UTF-8");
     File archivo1 = new File("C:\\MEIA\\puntuacion.txt");
     File archivo2 = new File("C:\\MEIA\\resultado.txt");
     File rutaFoto = new File("C:\\MEIA\\Imagenes");
@@ -54,6 +59,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             chbAdministrador.setEnabled(false);
             chbUsuario.setEnabled(false);
         }
+        ImageIcon im = new ImageIcon(Proyecto1.logo.getPath());
+        Image image = im.getImage(); // transform it 
+        Image newimg = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+        im = new ImageIcon(newimg);
+        labelImage.setIcon(im);
     }
 
     /**
@@ -84,10 +94,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         labelTelefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         labelFoto = new javax.swing.JLabel();
-        btnBuscarFoto = new javax.swing.JButton();
         labelPathFoto = new javax.swing.JLabel();
+        btnBuscarFoto = new javax.swing.JButton();
         btnCrearusuario = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        labelImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,18 +181,21 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBuscarFoto)
-                            .addComponent(labelPathFoto)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtCorreo)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                            .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnCrearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPathFoto)))
+                    .addComponent(btnCrearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelImage))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addContainerGap()
+                .addComponent(labelImage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelUsuario)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -222,11 +236,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                     .addComponent(btnBuscarFoto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPathFoto)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrearusuario)
                     .addComponent(btnSalir))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -282,7 +296,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                 cont++;
                 errorMessage += "\nEl tamaño del correo a excedido la longitud de 40 caracteres";
             }
-            if(!(txtTelefono.getText().length() > 8)){
+            if(!(txtTelefono.getText().length() != 8)){
                 try{
                     us.setTelefono(Integer.parseInt(txtTelefono.getText()));
                 }catch(Exception e){
@@ -293,11 +307,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             }
             else{
                 cont++;
-                errorMessage += "\nEl numero de telefono no se ha ingresado";
+                errorMessage += "\nEl numero de telefono no cumple los parametros necasarios";
             }
             if((chbAdministrador.isSelected() == true) && (chbUsuario.isSelected() == true)){
                 cont++;
-                errorMessage += "\nNo ha seleccionado ";
+                errorMessage += "\nDebe seleccionar unicamente una opcion, administrador o usuario";
             }
             else{
                 if(chbAdministrador.isSelected()){
@@ -338,7 +352,6 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                     }catch(Exception e){
                         e.printStackTrace();
                     }
-                    firstUser = false;
                 }
                 else{
                     try{
@@ -385,9 +398,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 limpiarArchivo(Proyecto1.descMaestroUsuario);
                                 escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), admin, desM.getNumRegistros() + bitUsuario.size(), contA, contI, desM.getMaxReorganizacion()));
                                 limpiarArchivo(Proyecto1.bitacoraUsuario);
+                                escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
                                 DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
                                 limpiarArchivo(Proyecto1.descBitacoraUsuario);
-                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 0, 0, 0, desB.getMaxReorganizacion()));
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
                             }
                             else{
                                 Date ahora2 = new Date();
@@ -406,9 +420,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 }
                                 escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario("maestro_Usuario", ahora2, admin, ahora2, admin, nuevoMasUsuario.size(), contA, contI, -1));
                                 limpiarArchivo(Proyecto1.bitacoraUsuario);
+                                escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
                                 DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
                                 limpiarArchivo(Proyecto1.descBitacoraUsuario);
-                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 0, 0, 0, desB.getMaxReorganizacion()));
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
                             }
                         }
                     }catch(Exception e){
@@ -416,8 +431,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                     }
                 }
                 dispose();
-                VistaLogin v = new VistaLogin();
-                v.setVisible(true);
+                if(firstUser){
+                    VistaLogin v = new VistaLogin();
+                    v.setVisible(true);
+                    firstUser = false;
+                }
                 JOptionPane.showMessageDialog(null, "Usuario creado Exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
             }
         }
@@ -472,7 +490,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     
     public DescUsuario leerDescriptor(File archivo) throws IOException{
         DescUsuario desc = null;
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         BufferedReader br = null;
 	FileReader fr = null;
 	fr = new FileReader(archivo);
@@ -485,21 +503,13 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
         fr.close();
         br.close();
-        if(texto.equals("")){
+        if(texto.toString().equals("")){
             return desc;
         }
         else{
             try{
                 String[] contenido = texto.toString().split("\\|");
-                desc.setNombreSimbolico(contenido[0]);
-                desc.setFechaCreacion(date.parse(contenido[1]));
-                desc.setUsuarioCreacion(contenido[2]);
-                desc.setFechaModificacion(date.parse(contenido[3]));
-                desc.setUsuarioModificacion(contenido[4]);
-                desc.setNumRegistros(Integer.parseInt(contenido[5]));
-                desc.setRegistrosActivos(Integer.parseInt(contenido[6]));
-                desc.setRegistrosInactivos(Integer.parseInt(contenido[7]));
-                desc.setMaxReorganizacion(Integer.parseInt(contenido[8]));
+                desc = new DescUsuario(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -526,11 +536,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             return us;
         }
         else{
-            String[] contenido = texto.toString().split("\n");
+            String[] contenido = texto.toString().split("\\r?\\n");
             for(int i = 0; i < contenido.length; i++){
                 try{
                     String[] usuario = contenido[i].split("\\|");
-                    Usuario usu = null;
+                    Usuario usu = new Usuario();
                     usu.setNombreDeUsuario(quitarExtra(usuario[0]).toCharArray());
                     usu.setNombre(quitarExtra(usuario[1]).toCharArray());
                     usu.setApellido(quitarExtra(usuario[2]).toCharArray());
@@ -565,7 +575,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         String div = "|";
         texto += des.getNombreSimbolico();
         texto += div;
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         texto += date.format(des.getFechaCreacion());
         texto += div;
         texto += des.getUsuarioCreacion();
@@ -621,7 +631,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     public void escribirUsuarioBitacora(File archivo, Usuario s) throws IOException{
         String texto = "";
         String div = "|";
-        String fin = "\n";
+        String fin = "\r\n";
         String txtCompleto = "";
         texto += completarTexto(String.valueOf(s.getNombreDeUsuario()), 20);
         texto += div;
@@ -629,7 +639,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         texto += div;
         texto += completarTexto(String.valueOf(s.getApellido()), 30);
         texto += div;
-        texto += completarTexto(encriptarContraseña(String.valueOf(s.getPassword())), 30);
+        texto += completarTexto(encriptarContraseña(String.valueOf(s.getPassword())), 40);
         texto += div;
         if(s.isRol()){
             //Es un Admimnistrador
@@ -660,8 +670,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         texto += fin;
         if(archivo.exists()){
             FileOutputStream fos = new FileOutputStream(archivo, true);
-            fos.write(texto.getBytes());
-            fos.flush();
+            Writer wr = new OutputStreamWriter(fos, UTF8);
+            wr.write(texto);
+            wr.flush();
+            wr.close();
             fos.close();
         }
     }
@@ -690,21 +702,21 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
     
     private static void copiarArchivo(File source, File dest) throws IOException {
-    InputStream is = null;
-    OutputStream os = null;
-    try {
-        is = new FileInputStream(source);
-        os = new FileOutputStream(dest);
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = is.read(buffer)) > 0) {
-            os.write(buffer, 0, length);
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
         }
-    } finally {
-        is.close();
-        os.close();
     }
-}
     
     public void leerArchivo(){
         FileReader puntuacion;
@@ -877,6 +889,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelCorreo;
     private javax.swing.JLabel labelFechaN;
     private javax.swing.JLabel labelFoto;
+    private javax.swing.JLabel labelImage;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPathFoto;
     private javax.swing.JLabel labelRol;

@@ -25,6 +25,8 @@ public class Proyecto1 {
     static File descBitacoraUsuario = new File("C:\\MEIA\\desc_Bitacora_Usuario.txt");
     static File maestroUsuario = new File("C:\\MEIA\\maestro_Usuario.txt");
     static File descMaestroUsuario = new File("C:\\MEIA\\desc_Maestro_Usuario.txt");
+    static File bitacoraBackup = new File("C:\\MEIA\\bitacora_Backup.txt");
+    static File descBitacoraBackup = new File("C:\\MEIA\\desc_Bitacora_Backup.txt");
     static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");
     
     public static void main(String[] args) {
@@ -42,6 +44,12 @@ public class Proyecto1 {
             }
             if(!(descMaestroUsuario.exists())){
                 descMaestroUsuario.createNewFile();
+            }
+            if(!(descBitacoraBackup.exists())){
+                descBitacoraBackup.createNewFile();
+            }
+            if(!(bitacoraBackup.exists())){
+                bitacoraBackup.createNewFile();
             }
             if((leerArchivo(bitacoraUsuario).equals("")) && (leerArchivo(maestroUsuario).equals(""))){
                 int reply = JOptionPane.showConfirmDialog(null, "Desea crear un nuevo Usuario", "No existen usuarios en los archivos", JOptionPane.YES_NO_OPTION);

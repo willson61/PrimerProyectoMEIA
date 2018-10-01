@@ -66,15 +66,16 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnBuscarFoto" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelPathFoto" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtCorreo" max="32767" attributes="0"/>
-                              <Component id="txtTelefono" pref="201" max="32767" attributes="0"/>
+                              <Component id="txtTelefono" min="-2" pref="201" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnSalir" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="labelPathFoto" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="btnCrearusuario" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="labelImage" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="79" max="32767" attributes="0"/>
           </Group>
@@ -83,7 +84,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelImage" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,12 +136,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelPathFoto" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCrearusuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSalir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -218,6 +221,8 @@
         <Property name="text" type="java.lang.String" value="Foto:"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JLabel" name="labelPathFoto">
+    </Component>
     <Component class="javax.swing.JButton" name="btnBuscarFoto">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
@@ -225,8 +230,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarFotoActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelPathFoto">
     </Component>
     <Component class="javax.swing.JButton" name="btnCrearusuario">
       <Properties>
@@ -240,6 +243,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelImage">
     </Component>
   </SubComponents>
 </Form>
