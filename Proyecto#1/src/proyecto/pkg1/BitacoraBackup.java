@@ -8,7 +8,8 @@ package proyecto.pkg1;
 import java.util.Date;
 
 /**
- *
+ * Clase de entrada de la bitacora de backups
+ * Con sus variables, getters y setters
  * @author Sthephan
  */
 public class BitacoraBackup {

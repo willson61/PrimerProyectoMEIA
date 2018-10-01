@@ -8,7 +8,8 @@ package proyecto.pkg1;
 import java.util.Date;
 
 /**
- *
+ * Clase del descriptor de la bitacora de backups
+ * Con sus variables, getters y setters
  * @author Sthephan
  */
 public class DescBitacoraBackup {
@@ -28,7 +29,6 @@ public class DescBitacoraBackup {
         this.numRegistros = numRegistros;
     }
         
-
     public String getNombreSimbolico() {
         return nombreSimbolico;
     }

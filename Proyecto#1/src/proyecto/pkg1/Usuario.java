@@ -10,7 +10,8 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- *
+ * Clase de entrada de Usuario
+ * Con sus variables, getters y setters
  * @author Sthephan
  */
 public class Usuario {
@@ -107,6 +108,11 @@ public class Usuario {
     
     
 }
+
+/**
+ * Clase de comparador por nombre de usuario
+ * @author Sthephan
+ */
 class StringComparator  implements Comparator<Usuario> {
     
     @Override  

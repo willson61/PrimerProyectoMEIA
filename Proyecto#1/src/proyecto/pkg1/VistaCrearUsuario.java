@@ -52,6 +52,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
     public static boolean firstUser = false;
     public static String admin;
     
+    /**
+     * Creacion de la vista de creacion de usuario
+     * Establecimiento de condiciones de vista de creacion de usuario
+     */
     public VistaCrearUsuario() {
         initComponents();
         if(firstUser){

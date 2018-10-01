@@ -38,7 +38,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MenuUsuario extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuUsuario
+     * Creacion del menu del Usuario
+     * Establecimiento de datos del usuario
      */
     public MenuUsuario() {
         initComponents();

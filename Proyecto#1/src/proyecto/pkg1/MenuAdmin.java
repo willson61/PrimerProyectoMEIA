@@ -41,7 +41,8 @@ import static proyecto.pkg1.MenuUsuario.user;
 public class MenuAdmin extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuAdmin
+     * Creacion del menu del administrador
+     * Establecimiento de datos del administrador
      */
     public MenuAdmin() {
         initComponents();

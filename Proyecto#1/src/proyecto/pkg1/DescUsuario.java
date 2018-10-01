@@ -8,7 +8,8 @@ package proyecto.pkg1;
 import java.util.Date;
 
 /**
- *
+ * Clase del descriptor de la bitacora de usuarios
+ * Con sus variables, getters y setters
  * @author Sthephan
  */
 public class DescUsuario {
