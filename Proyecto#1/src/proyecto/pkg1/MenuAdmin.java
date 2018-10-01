@@ -932,6 +932,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de contraseña se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            adminUs = buscarUsuario(String.valueOf(adminUs.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarContrActionPerformed
 
     /**
@@ -953,6 +958,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "Debe ingresar una fecha para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+            adminUs = buscarUsuario(String.valueOf(adminUs.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarFechaActionPerformed
 
@@ -976,6 +986,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de correo se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+            adminUs = buscarUsuario(String.valueOf(adminUs.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarCorreoActionPerformed
 
@@ -1005,6 +1020,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de telefono se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            adminUs = buscarUsuario(String.valueOf(adminUs.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarTeleActionPerformed
 
     /**
@@ -1027,6 +1047,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "El campo de ubicacion de foto se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+            adminUs = buscarUsuario(String.valueOf(adminUs.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarFotoActionPerformed
 
@@ -1062,6 +1087,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El campo de edicion de contraseña se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarContrUActionPerformed
 
     /**
@@ -1085,6 +1115,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar una fecha para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarFechaUActionPerformed
 
     /**
@@ -1109,6 +1144,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El campo de edicion de correo se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarCorreoUActionPerformed
 
     /**
@@ -1138,6 +1178,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El campo de edicion de telefono se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarTeleUActionPerformed
 
     /**
@@ -1162,6 +1207,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El campo de ubicacion de foto se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarFotoUActionPerformed
 
     /**
@@ -1173,7 +1223,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             try {
                 if(!(txtNomUsuario.getText().equals(admin))){
                     usuarioBus = buscarUsuario(txtNomUsuario.getText());
-                    if(usuarioBus.getNombreDeUsuario().length > 0){
+                    if(String.valueOf(usuarioBus.getNombreDeUsuario()).equals(txtNomUsuario.getText().trim())){
                         labelExiste.setText("El usuario buscado existe");
                         btnEditar.setVisible(true);
                         btnVer.setVisible(true);
@@ -1202,8 +1252,8 @@ public class MenuAdmin extends javax.swing.JFrame {
      */
     private void btnGuardarEstaUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEstaUActionPerformed
         String texto = null;
-        if((chbActivoU.isSelected() == false) && (chbInactivoU.isSelected() == false)){
-            if((chbActivoU.isSelected() == true) && (chbInactivoU.isSelected() == true)){
+        if((chbActivoU.isSelected()) || (chbInactivoU.isSelected())){
+            if((chbActivoU.isSelected()) && (chbInactivoU.isSelected())){
                 JOptionPane.showMessageDialog(null, "Debe seleccionar unicamente una opcion, administrador o usuario", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
             }
             else{
@@ -1217,13 +1267,11 @@ public class MenuAdmin extends javax.swing.JFrame {
                         if(!val){
                             editarUsuarioEstado(Proyecto1.maestroUsuario, Proyecto1.descMaestroUsuario, texto, 388, true, adminUs, usuarioBus);
                         }
-                        dispose();
-                        VistaLogin v = new VistaLogin();
                     }
                 }
                 if(chbInactivoU.isSelected()){
                     texto = "0";
-                    if(usuarioBus.isEstatus()){
+                    if(!usuarioBus.isEstatus()){
                         JOptionPane.showMessageDialog(null, "El usuario ya se encuentra inactivo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
@@ -1239,6 +1287,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar alguna opcion para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
         boxOpEditarU.setVisible(true);
+        try {
+            usuarioBus = buscarUsuario(String.valueOf(usuarioBus.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarEstaUActionPerformed
 
     /**
@@ -1417,7 +1470,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(!fin){
+                while(raf.getFilePointer() < raf.length()){
                     if(linea.contains(String.valueOf(administrador.getNombreDeUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
@@ -1426,6 +1479,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                         limpiarArchivo(descriptor);
                         escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
+                        JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditar.setVisible(true);
+                        inicio1();
                         break;
                     }
                     else{
@@ -1433,9 +1489,6 @@ public class MenuAdmin extends javax.swing.JFrame {
                         cont = cont + 391;
                     }
                 }
-                JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                boxOpEditar.setVisible(true);
-                inicio1();
             } catch (Exception ex) {
                 Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1460,7 +1513,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(!fin){
+                while(raf.getFilePointer() < raf.length()){
                     if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
@@ -1469,6 +1522,10 @@ public class MenuAdmin extends javax.swing.JFrame {
                         limpiarArchivo(descriptor);
                         escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
+                        JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditarU.setVisible(true);
+                        inicio1();
+                        inicio2();
                         break;
                     }
                     else{
@@ -1476,10 +1533,6 @@ public class MenuAdmin extends javax.swing.JFrame {
                         cont = cont + 391;
                     }
                 }
-                JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                boxOpEditarU.setVisible(true);
-                inicio1();
-                inicio2();
             } catch (Exception ex) {
                 Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1505,7 +1558,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(!fin){
+                while(raf.getFilePointer() < raf.length()){
                     if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
@@ -1519,6 +1572,10 @@ public class MenuAdmin extends javax.swing.JFrame {
                             escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
                         }
                         fin = true;
+                        JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditarU.setVisible(true);
+                        inicio1();
+                        inicio2();
                         break;
                     }
                     else{
@@ -1526,10 +1583,6 @@ public class MenuAdmin extends javax.swing.JFrame {
                         cont = cont + 391;
                     }
                 }
-                JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                boxOpEditarU.setVisible(true);
-                inicio1();
-                inicio2();
             } catch (Exception ex) {
                 Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }

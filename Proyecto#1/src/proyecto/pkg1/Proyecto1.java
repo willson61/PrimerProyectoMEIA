@@ -28,10 +28,14 @@ public class Proyecto1 {
     static File bitacoraBackup = new File("C:\\MEIA\\bitacora_Backup.txt");
     static File descBitacoraBackup = new File("C:\\MEIA\\desc_Bitacora_Backup.txt");
     static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");
+    static File root = new File("C:\\MEIA");
+    static File rootImg = new File("C:\\MEIA\\Imagenes");
     
     public static void main(String[] args) {
         VistaLogin main = new VistaLogin();
         main.setVisible(true);
+        root.mkdirs();
+        rootImg.mkdirs();
         try{
             if(!bitacoraUsuario.exists()){
                 bitacoraUsuario.createNewFile();

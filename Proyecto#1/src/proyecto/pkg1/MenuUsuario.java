@@ -672,12 +672,17 @@ public class MenuUsuario extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de contraseña se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarContrActionPerformed
 
     private void btnGuardarEstaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEstaActionPerformed
         String texto = null;
-        if((chbActivo.isSelected() == false) && (chbInactivo.isSelected() == false)){
-            if((chbActivo.isSelected() == true) && (chbInactivo.isSelected() == true)){
+        if((chbActivo.isSelected()) || (chbInactivo.isSelected())){
+            if((chbActivo.isSelected()) && (chbInactivo.isSelected())){
                 JOptionPane.showMessageDialog(null, "Debe seleccionar unicamente una opcion, administrador o usuario", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
             }
             else{
@@ -693,11 +698,12 @@ public class MenuUsuario extends javax.swing.JFrame {
                         }
                         dispose();
                         VistaLogin v = new VistaLogin();
+                        v.setVisible(true);
                     }
                 }
                 if(chbInactivo.isSelected()){
                     texto = "0";
-                    if(us.isEstatus()){
+                    if(!us.isEstatus()){
                         JOptionPane.showMessageDialog(null, "El usuario ya se encuentra inactivo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
@@ -711,6 +717,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar alguna opcion para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarEstaActionPerformed
 
@@ -734,6 +745,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "Debe ingresar una fecha para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarFechaActionPerformed
 
     /**
@@ -756,6 +772,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de correo se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarCorreoActionPerformed
 
@@ -785,6 +806,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de telefono se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarTeleActionPerformed
 
     /**
@@ -808,6 +834,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El campo de ubicacion de foto se encuentra vacio", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
+        try {
+            us = buscarUsuario(String.valueOf(us.getNombreDeUsuario()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarFotoActionPerformed
 
     /**
@@ -828,6 +859,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarUsActionPerformed
 
+    
     /**
      * Boton que cancela la edicion del campo actual para seleccionar otro campo a editar
      * @param evt 
@@ -899,7 +931,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(!fin){
+                while(raf.getFilePointer() < raf.length()){
                     if(linea.contains(String.valueOf(us.getNombreDeUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
@@ -908,6 +940,9 @@ public class MenuUsuario extends javax.swing.JFrame {
                         limpiarArchivo(descriptor);
                         escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
+                        JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditar.setVisible(true);
+                        inicio();
                         break;
                     }
                     else{
@@ -915,9 +950,6 @@ public class MenuUsuario extends javax.swing.JFrame {
                         cont = cont + 391;
                     }
                 }
-                JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                boxOpEditar.setVisible(true);
-                inicio();
             } catch (Exception ex) {
                 Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -941,7 +973,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(!fin){
+                while(raf.getFilePointer() < raf.length()){
                     if(linea.contains(String.valueOf(us.getNombreDeUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
@@ -955,6 +987,9 @@ public class MenuUsuario extends javax.swing.JFrame {
                             escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
                         }
                         fin = true;
+                        JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditar.setVisible(true);
+                        inicio();
                         break;
                     }
                     else{
@@ -962,9 +997,6 @@ public class MenuUsuario extends javax.swing.JFrame {
                         cont = cont + 391;
                     }
                 }
-                JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                boxOpEditar.setVisible(true);
-                inicio();
             } catch (Exception ex) {
                 Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
