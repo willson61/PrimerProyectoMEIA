@@ -135,7 +135,13 @@ public class VistaDatos extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
+    
+    /**
+     * Metodo de busqueda de Usuario a travez de su nombre de usuario
+     * @param usuario Nombre de usuario del usuario que se buscara
+     * @return Objeto Usuario con los datos del nombre de usuario encontrado
+     * @throws ParseException 
+     */
     public Usuario buscarUsuario(String usuario) throws ParseException {
         Usuario val = new Usuario();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -228,6 +234,11 @@ public class VistaDatos extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Funcion que remueve los caracteres especiales "~" de una cadena 
+     * @param texto cadena a la que se la van a remover los caracteres especiales
+     * @return texto sin caracteres especiales
+     */
     public String quitarExtra(String texto){
         int cont = 0;
         for(int i = 0; i < texto.length(); i++){

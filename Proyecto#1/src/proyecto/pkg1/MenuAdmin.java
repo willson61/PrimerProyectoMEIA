@@ -68,7 +68,9 @@ public class MenuAdmin extends javax.swing.JFrame {
     File archivo1 = new File("C:\\MEIA\\puntuacion.txt");
     File archivo2 = new File("C:\\MEIA\\resultado.txt");
     File root = new File("C:\\MEIA");
-    
+    /**
+     * Estado inical de los campos en pestaña de edicion del administrador
+     */
     public void inicio1(){
         btnGuardarContr.setVisible(false);
         btnGuardarCorreo.setVisible(false);
@@ -111,6 +113,9 @@ public class MenuAdmin extends javax.swing.JFrame {
         labelFotoA.setIcon(im2);
     }
     
+    /**
+     * Estado inicial de los campos en pestaña de edicion de la busqueda de usuarios
+     */
     public void inicio2(){
         btnGuardarContrU.setVisible(false);
         btnGuardarCorreoU.setVisible(false);
@@ -248,7 +253,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        labelLogo1.setText("Aplicacion MEIA");
+        labelLogo1.setText("Aplicacion MEIA - Perfil de Administrador");
 
         javax.swing.GroupLayout jPanelUsuarioLayout = new javax.swing.GroupLayout(jPanelUsuario);
         jPanelUsuario.setLayout(jPanelUsuarioLayout);
@@ -258,18 +263,18 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelUsuarioLayout.createSequentialGroup()
-                        .addComponent(btnCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCrearUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBackUp, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBackUp, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelUsuarioLayout.createSequentialGroup()
                         .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelFotoA)
                             .addComponent(labelNombre)
                             .addComponent(labelRol)
                             .addComponent(labelLogo1))
-                        .addGap(0, 328, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelUsuarioLayout.setVerticalGroup(
@@ -279,11 +284,11 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addComponent(labelLogo1)
                 .addGap(52, 52, 52)
                 .addComponent(labelFotoA)
-                .addGap(70, 70, 70)
+                .addGap(18, 18, 18)
                 .addComponent(labelNombre)
                 .addGap(18, 18, 18)
                 .addComponent(labelRol)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrearUsuario)
                     .addComponent(btnBackUp)
@@ -319,7 +324,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        labelLogo2.setText("Aplicacion MEIA");
+        labelLogo2.setText("Aplicacion MEIA - Edicion de Administrador");
 
         boxOpEditar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contraseña", "Fecha de Nacimiento", "Correo Electronico", "Telefono", "Foto" }));
         boxOpEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -515,7 +520,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         chbActivoU.setText("Activo");
 
-        labelLogo3.setText("Aplicacion MEIA");
+        labelLogo3.setText("Aplicacion MEIA - Busqueda y Edicion de Usuario");
 
         boxOpEditarU.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contraseña", "Estatus", "Fecha de Nacimiento", "Correo Electronico", "Telefono", "Foto" }));
         boxOpEditarU.addActionListener(new java.awt.event.ActionListener() {
@@ -715,7 +720,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Buscar", jPanelBuscar);
 
-        labelLogo4.setText("Aplicacion MEIA");
+        labelLogo4.setText("Aplicacion MEIA - Verificacion de Usuario");
 
         btnBuscarUs.setText("Buscar Usuario");
         btnBuscarUs.addActionListener(new java.awt.event.ActionListener() {
@@ -769,6 +774,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Boton de busqueda de nueva foto en pestaña de edicion del administrado
+     * @param evt 
+     */
     private void btnBuscarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoActionPerformed
         JFileChooser dialogo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagen files", ImageIO.getReaderFileSuffixes());
@@ -793,6 +802,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
 
+    /**
+     * Metodo de copia de archivos 
+     * @param source File del archivo original
+     * @param dest File del archivo de destino
+     * @throws IOException 
+     */
     private static void copiarArchivo(File source, File dest) throws IOException {
         InputStream is = null;
         OutputStream os = null;
@@ -810,6 +825,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Boton de busqueda de nueva foto en pestaña de edicion de la busqueda de usuario
+     * @param evt 
+     */
     private void btnBuscarFotoUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoUActionPerformed
         JFileChooser dialogo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagen files", ImageIO.getReaderFileSuffixes());
@@ -834,18 +853,30 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarFotoUActionPerformed
 
+    /**
+     * Boton de llamada al JFrame de creacion de nuevo Usuario
+     * @param evt 
+     */
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
         VistaCrearUsuario.admin = MenuAdmin.admin.toString();
         VistaCrearUsuario v = new VistaCrearUsuario();
         v.setVisible(true);
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
+    /**
+     * Boton de cerrar sesion
+     * @param evt 
+     */
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         dispose();
         VistaLogin v = new VistaLogin();
         v.setVisible(true);
     }//GEN-LAST:event_btnLogOutActionPerformed
 
+    /**
+     * Choice box de seleccion de campo a editar del administrador
+     * @param evt 
+     */
     private void boxOpEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOpEditarActionPerformed
         switch(boxOpEditar.getSelectedItem().toString()){
             case "Contraseña":
@@ -878,6 +909,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditar.setVisible(false);
     }//GEN-LAST:event_boxOpEditarActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de contraseña para el administrador
+     * @param evt 
+     */
     private void btnGuardarContrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarContrActionPerformed
         if((txtContraseña.getPassword().length > 0)){
             String texto = String.valueOf(txtContraseña.getPassword());
@@ -898,6 +933,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarContrActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de fecha de nacimiento para el administrador
+     * @param evt 
+     */
     private void btnGuardarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFechaActionPerformed
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         if(!(txtFechaNacimiento.getText().equals(""))){
@@ -916,6 +955,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarFechaActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de correo electronico para el administrador
+     * @param evt 
+     */
     private void btnGuardarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCorreoActionPerformed
         if(!(txtCorreo.getText().equals(""))){
             if(!(txtCorreo.getText().toCharArray().length > 40)){
@@ -935,6 +978,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarCorreoActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de telefono para el administrador
+     * @param evt 
+     */
     private void btnGuardarTeleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTeleActionPerformed
         if(!(txtTelefono.getText().equals(""))){
             if(!(txtTelefono.getText().length() != 8)){
@@ -959,6 +1006,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarTeleActionPerformed
 
+    /**
+     * Boton que guarda la ubicacion de la nueva foto del administrador
+     * @param evt 
+     */
     private void btnGuardarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFotoActionPerformed
         if(!(labelPathFoto.getText().equals(""))){
             if(!(labelPathFoto.getText().toCharArray().length > 200)){
@@ -978,11 +1029,19 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarFotoActionPerformed
 
+    /**
+     * Boton que cancela la edicion del campo actual para seleccionar otro campo a editar
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         inicio1();
         boxOpEditar.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de contraseña para el usuario buscado
+     * @param evt 
+     */
     private void btnGuardarContrUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarContrUActionPerformed
         if((txtContraseñaU.getPassword().length > 0)){
             String texto = String.valueOf(txtContraseñaU.getPassword());
@@ -1004,6 +1063,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarContrUActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de fecha para el usuario buscado
+     * @param evt 
+     */
     private void btnGuardarFechaUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFechaUActionPerformed
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         if(!(txtFechaNacimientoU.getText().equals(""))){
@@ -1023,6 +1086,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarFechaUActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de correo para el usuario buscado
+     * @param evt 
+     */
     private void btnGuardarCorreoUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCorreoUActionPerformed
         if(!(txtCorreoU.getText().equals(""))){
             if(!(txtCorreoU.getText().toCharArray().length > 40)){
@@ -1043,6 +1110,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarCorreoUActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de telefono para el usuario buscado
+     * @param evt 
+     */
     private void btnGuardarTeleUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTeleUActionPerformed
         if(!(txtTelefonoU.getText().equals(""))){
             if(!(txtTelefonoU.getText().length() != 8)){
@@ -1068,6 +1139,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarTeleUActionPerformed
 
+    /**
+     * Boton que guarda la ubicacion de la nueva foto para el usuario buscado
+     * @param evt 
+     */
     private void btnGuardarFotoUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFotoUActionPerformed
         if(!(labelPathFotoU.getText().equals(""))){
             if(!(labelPathFotoU.getText().toCharArray().length > 200)){
@@ -1088,6 +1163,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarFotoUActionPerformed
 
+    /**
+     * Boton que busca un usuario en la bitacora y en el archivo maestro para su edicion
+     * @param evt 
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if(!(txtNomUsuario.getText().equals(""))){
             try {
@@ -1116,6 +1195,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+     * Boton que guardar el nuevo estado del usuario buscado
+     * @param evt 
+     */
     private void btnGuardarEstaUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEstaUActionPerformed
         String texto = null;
         if((chbActivoU.isSelected() == false) && (chbInactivoU.isSelected() == false)){
@@ -1157,6 +1240,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnGuardarEstaUActionPerformed
 
+    /**
+     * Boton que busca un usuario en la bitacora y en el archivo maestro para ver si existe o no
+     * @param evt 
+     */
     private void btnBuscarUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsActionPerformed
         if(!(txtNom.getText().equals(""))){
             if(existeUsuario(txtNom.getText())){
@@ -1171,6 +1258,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarUsActionPerformed
 
+    /**
+     * Choice box de seleccion de campo a editar del resultado de la busqueda de usuario
+     * @param evt 
+     */
     private void boxOpEditarUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOpEditarUActionPerformed
         switch(boxOpEditarU.getSelectedItem().toString()){
             case "Contraseña":
@@ -1209,30 +1300,43 @@ public class MenuAdmin extends javax.swing.JFrame {
         boxOpEditarU.setVisible(false);
     }//GEN-LAST:event_boxOpEditarUActionPerformed
 
+    /**
+     * Boton que cancela la edicion del campo actual para seleccionar otro campo a editar
+     * @param evt 
+     */
     private void btnCancelarUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarUActionPerformed
         inicio2();
         boxOpEditarU.setVisible(true);
     }//GEN-LAST:event_btnCancelarUActionPerformed
 
+    /**
+     * Boton que muestra las opciones de edicion del resultado de la busqueda de usuario
+     * @param evt 
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         boxOpEditarU.setVisible(true);
         labelExiste.setText("Usuario Actual: " + txtNomUsuario.getText());
         txtNomUsuario.setText("");
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+     * Realiza el backup de los archivos de la carpeta C:\\MEIA en la ubicacion seleccionada
+     * @param evt 
+     */
     private void btnBackUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackUpActionPerformed
         File[] archivosMEIA = root.listFiles();
         File destRoot = null;
         JFileChooser dialogo = new JFileChooser();
         dialogo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int valor = dialogo.showOpenDialog(this);
-        if (valor == JFileChooser.APPROVE_OPTION){
+        dialogo.setAcceptAllFileFilterUsed(false);
+        if (dialogo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             int cont = 0;
-            destRoot = dialogo.getCurrentDirectory();
+            destRoot = dialogo.getSelectedFile();
             try{
                 File dest = new File(destRoot, "MEIA_Backup");
                 dest.mkdirs();
                 File destImagenes = new File(dest, "Imagenes");
+                destImagenes.mkdirs();
                 for (File archivo : archivosMEIA) {
                     if (archivo.getPath().contains(".txt")) {
                         File copy = new File(dest, archivo.getName());
@@ -1275,22 +1379,35 @@ public class MenuAdmin extends javax.swing.JFrame {
                     limpiarArchivo(Proyecto1.descBitacoraBackup);
                     escribirDescriptorBackup(Proyecto1.descBitacoraBackup, new DescBitacoraBackup(descBackup.getNombreSimbolico(), descBackup.getFechaCreacion(), descBackup.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), descBackup.getNumRegistros() + 1));
                 }
+                JOptionPane.showMessageDialog(null, "Backup realizado con exito", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
         else{
             JOptionPane.showMessageDialog(null, "no se ha seleccionado el destino del backup", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
-        
         }
     }//GEN-LAST:event_btnBackUpActionPerformed
 
+    /**
+     * Llama a la vista de visualizacion de los elementos del usuario buscado
+     * @param evt 
+     */
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        VistaDatos.user = admin;
+        VistaDatos.user = String.valueOf(usuarioBus.getNombreDeUsuario());
         VistaDatos v = new VistaDatos();
         v.setVisible(true);
     }//GEN-LAST:event_btnVerActionPerformed
 
+    /**
+     * Editor de un campo del administrador
+     * @param archivo File donde se buscara el usuario
+     * @param descriptor descriptor que se actualizara al editar el usuario
+     * @param texto nuevo campo del usuario
+     * @param pos posicion en la linea del campo a editar
+     * @param administrador usuario a buscar en el archivo y que hace las momdificaciones
+     * @return valor booleano de si se econtro y edito el usuario o no
+     */
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos, Usuario administrador){
         boolean fin = false;
             int cont = 0;
@@ -1323,7 +1440,17 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         return fin;
     }
-    
+
+    /**
+     * Editor de un campo del resultado de busqueda de usuario
+     * @param archivo File donde se buscara el usuario
+     * @param descriptor descriptor que se actualizara al editar el usuario
+     * @param texto nuevo campo del usuario
+     * @param pos posicion en la linea del campo a editar
+     * @param administrador usuario que realiza las modificaciones
+     * @param busqueda usuario en el que se modifican los campos
+     * @return valor booleano de si se econtro y edito el usuario o no
+     */
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos, Usuario administrador, Usuario busqueda){
         boolean fin = false;
             int cont = 0;
@@ -1358,6 +1485,17 @@ public class MenuAdmin extends javax.swing.JFrame {
         return fin;
     }
     
+    /**
+     * Editor del Estatus del resultado de busqueda de usuario
+     * @param archivo File donde se buscara el usuario
+     * @param descriptor descriptor que se actualizara al editar el usuario
+     * @param texto nuevo campo del usuario
+     * @param pos posicion en la linea del campo a editar
+     * @param val booleano que determina si se le agrega o quita a los registros activos
+     * @param administrador usuario que realiza las modificaciones
+     * @param busqueda usuario en el que se modifican los campos
+     * @return valor booleano de si se econtro y edito el usuario o no
+     */
      public boolean editarUsuarioEstado(File archivo, File descriptor, String texto, int pos, boolean val, Usuario administrador, Usuario busqueda){
         boolean fin = false;
             int cont = 0;
@@ -1397,6 +1535,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         return fin;
     }
     
+     /**
+     * Funcion que encripta la contraseña recibida con md5
+     * @param source texto con la contraseña a encriptar
+     * @return contraseña encriptada
+     */
     public String encriptarContraseña(String source){
         String md5 = null;
         try{
@@ -1409,6 +1552,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         return md5;
     }
     
+    /**
+     * Funcion que completa una cadena hasta un limite determinado con el caracter especial "~"
+     * @param texto texto original sin agregar caracteres especiales
+     * @param limite numero limite para agregar caracteres especiales
+     * @return texto con caracteres especiales
+     */
     public String completarTexto(String texto, int limite){
         while(texto.length() < limite){
             texto += "~";
@@ -1416,6 +1565,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Funcion que remueve los caracteres especiales "~" de una cadena 
+     * @param texto cadena a la que se la van a remover los caracteres especiales
+     * @return texto sin caracteres especiales
+     */
     public String quitarExtra(String texto){
         int cont = 0;
         for(int i = 0; i < texto.length(); i++){
@@ -1428,6 +1582,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Metodo de busqueda de Usuario a travez de su nombre de usuario
+     * @param usuario Nombre de usuario del usuario que se buscara
+     * @return Objeto Usuario con los datos del nombre de usuario encontrado
+     * @throws ParseException 
+     */
     public Usuario buscarUsuario(String usuario) throws ParseException {
         Usuario val = new Usuario();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -1520,6 +1680,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Metodo que escribe al descriptor de usuario 
+     * @param archivo informacion que se escribira
+     * @param des archivo al que se escribira
+     * @throws IOException 
+     */
     public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
         String texto = "";
         String div = "|";
@@ -1547,6 +1713,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         fos.close();
     }
     
+    /**
+     * Metodo que escribe al descriptor de la bitacora del backup
+     * @param archivo
+     * @param des
+     * @throws IOException 
+     */
     public void escribirDescriptorBackup(File archivo, DescBitacoraBackup des) throws IOException{
         String texto = "";
         String div = "|";
@@ -1568,6 +1740,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         fos.close();
     }
     
+    /**
+     * Metodo que escribe una entrada a la bitacora de backups
+     * @param archivo archivo al que se escribe la entrada
+     * @param bit informacion que se va a escribir a la bitacora de backups
+     * @throws IOException 
+     */
     public void escribirBitacoraBackup(File archivo, BitacoraBackup bit)throws IOException{
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         String texto = "";
@@ -1578,6 +1756,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         texto += completarTexto(String.valueOf(bit.getUsuario()), 20);
         texto += div;
         texto += date.format(bit.getFechaTransaccion());
+        texto += fin;
         if(archivo.exists()){
             FileOutputStream fos = new FileOutputStream(archivo, true);
             Writer wr = new OutputStreamWriter(fos, UTF8);
@@ -1588,6 +1767,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Funcion que lee el contenido del descriptor de la bitacora de usuarios
+     * @param archivo Archivo del descriptor que se va a leer
+     * @return informacion leida del descriptor
+     * @throws IOException 
+     */
     public DescUsuario leerDescriptor(File archivo) throws IOException{
         DescUsuario desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -1617,6 +1802,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Funcion que lee el contenido del descriptor de la bitacora de backups
+     * @param archivo Archivo del descriptor que se va a leer
+     * @return informacion leida del descriptor
+     * @throws IOException
+     */
     public DescBitacoraBackup leerDescriptorBackup(File archivo)throws IOException{
         DescBitacoraBackup desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -1646,12 +1837,22 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo que limpia el contenido de un archivo
+     * @param archivo archivo al que se le limpiara el contenido
+     * @throws IOException 
+     */
     public void limpiarArchivo(File archivo)throws IOException{
         PrintWriter writer = new PrintWriter(archivo);
         writer.print("");
         writer.close();
     }
     
+    /**
+     * Funcion booleana que verifica que un usuario exista en la bitacora normal o maestra de usuarios
+     * @param usuario nombre de usuario por el que se buscara
+     * @return valor booleano de si existe o no el usuario buscado
+     */
     public boolean existeUsuario(String usuario){
         boolean val = false;
         BufferedReader br = null;
@@ -1693,6 +1894,9 @@ public class MenuAdmin extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Metodo que lee los parametros para la verificacion de seguridad de la contraseña
+     */
     public void leerParametrosContraseña(){
         FileReader puntuacion;
         FileReader resultado;
@@ -1741,6 +1945,12 @@ public class MenuAdmin extends javax.swing.JFrame {
             
     }
     
+    /**
+     * Funcion que lee el contenido de un archivo 
+     * @param fileName archivo que se va a leer
+     * @return el contenido del archivo en un string
+     * @throws IOException 
+     */
     public static String leerArchivo(File fileName) throws IOException{
         BufferedReader br = null;
 	FileReader fr = null;
@@ -1757,6 +1967,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         return texto.toString();
     }
     
+    /**
+     * Funcion que mide el grado de seguridad de una contraseña
+     * @param password contraseña a la que se le verificara el nivel de seguridad
+     * @return nivel de seguridad de la contraseña
+     */
     public String calcularSeguridad(char[] password){
         leerParametrosContraseña();
         String contraseña = "";
@@ -1796,6 +2011,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         return mensaje;
     }
     
+    /**
+     * Funcion de calculo de numero de letras mayusculas en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de mayusculas en el texto
+     */
     public int calcularMayus(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1805,6 +2025,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de letras en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de letras en el texto
+     */
     public int calcularLetras(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1814,6 +2040,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de digitos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de digitos en el texto
+     */
     public int calcularNumeros(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1823,6 +2055,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de simbolos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de simbolos en el texto
+     */
     public int calcularSimbolos(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){

@@ -142,6 +142,8 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
 
         btnSalir.setText("Salir");
 
+        labelImage.setText("Aplicacion MEIA - Creacion de Usuario");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,7 +197,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelUsuario)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,6 +248,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo de creacion de nuevo usuario
+     * @param evt 
+     */
     private void btnCrearusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearusuarioActionPerformed
         String errorMessage = "";
         int cont = 0;
@@ -441,6 +447,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCrearusuarioActionPerformed
 
+    /**
+     * Funcion booleana que verifica que un usuario exista en la bitacora normal o maestra de usuarios
+     * @param usuario nombre de usuario por el que se buscara
+     * @return valor booleano de si existe o no el usuario buscado
+     */
     public boolean existeUsuario(String usuario){
         boolean val = false;
         BufferedReader br = null;
@@ -482,12 +493,23 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Metodo que limpia el contenido de un archivo
+     * @param archivo archivo al que se le limpiara el contenido
+     * @throws IOException 
+     */
     public void limpiarArchivo(File archivo)throws IOException{
         PrintWriter writer = new PrintWriter(archivo);
         writer.print("");
         writer.close();
     }
     
+    /**
+     * Funcion que lee el contenido del descriptor de la bitacora de usuarios
+     * @param archivo Archivo del descriptor que se va a leer
+     * @return informacion leida del descriptor
+     * @throws IOException 
+     */
     public DescUsuario leerDescriptor(File archivo) throws IOException{
         DescUsuario desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -517,6 +539,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Funcion que lee los usuarios del archivo enviado 
+     * @param fileName archivo en el que se buscan los usuarios
+     * @return lista con los usuarios encontrados en el archivo
+     * @throws IOException 
+     */
     public LinkedList<Usuario> leerUsuarios(File fileName) throws IOException{
         LinkedList<Usuario> us = new LinkedList<>();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -570,6 +598,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo que escribe al descriptor de usuario 
+     * @param archivo informacion que se escribira
+     * @param des archivo al que se escribira
+     * @throws IOException 
+     */
     public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
         String texto = "";
         String div = "|";
@@ -597,6 +631,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         fos.close();
     }
     
+    /**
+     * Funcion que completa una cadena hasta un limite determinado con el caracter especial "~"
+     * @param texto texto original sin agregar caracteres especiales
+     * @param limite numero limite para agregar caracteres especiales
+     * @return texto con caracteres especiales
+     */
     public String completarTexto(String texto, int limite){
         while(texto.length() < limite){
             texto += "~";
@@ -604,6 +644,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Funcion que remueve los caracteres especiales "~" de una cadena 
+     * @param texto cadena a la que se la van a remover los caracteres especiales
+     * @return texto sin caracteres especiales
+     */
     public String quitarExtra(String texto){
         int cont = 0;
         for(int i = 0; i < texto.length(); i++){
@@ -616,6 +661,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Funcion que encripta la contraseña recibida con md5
+     * @param source texto con la contraseña a encriptar
+     * @return contraseña encriptada
+     */
     public String encriptarContraseña(String source){
         String md5 = null;
         try{
@@ -628,6 +678,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         return md5;
     }
     
+    /**
+     * Metodo que escribe una entrada a la bitacora de usuarios
+     * @param archivo File al que se escribira la entrada
+     * @param s Usuario con la iformacion para la entrada
+     * @throws IOException 
+     */
     public void escribirUsuarioBitacora(File archivo, Usuario s) throws IOException{
         String texto = "";
         String div = "|";
@@ -678,6 +734,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Boton de busqueda de foto en para usuario
+     * @param evt 
+     */
     private void btnBuscarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoActionPerformed
         JFileChooser dialogo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagen files", ImageIO.getReaderFileSuffixes());
@@ -701,6 +761,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
     
+    /**
+     * Metodo de copia de archivos 
+     * @param source File del archivo original
+     * @param dest File del archivo de destino
+     * @throws IOException 
+     */
     private static void copiarArchivo(File source, File dest) throws IOException {
         InputStream is = null;
         OutputStream os = null;
@@ -718,7 +784,10 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
     }
     
-    public void leerArchivo(){
+    /**
+     * Metodo que lee los parametros para la verificacion de seguridad de la contraseña
+     */
+    public void leerParametrosContraseña(){
         FileReader puntuacion;
         FileReader resultado;
             try{
@@ -766,8 +835,13 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
             
     }
     
+    /**
+     * Funcion que mide el grado de seguridad de una contraseña
+     * @param password contraseña a la que se le verificara el nivel de seguridad
+     * @return nivel de seguridad de la contraseña
+     */
     public String calcularSeguridad(char[] password){
-        leerArchivo();
+        leerParametrosContraseña();
         String contraseña = "";
         for(int i = 0; i < password.length; i++){
             contraseña += Character.toString(password[i]);
@@ -805,6 +879,11 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         return mensaje;
     }
     
+    /**
+     * Funcion de calculo de numero de letras mayusculas en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de mayusculas en el texto
+     */
     public int calcularMayus(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -814,6 +893,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de letras en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de letras en el texto
+     */
     public int calcularLetras(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -823,6 +908,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de digitos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de digitos en el texto
+     */
     public int calcularNumeros(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -832,6 +923,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de simbolos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de simbolos en el texto
+     */
     public int calcularSimbolos(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){

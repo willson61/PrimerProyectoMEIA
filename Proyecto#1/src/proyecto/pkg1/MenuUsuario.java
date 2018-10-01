@@ -164,7 +164,7 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         labelRol.setText("Rol:");
 
-        labelLogo.setText("Aplicacion MEIA");
+        labelLogo.setText("Aplicacion MEIA - Perfil de Usuario");
 
         btnLogOut.setText("LogOut");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +185,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                     .addComponent(labelRol)
                     .addComponent(labelLogo)
                     .addComponent(btnLogOut))
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         jPanelUsuarioLayout.setVerticalGroup(
             jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +237,7 @@ public class MenuUsuario extends javax.swing.JFrame {
             }
         });
 
-        labelLogo2.setText("Aplicacion MEIA");
+        labelLogo2.setText("Aplicacion MEIA - Edicion de Usuario");
 
         boxOpEditar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contraseña", "Estatus", "Fecha de Nacimiento", "Correo Electronico", "Telefono", "Foto" }));
         boxOpEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -304,29 +304,6 @@ public class MenuUsuario extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelEditarLayout.createSequentialGroup()
-                                .addComponent(labelCorreo)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanelEditarLayout.createSequentialGroup()
-                                .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelEditarLayout.createSequentialGroup()
-                                        .addComponent(labelFoto)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnBuscarFoto)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelPathFoto))
-                                    .addGroup(jPanelEditarLayout.createSequentialGroup()
-                                        .addComponent(labelEstatus)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(chbActivo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(chbInactivo)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnGuardarEsta))
-                                    .addComponent(boxOpEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanelEditarLayout.createSequentialGroup()
                                 .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelEditarLayout.createSequentialGroup()
                                         .addComponent(labelFechaN)
@@ -343,7 +320,29 @@ public class MenuUsuario extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(26, 26, 26)))
+                                .addGap(26, 26, 26))
+                            .addGroup(jPanelEditarLayout.createSequentialGroup()
+                                .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelEditarLayout.createSequentialGroup()
+                                        .addComponent(labelCorreo)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelEditarLayout.createSequentialGroup()
+                                        .addComponent(labelFoto)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscarFoto)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelPathFoto))
+                                    .addGroup(jPanelEditarLayout.createSequentialGroup()
+                                        .addComponent(labelEstatus)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(chbActivo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(chbInactivo)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnGuardarEsta))
+                                    .addComponent(boxOpEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGuardarContr, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnGuardarCorreo, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -357,9 +356,9 @@ public class MenuUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(boxOpEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelContraseña)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,11 +387,12 @@ public class MenuUsuario extends javax.swing.JFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardarTele))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFoto)
-                    .addComponent(btnBuscarFoto)
-                    .addComponent(btnGuardarFoto)
-                    .addComponent(labelPathFoto))
+                .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelPathFoto)
+                    .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelFoto)
+                        .addComponent(btnBuscarFoto)
+                        .addComponent(btnGuardarFoto)))
                 .addGap(24, 24, 24)
                 .addComponent(btnCancelar)
                 .addContainerGap())
@@ -400,7 +400,7 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Editar", jPanelEditar);
 
-        labelLogo3.setText("Aplicacion MEIA");
+        labelLogo3.setText("Aplicacion MEIA - Verificacion de Usuario");
 
         btnBuscarUs.setText("Buscar Usuario");
         btnBuscarUs.addActionListener(new java.awt.event.ActionListener() {
@@ -454,6 +454,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo de busqueda de Usuario a travez de su nombre de usuario
+     * @param usuario Nombre de usuario del usuario que se buscara
+     * @return Objeto Usuario con los datos del nombre de usuario encontrado
+     * @throws ParseException 
+     */
     public Usuario buscarUsuario(String usuario) throws ParseException {
         Usuario val = new Usuario();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
@@ -546,6 +552,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Funcion que remueve los caracteres especiales "~" de una cadena 
+     * @param texto cadena a la que se la van a remover los caracteres especiales
+     * @return texto sin caracteres especiales
+     */
     public String quitarExtra(String texto){
         int cont = 0;
         for(int i = 0; i < texto.length(); i++){
@@ -558,6 +569,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Boton de busqueda de nueva foto en para usuario
+     * @param evt 
+     */
     private void btnBuscarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoActionPerformed
         JFileChooser dialogo = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imagen files", ImageIO.getReaderFileSuffixes());
@@ -582,12 +597,20 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
 
+    /**
+     * Boton de cerrar sesion
+     * @param evt 
+     */
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         dispose();
         VistaLogin v = new VistaLogin();
         v.setVisible(true);
     }//GEN-LAST:event_btnLogOutActionPerformed
 
+    /**
+     * Choice box de seleccion de campo a editar del usuario
+     * @param evt 
+     */
     private void boxOpEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOpEditarActionPerformed
         switch(boxOpEditar.getSelectedItem().toString()){
             case "Contraseña":
@@ -626,6 +649,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         boxOpEditar.setVisible(false);
     }//GEN-LAST:event_boxOpEditarActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de contraseña para el usuario
+     * @param evt 
+     */
     private void btnGuardarContrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarContrActionPerformed
         if((txtContraseña.getPassword().length > 0)){
             String texto = String.valueOf(txtContraseña.getPassword());
@@ -686,6 +713,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarEstaActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de fecha de nacimiento para el usuario
+     * @param evt 
+     */
     private void btnGuardarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFechaActionPerformed
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         if(!(txtFechaNacimiento.getText().equals(""))){
@@ -704,6 +735,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarFechaActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de correo electronico para el usuario
+     * @param evt 
+     */
     private void btnGuardarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCorreoActionPerformed
         if(!(txtCorreo.getText().equals(""))){
             if(!(txtCorreo.getText().toCharArray().length > 40)){
@@ -723,6 +758,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarCorreoActionPerformed
 
+    /**
+     * Boton que guarda el nuevo valor de telefono para el usuario
+     * @param evt 
+     */
     private void btnGuardarTeleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTeleActionPerformed
         if(!(txtTelefono.getText().equals(""))){
             if(!(txtTelefono.getText().length() != 8)){
@@ -747,6 +786,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarTeleActionPerformed
 
+    /**
+     * Boton que guarda la ubicacion de la nueva foto del usuario
+     * @param evt 
+     */
     private void btnGuardarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarFotoActionPerformed
         if(!(labelPathFoto.getText().equals(""))){
             if(!(labelPathFoto.getText().toCharArray().length > 200)){
@@ -766,6 +809,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarFotoActionPerformed
 
+    /**
+     * Metodo de busqueda que verifica si un usuario existe o no
+     * @param evt 
+     */
     private void btnBuscarUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsActionPerformed
         if(!(txtNom.getText().equals(""))){
             if(existeUsuario(txtNom.getText())){
@@ -780,11 +827,20 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarUsActionPerformed
 
+    /**
+     * Boton que cancela la edicion del campo actual para seleccionar otro campo a editar
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         inicio();
         boxOpEditar.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Funcion booleana que verifica que un usuario exista en la bitacora normal o maestra de usuarios
+     * @param usuario nombre de usuario por el que se buscara
+     * @return valor booleano de si existe o no el usuario buscado
+     */
     public boolean existeUsuario(String usuario){
         boolean val = false;
         BufferedReader br = null;
@@ -826,6 +882,14 @@ public class MenuUsuario extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Editor de un campo del usuario
+     * @param archivo File donde se buscara el usuario
+     * @param descriptor descriptor que se actualizara al editar el usuario
+     * @param texto nuevo campo del usuario
+     * @param pos posicion en la linea del campo a editar
+     * @return valor booleano de si se econtro y edito el usuario o no
+     */
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos){
         boolean fin = false;
             int cont = 0;
@@ -859,6 +923,15 @@ public class MenuUsuario extends javax.swing.JFrame {
         return fin;
     }
     
+    /**
+     * Editor del Estatus del resultado de busqueda de usuario
+     * @param archivo File donde se buscara el usuario
+     * @param descriptor descriptor que se actualizara al editar el usuario
+     * @param texto nuevo campo del usuario
+     * @param pos posicion en la linea del campo a editar
+     * @param val booleano que determina si se le agrega o quita a los registros activos
+     * @return valor booleano de si se econtro y edito el usuario o no
+     */
     public boolean editarUsuarioEstado(File archivo, File descriptor, String texto, int pos, boolean val){
         boolean fin = false;
             int cont = 0;
@@ -897,6 +970,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         return fin;
     }
     
+    /**
+     * Funcion que encripta la contraseña recibida con md5
+     * @param source texto con la contraseña a encriptar
+     * @return contraseña encriptada
+     */
     public String encriptarContraseña(String source){
         String md5 = null;
         try{
@@ -909,6 +987,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         return md5;
     }
     
+    /**
+     * Funcion que completa una cadena hasta un limite determinado con el caracter especial "~"
+     * @param texto texto original sin agregar caracteres especiales
+     * @param limite numero limite para agregar caracteres especiales
+     * @return texto con caracteres especiales
+     */
     public String completarTexto(String texto, int limite){
         while(texto.length() < limite){
             texto += "~";
@@ -916,6 +1000,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Metodo de copia de archivos 
+     * @param source File del archivo original
+     * @param dest File del archivo de destino
+     * @throws IOException 
+     */
     private static void copiarArchivo(File source, File dest) throws IOException {
         InputStream is = null;
         OutputStream os = null;
@@ -933,6 +1023,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo que escribe al descriptor de usuario 
+     * @param archivo informacion que se escribira
+     * @param des archivo al que se escribira
+     * @throws IOException 
+     */
     public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
         String texto = "";
         String div = "|";
@@ -960,6 +1056,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         fos.close();
     }
     
+    /**
+     * Funcion que lee el contenido del descriptor de la bitacora de usuarios
+     * @param archivo Archivo del descriptor que se va a leer
+     * @return informacion leida del descriptor
+     * @throws IOException 
+     */
     public DescUsuario leerDescriptor(File archivo) throws IOException{
         DescUsuario desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -989,13 +1091,21 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo que limpia el contenido de un archivo
+     * @param archivo archivo al que se le limpiara el contenido
+     * @throws IOException 
+     */
     public void limpiarArchivo(File archivo)throws IOException{
         PrintWriter writer = new PrintWriter(archivo);
         writer.print("");
         writer.close();
     }
     
-    public void leerArchivo(){
+    /**
+     * Metodo que lee los parametros para la verificacion de seguridad de la contraseña
+     */
+    public void leerParametrosContraseña(){
         FileReader puntuacion;
         FileReader resultado;
             try{
@@ -1043,8 +1153,13 @@ public class MenuUsuario extends javax.swing.JFrame {
             
     }
     
+    /**
+     * Funcion que mide el grado de seguridad de una contraseña
+     * @param password contraseña a la que se le verificara el nivel de seguridad
+     * @return nivel de seguridad de la contraseña
+     */
     public String calcularSeguridad(char[] password){
-        leerArchivo();
+        leerParametrosContraseña();
         String contraseña = "";
         for(int i = 0; i < password.length; i++){
             contraseña += Character.toString(password[i]);
@@ -1082,6 +1197,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         return mensaje;
     }
     
+    /**
+     * Funcion de calculo de numero de letras mayusculas en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de mayusculas en el texto
+     */
     public int calcularMayus(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1091,6 +1211,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de letras en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de letras en el texto
+     */
     public int calcularLetras(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1100,6 +1226,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de digitos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de digitos en el texto
+     */
     public int calcularNumeros(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){
@@ -1109,6 +1241,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
         return cont;
     }
+    
+    /**
+     * Funcion de calculo de numero de simbolos en un texto
+     * @param contraseña texto del que se hara el calculo
+     * @return numero de simbolos en el texto
+     */
     public int calcularSimbolos(String contraseña){
         int cont = 0;
         for(int i = 0; i < contraseña.length(); i++){

@@ -58,7 +58,7 @@
                           <Component id="labelLogo" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="btnLogOut" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="348" max="32767" attributes="0"/>
+                      <EmptySpace pref="260" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -95,7 +95,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="labelLogo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Aplicacion MEIA"/>
+                <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Perfil de Usuario"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnLogOut">
@@ -133,34 +133,6 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="labelCorreo" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtCorreo" min="-2" pref="201" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="labelFoto" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="btnBuscarFoto" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="labelPathFoto" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="labelEstatus" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="chbActivo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="chbInactivo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="btnGuardarEsta" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="boxOpEditar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -185,6 +157,33 @@
                                       </Group>
                                       <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="labelCorreo" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="txtCorreo" min="-2" pref="201" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="labelFoto" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btnBuscarFoto" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="labelPathFoto" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="labelEstatus" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="chbActivo" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="chbInactivo" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btnGuardarEsta" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="boxOpEditar" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnGuardarContr" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -204,9 +203,9 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="labelLogo2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="boxOpEditar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -240,11 +239,13 @@
                           <Component id="btnGuardarTele" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelFoto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnBuscarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnGuardarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="labelPathFoto" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelFoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnBuscarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnGuardarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
@@ -327,7 +328,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="labelLogo2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Aplicacion MEIA"/>
+                <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Edicion de Usuario"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="boxOpEditar">
@@ -447,7 +448,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="labelLogo3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Aplicacion MEIA"/>
+                <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Verificacion de Usuario"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNom">

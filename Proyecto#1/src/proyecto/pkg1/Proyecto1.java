@@ -65,6 +65,12 @@ public class Proyecto1 {
         }
     }
     
+    /**
+     * Funcion que lee el contenido de un archivo 
+     * @param fileName archivo que se va a leer
+     * @return el contenido del archivo en un string
+     * @throws IOException 
+     */
     public static String leerArchivo(File fileName) throws IOException{
         BufferedReader br = null;
 	FileReader fr = null;

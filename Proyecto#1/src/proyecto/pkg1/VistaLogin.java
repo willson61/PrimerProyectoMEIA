@@ -35,7 +35,12 @@ public class VistaLogin extends javax.swing.JFrame {
     }
     
     
-    
+    /**
+     * Funcion que lee el contenido de un archivo 
+     * @param fileName archivo que se va a leer
+     * @return el contenido del archivo en un string
+     * @throws IOException 
+     */
     public static String leerArchivo(File fileName) throws IOException{
         BufferedReader br = null;
 	FileReader fr = null;
@@ -52,6 +57,11 @@ public class VistaLogin extends javax.swing.JFrame {
         return texto.toString();
     }
     
+    /**
+     * Funcion que remueve los caracteres especiales "~" de una cadena 
+     * @param texto cadena a la que se la van a remover los caracteres especiales
+     * @return texto sin caracteres especiales
+     */
     public String quitarExtra(String texto){
         int cont = 0;
         for(int i = 0; i < texto.length(); i++){
@@ -64,6 +74,11 @@ public class VistaLogin extends javax.swing.JFrame {
         return texto;
     }
     
+    /**
+     * Funcion que encripta la contraseña recibida con md5
+     * @param source texto con la contraseña a encriptar
+     * @return contraseña encriptada
+     */
     public String encriptarContraseña(String source){
         String md5 = null;
         try{
@@ -76,6 +91,12 @@ public class VistaLogin extends javax.swing.JFrame {
         return md5;
     }
     
+    /**
+     * Metodo de busqueda de Usuario a travez de su nombre de usuario
+     * @param usuario Nombre de usuario del usuario que se buscara
+     * @return Objeto Usuario con los datos del nombre de usuario encontrado
+     * @throws ParseException 
+     */
     public Usuario buscarUsuario(String usuario){
         Usuario val = new Usuario();
         BufferedReader br = null;
@@ -152,16 +173,15 @@ public class VistaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         txtNomUsuario = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JPasswordField();
         btnIngreso = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         labelImage = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Login");
 
         btnIngreso.setText("Ingresar");
         btnIngreso.addActionListener(new java.awt.event.ActionListener() {
@@ -177,38 +197,47 @@ public class VistaLogin extends javax.swing.JFrame {
             }
         });
 
+        labelImage.setText("Aplicacion MEIA - Login");
+
+        jLabel2.setText("Usuario:");
+
+        jLabel3.setText("Contraseña:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelImage)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnIngreso)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel1)
                             .addComponent(txtNomUsuario)
-                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelImage)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNomUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngreso)
@@ -219,6 +248,10 @@ public class VistaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Boton de accion de LogIn
+     * @param evt 
+     */
     private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
         if((txtNomUsuario.getText().equals("")) || (txtContraseña.getPassword().length == 0)){
             JOptionPane.showMessageDialog(null, "Alguno de los campos de login se encuentra vacio, por favor ingreselos", "InfoBox: " + "Error en creacion de Usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -253,6 +286,10 @@ public class VistaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
 
+    /**
+     * Boton para cerrar Aplicacion
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -295,7 +332,8 @@ public class VistaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngreso;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelImage;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtNomUsuario;
