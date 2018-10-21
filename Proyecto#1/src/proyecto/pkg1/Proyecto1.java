@@ -25,6 +25,10 @@ public class Proyecto1 {
     static File descBitacoraUsuario = new File("C:\\MEIA\\desc_Bitacora_Usuario.txt");
     static File maestroUsuario = new File("C:\\MEIA\\maestro_Usuario.txt");
     static File descMaestroUsuario = new File("C:\\MEIA\\desc_Maestro_Usuario.txt");
+    static File bitacoraLista = new File("C:\\MEIA\\bitacora_Lista.txt");
+    static File descBitacoraLista = new File("C:\\MEIA\\desc_Bitacora_Lista.txt");
+    static File maestroLista = new File("C:\\MEIA\\maestro_Lista.txt");
+    static File descMaestroLista = new File("C:\\MEIA\\desc_Maestro_Lista.txt");
     static File bitacoraBackup = new File("C:\\MEIA\\bitacora_Backup.txt");
     static File descBitacoraBackup = new File("C:\\MEIA\\desc_Bitacora_Backup.txt");
     static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");
@@ -48,6 +52,18 @@ public class Proyecto1 {
             }
             if(!(descMaestroUsuario.exists())){
                 descMaestroUsuario.createNewFile();
+            }
+            if(!bitacoraLista.exists()){
+                bitacoraLista.createNewFile();
+            }
+            if(!(descBitacoraLista.exists())){
+                descBitacoraLista.createNewFile();
+            }
+            if(!(maestroLista.exists())){
+                maestroLista.createNewFile();
+            }
+            if(!(descMaestroLista.exists())){
+                descMaestroLista.createNewFile();
             }
             if(!(descBitacoraBackup.exists())){
                 descBitacoraBackup.createNewFile();

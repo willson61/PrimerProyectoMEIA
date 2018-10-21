@@ -360,20 +360,20 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                     admin = String.valueOf(us.getNombreDeUsuario());
                     try{
                         escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
-                        escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario("bitacora_Usuario", ahora, admin, ahora, admin, 1, 1, 0, 5));
+                        escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario_Lista("bitacora_Usuario", ahora, admin, ahora, admin, 1, 1, 0, 5));
                     }catch(Exception e){
                         e.printStackTrace();
                     }
                 }
                 else{
                     try{
-                        DescUsuario des = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                        DescUsuario_Lista des = leerDescriptor(Proyecto1.descBitacoraUsuario);
                         if(des.getNumRegistros() < des.getMaxReorganizacion()){
                             escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
                             PrintWriter writer = new PrintWriter(Proyecto1.descBitacoraUsuario);
                             writer.print("");
                             writer.close();
-                            escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(des.getNombreSimbolico(), des.getFechaCreacion(), des.getUsuarioCreacion(), new Date(), admin, des.getNumRegistros() + 1, des.getRegistrosActivos() + 1, des.getRegistrosInactivos(), des.getMaxReorganizacion()));
+                            escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario_Lista(des.getNombreSimbolico(), des.getFechaCreacion(), des.getUsuarioCreacion(), new Date(), admin, des.getNumRegistros() + 1, des.getRegistrosActivos() + 1, des.getRegistrosInactivos(), des.getMaxReorganizacion()));
                             
                         }
                         else{
@@ -406,14 +406,14 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 for(int i = 0; i < nuevoMasUsuario.size(); i++){
                                     escribirUsuarioMaster(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
                                 }
-                                DescUsuario desM = leerDescriptor(Proyecto1.descMaestroUsuario);
+                                DescUsuario_Lista desM = leerDescriptor(Proyecto1.descMaestroUsuario);
                                 limpiarArchivo(Proyecto1.descMaestroUsuario);
-                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), admin, desM.getNumRegistros() + bitUsuario.size(), contA, contI, desM.getMaxReorganizacion()));
+                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), admin, desM.getNumRegistros() + bitUsuario.size(), contA, contI, desM.getMaxReorganizacion()));
                                 limpiarArchivo(Proyecto1.bitacoraUsuario);
                                 escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
-                                DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                                DescUsuario_Lista desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
                                 limpiarArchivo(Proyecto1.descBitacoraUsuario);
-                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
                             }
                             else{
                                 Date ahora2 = new Date();
@@ -430,12 +430,12 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                                 for(int i = 0; i < nuevoMasUsuario.size(); i++){
                                     escribirUsuarioMaster(Proyecto1.maestroUsuario, nuevoMasUsuario.get(i));
                                 }
-                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario("maestro_Usuario", ahora2, admin, ahora2, admin, nuevoMasUsuario.size(), contA, contI, -1));
+                                escribirDescriptor(Proyecto1.descMaestroUsuario, new DescUsuario_Lista("maestro_Usuario", ahora2, admin, ahora2, admin, nuevoMasUsuario.size(), contA, contI, -1));
                                 limpiarArchivo(Proyecto1.bitacoraUsuario);
                                 escribirUsuarioBitacora(Proyecto1.bitacoraUsuario, us);
-                                DescUsuario desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
+                                DescUsuario_Lista desB = leerDescriptor(Proyecto1.descBitacoraUsuario);
                                 limpiarArchivo(Proyecto1.descBitacoraUsuario);
-                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
+                                escribirDescriptor(Proyecto1.descBitacoraUsuario, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), admin, 1, 1, 0, desB.getMaxReorganizacion()));
                             }
                         }
                     }catch(Exception e){
@@ -516,8 +516,8 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
      * @return informacion leida del descriptor
      * @throws IOException 
      */
-    public DescUsuario leerDescriptor(File archivo) throws IOException{
-        DescUsuario desc = null;
+    public DescUsuario_Lista leerDescriptor(File archivo) throws IOException{
+        DescUsuario_Lista desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         BufferedReader br = null;
 	FileReader fr = null;
@@ -537,7 +537,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
         else{
             try{
                 String[] contenido = texto.toString().split("\\|");
-                desc = new DescUsuario(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
+                desc = new DescUsuario_Lista(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -610,7 +610,7 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
      * @param des archivo al que se escribira
      * @throws IOException 
      */
-    public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
+    public void escribirDescriptor(File archivo, DescUsuario_Lista des) throws IOException{
         String texto = "";
         String div = "|";
         texto += des.getNombreSimbolico();

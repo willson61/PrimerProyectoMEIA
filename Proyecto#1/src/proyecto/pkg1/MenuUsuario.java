@@ -50,7 +50,9 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelLogo.setIcon(im);
         labelLogo2.setIcon(im);
         labelLogo3.setIcon(im);
+        labelLogo4.setIcon(im);
         inicio();
+        inicio2();
     }
     
     public void inicio(){
@@ -102,6 +104,21 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelPathFoto.setText("");
     }
     
+    public void inicio2(){
+        btnEditar.setVisible(false);
+        btnVer.setVisible(false);
+        labelDescripcion.setVisible(false);
+        txtDescripcion.setVisible(false);
+        btnGuardarDescripcion.setVisible(false);
+        boxOpEditarL.setVisible(false);
+        chbActivoL.setVisible(false);
+        chbInactivoL.setVisible(false);
+        labelEstatusL.setVisible(false);
+        btnGuardarEstaL.setVisible(false);
+        chbActivoL.setSelected(false);
+        chbInactivoL.setSelected(false);
+    }
+    
     File rutaFoto = new File("C:\\MEIA\\Imagenes");
     File test = new File("C:\\MEIA\\test2.txt");
     static ArrayList<Integer> valores = new ArrayList<Integer>();
@@ -111,6 +128,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     
     public static String user;
     public Usuario us;
+    public Lista lis;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -128,6 +146,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelRol = new javax.swing.JLabel();
         labelLogo = new javax.swing.JLabel();
         btnLogOut = new javax.swing.JButton();
+        btnAgregarLista = new javax.swing.JButton();
         jPanelEditar = new javax.swing.JPanel();
         txtContraseña = new javax.swing.JPasswordField();
         labelContraseña = new javax.swing.JLabel();
@@ -158,6 +177,23 @@ public class MenuUsuario extends javax.swing.JFrame {
         txtNom = new javax.swing.JTextField();
         btnBuscarUs = new javax.swing.JButton();
         labelBusqueda = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        labelLogo4 = new javax.swing.JLabel();
+        txtBusquedaLista = new javax.swing.JTextField();
+        btnBuscarLista = new javax.swing.JButton();
+        labelResultado = new javax.swing.JLabel();
+        boxOpEditarL = new javax.swing.JComboBox<>();
+        labelDescripcion = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
+        btnGuardarDescripcion = new javax.swing.JButton();
+        btnCancelarL = new javax.swing.JButton();
+        labelEstado = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JButton();
+        btnVer = new javax.swing.JButton();
+        labelEstatusL = new javax.swing.JLabel();
+        chbActivoL = new javax.swing.JCheckBox();
+        chbInactivoL = new javax.swing.JCheckBox();
+        btnGuardarEstaL = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,6 +210,13 @@ public class MenuUsuario extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarLista.setText("Agregar Lista");
+        btnAgregarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelUsuarioLayout = new javax.swing.GroupLayout(jPanelUsuario);
         jPanelUsuario.setLayout(jPanelUsuarioLayout);
         jPanelUsuarioLayout.setHorizontalGroup(
@@ -185,8 +228,11 @@ public class MenuUsuario extends javax.swing.JFrame {
                     .addComponent(labelNombre)
                     .addComponent(labelRol)
                     .addComponent(labelLogo)
-                    .addComponent(btnLogOut))
-                .addContainerGap(260, Short.MAX_VALUE))
+                    .addGroup(jPanelUsuarioLayout.createSequentialGroup()
+                        .addComponent(btnLogOut)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarLista)))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
         jPanelUsuarioLayout.setVerticalGroup(
             jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +246,9 @@ public class MenuUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(labelRol)
                 .addGap(18, 18, 18)
-                .addComponent(btnLogOut)
+                .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogOut)
+                    .addComponent(btnAgregarLista))
                 .addGap(82, 82, 82))
         );
 
@@ -441,6 +489,141 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Buscar", jPanelBuscar);
 
+        labelLogo4.setText("Aplicacion MEIA - Manejo de Listas");
+
+        btnBuscarLista.setText("Buscar Lista");
+        btnBuscarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarListaActionPerformed(evt);
+            }
+        });
+
+        boxOpEditarL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Descripcion", "Estatus" }));
+        boxOpEditarL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxOpEditarLActionPerformed(evt);
+            }
+        });
+
+        labelDescripcion.setText("Descripcion: ");
+
+        btnGuardarDescripcion.setText("Guardar");
+        btnGuardarDescripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarDescripcionActionPerformed(evt);
+            }
+        });
+
+        btnCancelarL.setText("Cancelar");
+        btnCancelarL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarLActionPerformed(evt);
+            }
+        });
+
+        labelEstado.setText("Estado: ");
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnVer.setText("Ver Datos");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+
+        labelEstatusL.setText("Estatus:");
+
+        chbActivoL.setText("Activo");
+
+        chbInactivoL.setText("Inactivo");
+
+        btnGuardarEstaL.setText("Guardar");
+        btnGuardarEstaL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarEstaLActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelLogo4)
+                    .addComponent(boxOpEditarL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelDescripcion)
+                        .addGap(33, 33, 33)
+                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardarDescripcion))
+                    .addComponent(btnCancelarL)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBusquedaLista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelEstado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelResultado)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBuscarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVer))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelEstatusL)
+                        .addGap(18, 18, 18)
+                        .addComponent(chbActivoL)
+                        .addGap(18, 18, 18)
+                        .addComponent(chbInactivoL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardarEstaL)))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusquedaLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarLista))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelResultado)
+                    .addComponent(labelEstado)
+                    .addComponent(btnEditar)
+                    .addComponent(btnVer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(boxOpEditarL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDescripcion)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardarDescripcion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEstatusL)
+                    .addComponent(chbActivoL)
+                    .addComponent(chbInactivoL)
+                    .addComponent(btnGuardarEstaL))
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelarL)
+                .addContainerGap(119, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Listas", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -551,6 +734,50 @@ public class MenuUsuario extends javax.swing.JFrame {
             e.printStackTrace();
 	}
         return val;
+    }
+    
+    public Lista buscarLista(File fileName, String lista) throws IOException{
+        Lista lis = new Lista();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return lis;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] listas = contenido[i].split("\\|");
+                    if(quitarExtra(listas[0]).equals(lista)){
+                        lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
+                        lis.setUsuario(quitarExtra(listas[1]).toCharArray());
+                        lis.setDescripcion(quitarExtra(listas[2]).toCharArray());
+                        lis.setNumeroUsuarios(Integer.parseInt(listas[3]));
+                        lis.setFechaCreacion(date.parse(listas[4]));
+                        if(listas[5].equals("1")){
+                            lis.setEstatus(true);
+                        }
+                        else{
+                            lis.setEstatus(false);
+                        }
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lis;
     }
     
     /**
@@ -869,6 +1096,195 @@ public class MenuUsuario extends javax.swing.JFrame {
         boxOpEditar.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnAgregarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarListaActionPerformed
+        try{
+            if((leerArchivo(Proyecto1.bitacoraLista).equals("")) && (leerArchivo(Proyecto1.maestroLista).equals(""))){
+                VistaCrearLista.primeraLista = true;
+            }
+            VistaCrearLista.nombreUsuario = user;
+            VistaCrearLista fr = new VistaCrearLista();
+            fr.setVisible(true);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAgregarListaActionPerformed
+
+    private void btnBuscarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarListaActionPerformed
+        Lista ls1 = new Lista();
+        Lista ls2 = new Lista();
+        inicio2();
+        try{
+            if(!txtBusquedaLista.getText().trim().equals("")){
+                ls1 = buscarLista(Proyecto1.bitacoraLista, txtBusquedaLista.getText());
+                ls2 = buscarLista(Proyecto1.maestroLista, txtBusquedaLista.getText());
+                if(String.valueOf(ls1.getNombreLista()).equals(txtBusquedaLista.getText())){
+                    lis = ls1;
+                    labelEstado.setVisible(true);
+                    labelResultado.setVisible(true);
+                    btnEditar.setVisible(true);
+                    btnVer.setVisible(true);
+                    labelResultado.setText("Lista Encontrada");
+                }
+                else if(String.valueOf(ls2.getNombreLista()).equals(txtBusquedaLista.getText().trim())){
+                    lis = ls2;
+                    labelEstado.setVisible(true);
+                    labelResultado.setVisible(true);
+                    btnEditar.setVisible(true);
+                    btnVer.setVisible(true);
+                    labelResultado.setText("Lista Encontrada");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "No se ha encontrado la lista", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Ingrese el nombre de una lista a buscar para continuar", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnBuscarListaActionPerformed
+
+    private void boxOpEditarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxOpEditarLActionPerformed
+        switch(boxOpEditarL.getSelectedItem().toString()){
+            case "Descripcion":
+                labelDescripcion.setVisible(true);
+                txtDescripcion.setVisible(true);
+                btnGuardarDescripcion.setVisible(true);
+                break;
+            case "Estatus":
+                chbActivoL.setVisible(true);
+                chbInactivoL.setVisible(true);
+                labelEstatusL.setVisible(true);
+                btnGuardarEstaL.setVisible(true);
+                break;
+        }
+        boxOpEditarL.setVisible(false);
+    }//GEN-LAST:event_boxOpEditarLActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        boxOpEditarL.setVisible(true);
+        labelResultado.setText("Lista Actual: " + txtBusquedaLista.getText());
+        txtBusquedaLista.setText("");
+        btnEditar.setVisible(false);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnGuardarDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarDescripcionActionPerformed
+        if(!(txtDescripcion.getText().equals(""))){
+            if(!(txtDescripcion.getText().toCharArray().length > 40)){
+                String texto = txtDescripcion.getText();
+                texto = completarTexto(texto, 40);
+                boolean val = editarLista(Proyecto1.bitacoraLista, Proyecto1.descBitacoraLista, texto, 52);
+                if(!val){
+                     editarLista(Proyecto1.maestroLista, Proyecto1.descMaestroLista, texto, 52);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El tamaño de la descripcion a excedido la longitud de 40 caracteres", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "El campo de edicion de descripcion se encuentra vacio", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
+        }
+        boxOpEditarL.setVisible(true);
+        btnVer.setVisible(true);
+        try {
+            if(String.valueOf(buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista())).getNombreLista()).equals(String.valueOf(lis.getNombreLista()))){
+                lis = buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista()));
+            }
+            else{
+                lis = buscarLista(Proyecto1.maestroLista, String.valueOf(lis.getNombreLista()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuardarDescripcionActionPerformed
+
+    private void btnGuardarEstaLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEstaLActionPerformed
+        String texto = null;
+        if((chbActivoL.isSelected()) || (chbInactivoL.isSelected())){
+            if((chbActivoL.isSelected()) && (chbInactivoL.isSelected())){
+                JOptionPane.showMessageDialog(null, "Debe seleccionar unicamente una opcion, activo o inactivo", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(chbActivoL.isSelected()){
+                    texto = "1";
+                    if(lis.isEstatus()){
+                        JOptionPane.showMessageDialog(null, "La lista ya se encuentra activo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        boolean val = editarListaEstado(Proyecto1.bitacoraLista, Proyecto1.descBitacoraLista, texto, 113, true);
+                        if(!val){
+                            editarListaEstado(Proyecto1.maestroLista, Proyecto1.descMaestroLista, texto, 113, true);
+                        }
+                    }
+                }
+                if(chbInactivoL.isSelected()){
+                    texto = "0";
+                    if(!lis.isEstatus()){
+                        JOptionPane.showMessageDialog(null, "La lista ya se encuentra inactivo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        boolean val = editarListaEstado(Proyecto1.bitacoraLista, Proyecto1.descBitacoraLista, texto, 113, false);
+                        if(!val){
+                            editarListaEstado(Proyecto1.maestroLista, Proyecto1.descMaestroLista, texto, 113, false);
+                        }
+                    }
+                }
+                inicio2();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar alguna opcion para continuar", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
+        }
+        boxOpEditarL.setVisible(true);
+        btnVer.setVisible(true);
+        try {
+            if(String.valueOf(buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista())).getNombreLista()).equals(String.valueOf(lis.getNombreLista()))){
+                lis = buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista()));
+            }
+            else{
+                lis = buscarLista(Proyecto1.maestroLista, String.valueOf(lis.getNombreLista()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuardarEstaLActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        VistaDatosLista.ls = lis;
+        VistaDatosLista vs = new VistaDatosLista();
+        vs.setVisible(true);
+    }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnCancelarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarLActionPerformed
+        inicio2();
+        boxOpEditarL.setVisible(true);
+        btnVer.setVisible(true);
+    }//GEN-LAST:event_btnCancelarLActionPerformed
+
+    /**
+     * Funcion que lee el contenido de un archivo 
+     * @param fileName archivo que se va a leer
+     * @return el contenido del archivo en un string
+     * @throws IOException 
+     */
+    public static String leerArchivo(File fileName) throws IOException{
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        return texto.toString();
+    }
+    
     /**
      * Funcion booleana que verifica que un usuario exista en la bitacora normal o maestra de usuarios
      * @param usuario nombre de usuario por el que se buscara
@@ -926,19 +1342,23 @@ public class MenuUsuario extends javax.swing.JFrame {
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos){
         boolean fin = false;
             int cont = 0;
+            int cont2 = 0;
             long puntero = 0;
+            long size = 0;
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+                size = raf.length();
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(raf.getFilePointer() < raf.length()){
-                    if(linea.contains(String.valueOf(us.getNombreDeUsuario()))){
+                while(raf.getFilePointer() < raf.length() + 1){
+                    puntero = raf.getFilePointer();
+                    if(linea.contains(String.valueOf(us.getNombreDeUsuario())) && cont2 < 2){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
-                        DescUsuario desB = leerDescriptor(descriptor);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
                         limpiarArchivo(descriptor);
-                        escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
+                        escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
                         JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                         boxOpEditar.setVisible(true);
@@ -947,7 +1367,66 @@ public class MenuUsuario extends javax.swing.JFrame {
                     }
                     else{
                         linea = raf.readLine();
+                        puntero = raf.getFilePointer();
                         cont = cont + 391;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return fin;
+    }
+    
+    /**
+     * Editor de un campo de la lista
+     * @param archivo File donde se buscara la lista
+     * @param descriptor descriptor que se actualizara al editar la lista
+     * @param texto nuevo campo de la lista
+     * @param pos posicion en la linea del campo a editar
+     * @return valor booleano de si se econtro y edito la lista o no
+     */
+    public boolean editarLista(File archivo, File descriptor, String texto, int pos){
+        boolean fin = false;
+            int cont = 0;
+            int cont2 = 0;
+            long puntero = 0;
+            long size = 0;
+            try {
+                RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+                size = raf.length();
+                raf.seek(0);
+                String linea = raf.readLine();
+                while(raf.getFilePointer() < raf.length() + 1){
+                    puntero = raf.getFilePointer();
+                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2){
+                        puntero = raf.getFilePointer();
+                        raf.seek(cont + pos);
+                        raf.writeBytes(texto);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
+                        limpiarArchivo(descriptor);
+                        escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(lis.getUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
+                        fin = true;
+                        JOptionPane.showMessageDialog(null, "La lista se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditarL.setVisible(true);
+                        inicio2();
+                        break;
+                    }
+                    else{
+                        linea = raf.readLine();
+                        puntero = raf.getFilePointer();
+                        cont = cont + 116;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
                     }
                 }
             } catch (Exception ex) {
@@ -968,23 +1447,24 @@ public class MenuUsuario extends javax.swing.JFrame {
     public boolean editarUsuarioEstado(File archivo, File descriptor, String texto, int pos, boolean val){
         boolean fin = false;
             int cont = 0;
+            int cont2 = 0;
             long puntero = 0;
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(raf.getFilePointer() < raf.length()){
-                    if(linea.contains(String.valueOf(us.getNombreDeUsuario()))){
+                while(raf.getFilePointer() < raf.length() + 1){
+                    if(linea.contains(String.valueOf(us.getNombreDeUsuario())) && cont2 < 2){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
-                        DescUsuario desB = leerDescriptor(descriptor);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
                         limpiarArchivo(descriptor);
                         if(val){
-                            escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() + 1, desB.getRegistrosInactivos() - 1, desB.getMaxReorganizacion()));
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() + 1, desB.getRegistrosInactivos() - 1, desB.getMaxReorganizacion()));
                         }
                         else{
-                            escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
                         }
                         fin = true;
                         JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -995,6 +1475,66 @@ public class MenuUsuario extends javax.swing.JFrame {
                     else{
                         linea = raf.readLine();
                         cont = cont + 391;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return fin;
+    }
+    
+    /**
+     * Editor del Estatus del resultado de busqueda de lista (Eliminacion logica)
+     * @param archivo File donde se buscara la lista
+     * @param descriptor descriptor que se actualizara al editar la lista
+     * @param texto nuevo campo de la lista
+     * @param pos posicion en la linea del campo a editar
+     * @param val booleano que determina si se le agrega o quita a los registros activos
+     * @return valor booleano de si se econtro y edito la lista o no
+     */
+    public boolean editarListaEstado(File archivo, File descriptor, String texto, int pos, boolean val){
+        boolean fin = false;
+            int cont = 0;
+            int cont2 = 0;
+            long puntero = 0;
+            try {
+                RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+                raf.seek(0);
+                String linea = raf.readLine();
+                while(raf.getFilePointer() < raf.length() + 1){
+                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2){
+                        puntero = raf.getFilePointer();
+                        raf.seek(cont + pos);
+                        raf.writeBytes(texto);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
+                        limpiarArchivo(descriptor);
+                        if(val){
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(lis.getUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() + 1, desB.getRegistrosInactivos() - 1, desB.getMaxReorganizacion()));
+                        }
+                        else{
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(lis.getUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
+                        }
+                        fin = true;
+                        JOptionPane.showMessageDialog(null, "La lista se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        boxOpEditarL.setVisible(true);
+                        inicio2();
+                        break;
+                    }
+                    else{
+                        linea = raf.readLine();
+                        cont = cont + 116;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
                     }
                 }
             } catch (Exception ex) {
@@ -1062,7 +1602,7 @@ public class MenuUsuario extends javax.swing.JFrame {
      * @param des archivo al que se escribira
      * @throws IOException 
      */
-    public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
+    public void escribirDescriptor(File archivo, DescUsuario_Lista des) throws IOException{
         String texto = "";
         String div = "|";
         texto += des.getNombreSimbolico();
@@ -1095,8 +1635,8 @@ public class MenuUsuario extends javax.swing.JFrame {
      * @return informacion leida del descriptor
      * @throws IOException 
      */
-    public DescUsuario leerDescriptor(File archivo) throws IOException{
-        DescUsuario desc = null;
+    public DescUsuario_Lista leerDescriptor(File archivo) throws IOException{
+        DescUsuario_Lista desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         BufferedReader br = null;
 	FileReader fr = null;
@@ -1116,7 +1656,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         else{
             try{
                 String[] contenido = texto.toString().split("\\|");
-                desc = new DescUsuario(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
+                desc = new DescUsuario_Lista(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -1331,18 +1871,29 @@ public class MenuUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxOpEditar;
+    private javax.swing.JComboBox<String> boxOpEditarL;
+    private javax.swing.JButton btnAgregarLista;
     private javax.swing.JButton btnBuscarFoto;
+    private javax.swing.JButton btnBuscarLista;
     private javax.swing.JButton btnBuscarUs;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelarL;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardarContr;
     private javax.swing.JButton btnGuardarCorreo;
+    private javax.swing.JButton btnGuardarDescripcion;
     private javax.swing.JButton btnGuardarEsta;
+    private javax.swing.JButton btnGuardarEstaL;
     private javax.swing.JButton btnGuardarFecha;
     private javax.swing.JButton btnGuardarFoto;
     private javax.swing.JButton btnGuardarTele;
     private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnVer;
     private javax.swing.JCheckBox chbActivo;
+    private javax.swing.JCheckBox chbActivoL;
     private javax.swing.JCheckBox chbInactivo;
+    private javax.swing.JCheckBox chbInactivoL;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBuscar;
     private javax.swing.JPanel jPanelEditar;
     private javax.swing.JPanel jPanelUsuario;
@@ -1350,7 +1901,10 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelBusqueda;
     private javax.swing.JLabel labelContraseña;
     private javax.swing.JLabel labelCorreo;
+    private javax.swing.JLabel labelDescripcion;
+    private javax.swing.JLabel labelEstado;
     private javax.swing.JLabel labelEstatus;
+    private javax.swing.JLabel labelEstatusL;
     private javax.swing.JLabel labelFechaN;
     private javax.swing.JLabel labelFormatoFecha;
     private javax.swing.JLabel labelFoto;
@@ -1358,12 +1912,16 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelLogo2;
     private javax.swing.JLabel labelLogo3;
+    private javax.swing.JLabel labelLogo4;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPathFoto;
+    private javax.swing.JLabel labelResultado;
     private javax.swing.JLabel labelRol;
     private javax.swing.JLabel labelTelefono;
+    private javax.swing.JTextField txtBusquedaLista;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNom;
     private javax.swing.JTextField txtTelefono;

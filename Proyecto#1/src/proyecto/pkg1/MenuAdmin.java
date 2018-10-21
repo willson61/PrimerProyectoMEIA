@@ -226,6 +226,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         txtNom = new javax.swing.JTextField();
         btnBuscarUs = new javax.swing.JButton();
         labelBusqueda = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -426,16 +427,15 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addComponent(labelLogo2)
                 .addGap(18, 18, 18)
                 .addComponent(boxOpEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardarCorreo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardarTele)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardarFoto))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                         .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelContraseña)
                             .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -761,6 +761,19 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Verificacion", jPanelVerificacion);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 423, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 387, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Listas", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -769,7 +782,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -1219,6 +1232,7 @@ public class MenuAdmin extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        inicio2();
         if(!(txtNomUsuario.getText().equals(""))){
             try {
                 if(!(txtNomUsuario.getText().equals(admin))){
@@ -1465,19 +1479,20 @@ public class MenuAdmin extends javax.swing.JFrame {
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos, Usuario administrador){
         boolean fin = false;
             int cont = 0;
+            int cont2 = 0;
             long puntero = 0;
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(raf.getFilePointer() < raf.length()){
-                    if(linea.contains(String.valueOf(administrador.getNombreDeUsuario()))){
+                while(raf.getFilePointer() < raf.length() + 1){
+                    if(linea.contains(String.valueOf(administrador.getNombreDeUsuario())) && cont2 < 2){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
-                        DescUsuario desB = leerDescriptor(descriptor);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
                         limpiarArchivo(descriptor);
-                        escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
+                        escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
                         JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                         boxOpEditar.setVisible(true);
@@ -1487,6 +1502,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                     else{
                         linea = raf.readLine();
                         cont = cont + 391;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
                     }
                 }
             } catch (Exception ex) {
@@ -1508,19 +1529,20 @@ public class MenuAdmin extends javax.swing.JFrame {
     public boolean editarUsuario(File archivo, File descriptor, String texto, int pos, Usuario administrador, Usuario busqueda){
         boolean fin = false;
             int cont = 0;
+            int cont2 = 0;
             long puntero = 0;
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(raf.getFilePointer() < raf.length()){
-                    if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario()))){
+                while(raf.getFilePointer() < raf.length() + 1){
+                    if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario())) && cont2 < 2){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
-                        DescUsuario desB = leerDescriptor(descriptor);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
                         limpiarArchivo(descriptor);
-                        escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
+                        escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getMaxReorganizacion()));
                         fin = true;
                         JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                         boxOpEditarU.setVisible(true);
@@ -1531,6 +1553,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                     else{
                         linea = raf.readLine();
                         cont = cont + 391;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
                     }
                 }
             } catch (Exception ex) {
@@ -1553,23 +1581,24 @@ public class MenuAdmin extends javax.swing.JFrame {
      public boolean editarUsuarioEstado(File archivo, File descriptor, String texto, int pos, boolean val, Usuario administrador, Usuario busqueda){
         boolean fin = false;
             int cont = 0;
+            int cont2 = 0;
             long puntero = 0;
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
-                while(raf.getFilePointer() < raf.length()){
-                    if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario()))){
+                while(raf.getFilePointer() < raf.length() + 1){
+                    if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario())) && cont2 < 2){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
-                        DescUsuario desB = leerDescriptor(descriptor);
+                        DescUsuario_Lista desB = leerDescriptor(descriptor);
                         limpiarArchivo(descriptor);
                         if(val){
-                            escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() + 1, desB.getRegistrosInactivos() - 1, desB.getMaxReorganizacion()));
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() + 1, desB.getRegistrosInactivos() - 1, desB.getMaxReorganizacion()));
                         }
                         else{
-                            escribirDescriptor(descriptor, new DescUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
+                            escribirDescriptor(descriptor, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(administrador.getNombreDeUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
                         }
                         fin = true;
                         JOptionPane.showMessageDialog(null, "El usuario se ha modificado exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -1581,6 +1610,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                     else{
                         linea = raf.readLine();
                         cont = cont + 391;
+                        if(cont2 == 1){
+                            break;
+                        }
+                        if(raf.getFilePointer() == raf.length()){
+                            cont2++;
+                        }
                     }
                 }
             } catch (Exception ex) {
@@ -1740,7 +1775,7 @@ public class MenuAdmin extends javax.swing.JFrame {
      * @param des archivo al que se escribira
      * @throws IOException 
      */
-    public void escribirDescriptor(File archivo, DescUsuario des) throws IOException{
+    public void escribirDescriptor(File archivo, DescUsuario_Lista des) throws IOException{
         String texto = "";
         String div = "|";
         texto += des.getNombreSimbolico();
@@ -1827,8 +1862,8 @@ public class MenuAdmin extends javax.swing.JFrame {
      * @return informacion leida del descriptor
      * @throws IOException 
      */
-    public DescUsuario leerDescriptor(File archivo) throws IOException{
-        DescUsuario desc = null;
+    public DescUsuario_Lista leerDescriptor(File archivo) throws IOException{
+        DescUsuario_Lista desc = null;
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         BufferedReader br = null;
 	FileReader fr = null;
@@ -1848,7 +1883,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         else{
             try{
                 String[] contenido = texto.toString().split("\\|");
-                desc = new DescUsuario(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
+                desc = new DescUsuario_Lista(contenido[0], date.parse(contenido[1]), contenido[2], date.parse(contenido[3]), contenido[4], Integer.parseInt(contenido[5]), Integer.parseInt(contenido[6]), Integer.parseInt(contenido[7]), Integer.parseInt(contenido[8]));
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -2189,6 +2224,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnVer;
     private javax.swing.JCheckBox chbActivoU;
     private javax.swing.JCheckBox chbInactivoU;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBuscar;
     private javax.swing.JPanel jPanelEditar;
     private javax.swing.JPanel jPanelUsuario;
