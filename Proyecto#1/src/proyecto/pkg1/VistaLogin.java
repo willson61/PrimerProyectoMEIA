@@ -125,6 +125,12 @@ public class VistaLogin extends javax.swing.JFrame {
                         else{
                             val.setRol(false);
                         }
+                        if(Integer.parseInt(data[9]) == 1){
+                            val.setEstatus(true);
+                        }
+                        else{
+                            val.setEstatus(false);
+                        }
                         return val;
                     }
                 }
@@ -151,6 +157,12 @@ public class VistaLogin extends javax.swing.JFrame {
                         }
                         else{
                             val.setRol(false);
+                        }
+                        if(Integer.parseInt(data[9]) == 1){
+                            val.setEstatus(true);
+                        }
+                        else{
+                            val.setEstatus(false);
                         }
                         return val;
                     }
@@ -261,18 +273,23 @@ public class VistaLogin extends javax.swing.JFrame {
             if(us != null){
                 String contr = encriptarContraseña(String.valueOf(txtContraseña.getPassword()));
                 if((txtNomUsuario.getText().equals(String.valueOf(us.getNombreDeUsuario()))) && (contr.equals(String.valueOf(us.getPassword())))){
-                    JOptionPane.showMessageDialog(null, "Login Exitoso!!", "InfoBox: " + "mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
-                    if(us.isRol()){
-                        MenuAdmin.admin = String.valueOf(us.getNombreDeUsuario());
-                        dispose();
-                        MenuAdmin v = new MenuAdmin();
-                        v.setVisible(true);
+                    if(us.isEstatus()){
+                        JOptionPane.showMessageDialog(null, "Login Exitoso!!", "InfoBox: " + "mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        if(us.isRol()){
+                            MenuAdmin.admin = String.valueOf(us.getNombreDeUsuario());
+                            dispose();
+                            MenuAdmin v = new MenuAdmin();
+                            v.setVisible(true);
+                        }
+                        else{
+                            MenuUsuario.user = String.valueOf(us.getNombreDeUsuario());
+                            dispose();
+                            MenuUsuario v = new MenuUsuario();
+                            v.setVisible(true);
+                        }
                     }
                     else{
-                        MenuUsuario.user = String.valueOf(us.getNombreDeUsuario());
-                        dispose();
-                        MenuUsuario v = new MenuUsuario();
-                        v.setVisible(true);
+                        JOptionPane.showMessageDialog(null, "El usuario se encuentra inactivo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
                 else{

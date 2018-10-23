@@ -58,6 +58,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         inicio();
         inicio2();
         inicio3();
+        inicio4();
     }
     
     public void inicio(){
@@ -1016,6 +1017,50 @@ public class MenuUsuario extends javax.swing.JFrame {
         return lis;
     }
     
+    public Lista buscarListaAsociacion(File fileName, String lista) throws IOException{
+        Lista lis = new Lista();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return lis;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] listas = contenido[i].split("\\|");
+                    if(quitarExtra(listas[0]).equals(lista) && quitarExtra(listas[1]).equals(String.valueOf(us.getNombreDeUsuario()))){
+                        lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
+                        lis.setUsuario(quitarExtra(listas[1]).toCharArray());
+                        lis.setDescripcion(quitarExtra(listas[2]).toCharArray());
+                        lis.setNumeroUsuarios(Integer.parseInt(listas[3]));
+                        lis.setFechaCreacion(date.parse(listas[4]));
+                        if(listas[5].equals("1")){
+                            lis.setEstatus(true);
+                        }
+                        else{
+                            lis.setEstatus(false);
+                        }
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lis;
+    }
+    
     public ArrayList<String> buscarUsuariosAsociados(File fileName, String lista) throws IOException{
         ArrayList<String> usuarios = new ArrayList<>();
         BufferedReader br = null;
@@ -1038,7 +1083,7 @@ public class MenuUsuario extends javax.swing.JFrame {
             for(int i = 0; i < contenido.length; i++){
                 try{
                     String[] valores = contenido[i].split("\\|");
-                    if(quitarExtra(valores[0]).equals(lista)){
+                    if(quitarExtra(valores[0]).equals(lista) && quitarExtra(valores[1]).equals(String.valueOf(us.getNombreDeUsuario()))){
                         usuarios.add(quitarExtra(valores[2]));
                     }
                 }catch(Exception e){
@@ -1538,23 +1583,33 @@ public class MenuUsuario extends javax.swing.JFrame {
         inicio3();
         try{
             if(!txtBusquedaListaAsociacion.getText().trim().equals("")){
-                ls1 = buscarLista(Proyecto1.bitacoraLista, txtBusquedaListaAsociacion.getText());
-                ls2 = buscarLista(Proyecto1.maestroLista, txtBusquedaListaAsociacion.getText());
+                ls1 = buscarListaAsociacion(Proyecto1.bitacoraLista, txtBusquedaListaAsociacion.getText());
+                ls2 = buscarListaAsociacion(Proyecto1.maestroLista, txtBusquedaListaAsociacion.getText());
                 if(String.valueOf(ls1.getNombreLista()).equals(txtBusquedaListaAsociacion.getText())){
-                    lisAs = ls1;
-                    labelRLista.setText("Lista Encontrada: " + txtBusquedaListaAsociacion.getText());
-                    txtBusquedaListaAsociacion.setVisible(false);
-                    btnBuscarListaAsociacion.setVisible(false);
-                    txtBusquedaUsuarioAsociar.setVisible(true);
-                    btnBuscarUsuarioAsociar.setVisible(true);
+                    if(ls1.isEstatus()){
+                        lisAs = ls1;
+                        labelRLista.setText("Lista Encontrada: " + txtBusquedaListaAsociacion.getText());
+                        txtBusquedaListaAsociacion.setVisible(false);
+                        btnBuscarListaAsociacion.setVisible(false);
+                        txtBusquedaUsuarioAsociar.setVisible(true);
+                        btnBuscarUsuarioAsociar.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "La lista buscada no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else if(String.valueOf(ls2.getNombreLista()).equals(txtBusquedaListaAsociacion.getText().trim())){
-                    lisAs = ls2;
-                    labelRLista.setText("Lista Encontrada: " + txtBusquedaListaAsociacion.getText());
-                    txtBusquedaListaAsociacion.setVisible(false);
-                    btnBuscarListaAsociacion.setVisible(false);
-                    txtBusquedaUsuarioAsociar.setVisible(true);
-                    btnBuscarUsuarioAsociar.setVisible(true);
+                    if(ls2.isEstatus()){
+                        lisAs = ls2;
+                        labelRLista.setText("Lista Encontrada: " + txtBusquedaListaAsociacion.getText());
+                        txtBusquedaListaAsociacion.setVisible(false);
+                        btnBuscarListaAsociacion.setVisible(false);
+                        txtBusquedaUsuarioAsociar.setVisible(true);
+                        btnBuscarUsuarioAsociar.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "La lista buscada no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la lista", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
@@ -1573,16 +1628,26 @@ public class MenuUsuario extends javax.swing.JFrame {
         try{
             if(!txtBusquedaUsuarioAsociar.getText().trim().equals("")){
                 usu = buscarUsuario(txtBusquedaUsuarioAsociar.getText());
-                if(String.valueOf(usu.getNombreDeUsuario()).equals(txtBusquedaUsuarioAsociar.getText())){
-                    usAs = usu;
-                    txtBusquedaUsuarioAsociar.setVisible(false);
-                    btnBuscarUsuarioAsociar.setVisible(false);
-                    labelRUsuario.setVisible(true);
-                    labelRUsuario.setText("Usuario Encontrado: " + txtBusquedaUsuarioAsociar.getText());
-                    btnGuardarAsociacion.setVisible(true);
+                if(!String.valueOf(usu.getNombreDeUsuario()).equals(String.valueOf(us.getNombreDeUsuario()))){
+                    if(String.valueOf(usu.getNombreDeUsuario()).equals(txtBusquedaUsuarioAsociar.getText())){
+                        if(usu.isEstatus()){
+                            usAs = usu;
+                            txtBusquedaUsuarioAsociar.setVisible(false);
+                            btnBuscarUsuarioAsociar.setVisible(false);
+                            labelRUsuario.setVisible(true);
+                            labelRUsuario.setText("Usuario Encontrado: " + txtBusquedaUsuarioAsociar.getText());
+                            btnGuardarAsociacion.setVisible(true);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "El usuario buscado no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Usuario", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "No se ha encontrado el Usuario", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se puede asociar el propietario a su propia lista", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Ingrese el nombre de un usuario a buscar para continuar", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -1779,6 +1844,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                         limpiarArchivo(Proyecto1.descIndiceListaUsuario);
                         escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
                         editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, actual);
+                        editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, actual.getPosicion(), inLsUs);
+                        JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
                         if(numeroRegistros < 3){
@@ -1792,6 +1859,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 siguiente = leerIndice(Proyecto1.IndiceListaUsuario, actual.getSiguiente());
                                 siguiente.setSiguiente(0);
                                 editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, siguiente);
+                                editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, actual.getPosicion(), inLsUs);
+                                JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else{
                                 siguiente = leerIndice(Proyecto1.IndiceListaUsuario, actual.getSiguiente());
@@ -1801,6 +1870,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
                                 editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, actual);
                                 editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, siguiente);
+                                editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, siguiente.getPosicion(), inLsUs);
+                                JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                         else{
@@ -1811,9 +1882,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
                                 actual.setEstatus(false);
                                 editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, actual);
-                                /*siguiente = leerIndice(Proyecto1.IndiceListaUsuario, actual.getSiguiente());
-                                siguiente.setSiguiente(0);
-                                editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, siguiente);*/
+                                editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, actual.getPosicion(), inLsUs);
+                                JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else{
                                 previo = actual;
@@ -1821,14 +1891,37 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 boolean fin = true;
                                 do{
                                     if(comparar(inLsUs, actual) == 0){
-                                        
+                                        previo.setSiguiente(actual.getSiguiente());
+                                        actual.setEstatus(false);
+                                        limpiarArchivo(Proyecto1.descIndiceListaUsuario);
+                                        escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
+                                        editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, previo);
+                                        editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, actual);
+                                        editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, actual.getPosicion(), inLsUs);
+                                        fin = false;
+                                        break;
+                                    }
+                                    else{
+                                        previo = actual;
+                                        actual = leerIndice(Proyecto1.IndiceListaUsuario, actual.getSiguiente()); 
                                     }
                                 }while(fin);
+                                JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                     }
                 }
             }
+            else{
+                JOptionPane.showMessageDialog(null, "No hay asociaciones que se puedan eliminar", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+            }
+            inicio4();
+            txtBusquedaListaEliminacion.setVisible(true);
+            txtBusquedaListaEliminacion.setText("");
+            btnBuscarListaEliminacion.setVisible(true);
+            txtBusquedaUsuarioEliminacion.setText("");
+            lisAs = new Lista();
+            usAs = new Usuario();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -1850,23 +1943,33 @@ public class MenuUsuario extends javax.swing.JFrame {
         inicio4();
         try{
             if(!txtBusquedaListaEliminacion.getText().trim().equals("")){
-                ls1 = buscarLista(Proyecto1.bitacoraLista, txtBusquedaListaEliminacion.getText());
-                ls2 = buscarLista(Proyecto1.maestroLista, txtBusquedaListaEliminacion.getText());
+                ls1 = buscarListaAsociacion(Proyecto1.bitacoraLista, txtBusquedaListaEliminacion.getText());
+                ls2 = buscarListaAsociacion(Proyecto1.maestroLista, txtBusquedaListaEliminacion.getText());
                 if(String.valueOf(ls1.getNombreLista()).equals(txtBusquedaListaEliminacion.getText())){
-                    lisAs = ls1;
-                    labelRListaEliminacion.setText("Lista Encontrada: " + txtBusquedaListaEliminacion.getText());
-                    txtBusquedaListaEliminacion.setVisible(false);
-                    btnBuscarListaEliminacion.setVisible(false);
-                    txtBusquedaUsuarioEliminacion.setVisible(true);
-                    btnBuscarUsuarioEliminacion.setVisible(true);
+                    if(ls1.isEstatus()){
+                        lisAs = ls1;
+                        labelRListaEliminacion.setText("Lista Encontrada: " + txtBusquedaListaEliminacion.getText());
+                        txtBusquedaListaEliminacion.setVisible(false);
+                        btnBuscarListaEliminacion.setVisible(false);
+                        txtBusquedaUsuarioEliminacion.setVisible(true);
+                        btnBuscarUsuarioEliminacion.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "La lista buscada no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else if(String.valueOf(ls2.getNombreLista()).equals(txtBusquedaListaEliminacion.getText().trim())){
-                    lisAs = ls2;
-                    labelRListaEliminacion.setText("Lista Encontrada: " + txtBusquedaListaEliminacion.getText());
-                    txtBusquedaListaEliminacion.setVisible(false);
-                    btnBuscarListaEliminacion.setVisible(false);
-                    txtBusquedaUsuarioEliminacion.setVisible(true);
-                    btnBuscarUsuarioEliminacion.setVisible(true);
+                    if(ls2.isEstatus()){
+                        lisAs = ls2;
+                        labelRListaEliminacion.setText("Lista Encontrada: " + txtBusquedaListaEliminacion.getText());
+                        txtBusquedaListaEliminacion.setVisible(false);
+                        btnBuscarListaEliminacion.setVisible(false);
+                        txtBusquedaUsuarioEliminacion.setVisible(true);
+                        btnBuscarUsuarioEliminacion.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "La lista buscada no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la lista", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
@@ -1891,12 +1994,17 @@ public class MenuUsuario extends javax.swing.JFrame {
                     }
                 }
                 if(String.valueOf(usu.getNombreDeUsuario()).equals(txtBusquedaUsuarioEliminacion.getText())){
-                    usAs = usu;
-                    txtBusquedaUsuarioEliminacion.setVisible(false);
-                    btnBuscarUsuarioEliminacion.setVisible(false);
-                    labelRUsuarioEliminacion.setVisible(true);
-                    labelRUsuarioEliminacion.setText("Usuario Encontrado: " + txtBusquedaUsuarioEliminacion.getText());
-                    btnGuardarEliminacion.setVisible(true);
+                    if(usu.isEstatus()){
+                        usAs = usu;
+                        txtBusquedaUsuarioEliminacion.setVisible(false);
+                        btnBuscarUsuarioEliminacion.setVisible(false);
+                        labelRUsuarioEliminacion.setVisible(true);
+                        labelRUsuarioEliminacion.setText("Usuario Encontrado: " + txtBusquedaUsuarioEliminacion.getText());
+                        btnGuardarEliminacion.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "El usuario buscado no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "No se ha encontrado el Usuario", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -1910,6 +2018,37 @@ public class MenuUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarUsuarioEliminacionActionPerformed
 
     public int comparar(IndiceListaUsuario obj1, IndiceListaUsuario obj2) {
+        if (String.valueOf(obj1.getNombreLista()).toUpperCase().equals(String.valueOf(obj2.getNombreLista()).toUpperCase())) {
+            if (String.valueOf(obj1.getUsuario()).toUpperCase().equals(String.valueOf(obj2.getUsuario()).toUpperCase())) {
+                if (String.valueOf(obj1.getUsuarioAsociado()).toUpperCase().equals(String.valueOf(obj2.getUsuarioAsociado()).toUpperCase())) {
+                    return 0;
+                }
+                if (String.valueOf(obj1.getUsuarioAsociado()).equals("")) {
+                    return -1;
+                }
+                if (String.valueOf(obj2.getUsuarioAsociado()).equals("")) {
+                    return 1;
+                }
+                return String.valueOf(obj1.getUsuarioAsociado()).toUpperCase().compareTo(String.valueOf(obj2.getUsuarioAsociado()).toUpperCase());
+            }
+            if (String.valueOf(obj1.getUsuario()).equals("")) {
+                return -1;
+            }
+            if (String.valueOf(obj2.getUsuario()).equals("")) {
+                return 1;
+            }
+            return String.valueOf(obj1.getUsuario()).toUpperCase().compareTo(String.valueOf(obj2.getUsuario()).toUpperCase());
+        }
+        if (String.valueOf(obj1.getNombreLista()).equals("")) {
+            return -1;
+        }
+        if (String.valueOf(obj2.getNombreLista()).equals("")) {
+            return 1;
+        }
+        return String.valueOf(obj1.getNombreLista()).toUpperCase().compareTo(String.valueOf(obj2.getNombreLista()).toUpperCase());
+    }
+    
+    public int comparar(IndiceListaUsuario obj1, ListaUsuario obj2) {
         if (String.valueOf(obj1.getNombreLista()).toUpperCase().equals(String.valueOf(obj2.getNombreLista()).toUpperCase())) {
             if (String.valueOf(obj1.getUsuario()).toUpperCase().equals(String.valueOf(obj2.getUsuario()).toUpperCase())) {
                 if (String.valueOf(obj1.getUsuarioAsociado()).toUpperCase().equals(String.valueOf(obj2.getUsuarioAsociado()).toUpperCase())) {
@@ -2231,6 +2370,48 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
     
     /**
+     * Editor de un campo de la asociacin de un usuario y lista
+     * @param archivo File donde se buscara la lista
+     * @param descriptor descriptor que se actualizara al editar la lista
+     * @param regB IndiceListaUsuario a comparar que contiene la posicion a modificar
+     * @param pos posicion en la linea del campo a editar
+     * @return valor booleano de si se econtro y edito la lista o no
+     */
+    public boolean editarEstadoAsociacion(File archivo, File descriptor, int pos, IndiceListaUsuario regB){
+        boolean fin = false;
+            int cont = 0;
+            int cont2 = 0;
+            long puntero = 0;
+            long size = 0;
+            int reg = 0;
+            try {
+                DescUsuario_Lista desB = leerDescriptor(descriptor);
+                reg = pos;
+                RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+                size = raf.length();
+                raf.seek(0);
+                String linea = "";
+                ListaUsuario val = leerListaUsuario(archivo, reg);
+                linea += "0";
+                if(comparar(regB, val) == 0){
+                    if(reg > 1){
+                        raf.seek(((reg - 1) * 134) + 131);
+                    }
+                    else{
+                        raf.seek(131);
+                    }
+                    puntero = raf.getFilePointer();
+                    raf.writeBytes(linea);
+                    limpiarArchivo(descriptor);
+                    escribirDescriptor(descriptor, new DescIndiceListaUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(regB.getUsuario()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getMaxReorganizacion()));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return fin;
+    }
+    
+    /**
      * Editor de un campo del indice
      * @param archivo File donde se buscara la lista
      * @param descriptor descriptor que se actualizara al editar la lista
@@ -2308,6 +2489,34 @@ public class MenuUsuario extends javax.swing.JFrame {
             val.setSiguiente(Integer.parseInt(contenido[5]));
             val.setEstatus(true);
             if(contenido[6].equals("1")){
+                val.setEstatus(true);
+            }
+            else{
+                val.setEstatus(false);
+            }
+        }
+        return val;
+    }
+    
+    public ListaUsuario leerListaUsuario(File archivo, int pos)throws Exception{
+        ListaUsuario val = new ListaUsuario();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+        if(pos > 1){
+            raf.seek((pos - 1) * 134);
+        }
+        else{
+            raf.seek(0);
+        }
+        String line = raf.readLine();
+        if(!line.equals("")){
+            String[] contenido = line.split("\\|");
+            val.setNombreLista(quitarExtra(contenido[0]).toCharArray());
+            val.setUsuario(quitarExtra(contenido[1]).toCharArray());
+            val.setUsuarioAsociado(quitarExtra(contenido[2]).toCharArray());
+            val.setDescripcion(quitarExtra(contenido[3]).toCharArray());
+            val.setFechaCreacion(date.parse(contenido[4]));
+            if(contenido[5].equals("1")){
                 val.setEstatus(true);
             }
             else{
