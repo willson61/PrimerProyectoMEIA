@@ -761,7 +761,7 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Guardar", jPanelGuardarAsociacion);
 
-        btnGuardarEliminacion.setText("Guardar");
+        btnGuardarEliminacion.setText("Eliminar");
         btnGuardarEliminacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarEliminacionActionPerformed(evt);
