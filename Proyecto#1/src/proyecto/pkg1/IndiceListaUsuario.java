@@ -74,5 +74,4 @@ public class IndiceListaUsuario {
         this.estatus = estatus;
     }
     
-    
 }

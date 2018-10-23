@@ -22,6 +22,20 @@ public class DescIndiceListaUsuario {
     public int registrosInactivos;
     public int registroInicial;
 
+    public DescIndiceListaUsuario(String nombreSimbolico, Date fechaCreacion, String usuarioCreacion, Date fechaModificacion, String usuarioModificacion, int numRegistros, int registrosActivos, int registrosInactivos, int registroInicial) {
+        this.nombreSimbolico = nombreSimbolico;
+        this.fechaCreacion = fechaCreacion;
+        this.usuarioCreacion = usuarioCreacion;
+        this.fechaModificacion = fechaModificacion;
+        this.usuarioModificacion = usuarioModificacion;
+        this.numRegistros = numRegistros;
+        this.registrosActivos = registrosActivos;
+        this.registrosInactivos = registrosInactivos;
+        this.registroInicial = registroInicial;
+    }
+    
+    
+
     public String getNombreSimbolico() {
         return nombreSimbolico;
     }
