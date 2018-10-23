@@ -1868,8 +1868,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 actual.setSiguiente(0);
                                 limpiarArchivo(Proyecto1.descIndiceListaUsuario);
                                 escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
-                                editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, actual);
                                 editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, siguiente);
+                                editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, actual);
                                 editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, siguiente.getPosicion(), inLsUs);
                                 JOptionPane.showMessageDialog(null, "La eliminacion se realizo exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                             }
@@ -1895,8 +1895,8 @@ public class MenuUsuario extends javax.swing.JFrame {
                                         actual.setEstatus(false);
                                         limpiarArchivo(Proyecto1.descIndiceListaUsuario);
                                         escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(lisAs.getUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos() - 1, descI.getRegistrosInactivos() + 1, descI.getRegistroInicial()));
-                                        editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, previo);
                                         editarEstadoIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 82, actual);
+                                        editarIndiceLista(Proyecto1.IndiceListaUsuario, Proyecto1.descIndiceListaUsuario, 79, previo);
                                         editarEstadoAsociacion(Proyecto1.bitacoraListaUsuario, Proyecto1.descBitacoraListaUsuario, actual.getPosicion(), inLsUs);
                                         fin = false;
                                         break;
