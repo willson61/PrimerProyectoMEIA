@@ -1963,6 +1963,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             else{
                 JOptionPane.showMessageDialog(null, "El tamaño de la descripcion a excedido la longitud de 40 caracteres", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
             }
+            inicio3();
         }
         else{
             JOptionPane.showMessageDialog(null, "El campo de edicion de descripcion se encuentra vacio", "InfoBox: " + "Error en Edicion de Lista", JOptionPane.INFORMATION_MESSAGE);
@@ -2775,10 +2776,10 @@ public class MenuAdmin extends javax.swing.JFrame {
             for(int i = 0; i < nuevoListaUsuario.size(); i++){
                 escribirListaUsuario(Proyecto1.bitacoraListaUsuario, nuevoListaUsuario.get(i));
             }
+            DescUsuario_Lista desM = leerDescriptor(Proyecto1.descBitacoraListaUsuario);
+            limpiarArchivo(Proyecto1.descBitacoraListaUsuario);
+            escribirDescriptor(Proyecto1.descBitacoraListaUsuario, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, desM.getMaxReorganizacion()));
         }
-        DescUsuario_Lista desM = leerDescriptor(Proyecto1.descBitacoraListaUsuario);
-        limpiarArchivo(Proyecto1.descBitacoraListaUsuario);
-        escribirDescriptor(Proyecto1.descBitacoraListaUsuario, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, desM.getMaxReorganizacion()));
         LinkedList<IndiceListaUsuario> bitIndiceUsuarios = leerUsuariosAsociados(Proyecto1.IndiceListaUsuario);
         LinkedList<IndiceListaUsuario> nuevoIndiceUsuarios = new LinkedList<>();
         contA = 0;
@@ -2866,6 +2867,28 @@ public class MenuAdmin extends javax.swing.JFrame {
             DescUsuario_Lista desM = leerDescriptor(Proyecto1.descMaestroLista);
             limpiarArchivo(Proyecto1.descMaestroLista);
             escribirDescriptor(Proyecto1.descMaestroLista, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, desM.getMaxReorganizacion()));
+        }
+        else if (bitLista.size() > 0 && masLista.isEmpty()){
+            for(int i = 0; i < bitLista.size(); i++){
+                if(bitLista.get(i).isEstatus()){
+                    contA++;
+                    nuevoMasLista.add(bitLista.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            Collections.sort(nuevoMasLista, new ListComparator());
+            limpiarArchivo(Proyecto1.maestroLista);
+            limpiarArchivo(Proyecto1.bitacoraLista);
+            DescUsuario_Lista desB = leerDescriptor(Proyecto1.descBitacoraLista);
+            limpiarArchivo(Proyecto1.descBitacoraLista);
+            escribirDescriptor(Proyecto1.descBitacoraLista, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), 0, 0, 0, desB.getMaxReorganizacion()));
+            for(int i = 0; i < nuevoMasLista.size(); i++){
+                escribirLista(Proyecto1.maestroLista, nuevoMasLista.get(i));
+            }
+            limpiarArchivo(Proyecto1.descMaestroLista);
+            escribirDescriptor(Proyecto1.descMaestroLista, new DescUsuario_Lista("maestro_Lista", new Date(), String.valueOf(adminUs.getNombreDeUsuario()), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, -1));
         }
     }
     
@@ -3189,6 +3212,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 size = raf.length();
                 raf.seek(0);
+                if(raf.length() == 0){
+                    return fin;
+                }
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     puntero = raf.getFilePointer();
@@ -3424,10 +3450,13 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 size = raf.length();
                 raf.seek(0);
+                if(raf.length() == 0){
+                    return fin;
+                }
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     puntero = raf.getFilePointer();
-                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2){
+                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2 && (linea.contains(String.valueOf(adminUs.getNombreDeUsuario())))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
@@ -3530,8 +3559,11 @@ public class MenuAdmin extends javax.swing.JFrame {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
                 String linea = raf.readLine();
+                if(raf.length() == 0){
+                    return fin;
+                }
                 while(raf.getFilePointer() < raf.length() + 1){
-                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2){
+                    if(linea.contains(String.valueOf(lis.getNombreLista())) && cont2 < 2 && (linea.contains(String.valueOf(adminUs.getNombreDeUsuario())))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
@@ -3586,6 +3618,9 @@ public class MenuAdmin extends javax.swing.JFrame {
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
+                if(raf.length() == 0){
+                    return fin;
+                }
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     if(linea.contains(String.valueOf(administrador.getNombreDeUsuario())) && cont2 < 2){
@@ -3639,6 +3674,9 @@ public class MenuAdmin extends javax.swing.JFrame {
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
+                if(raf.length() == 0){
+                    return fin;
+                }
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario())) && cont2 < 2){
@@ -3694,6 +3732,9 @@ public class MenuAdmin extends javax.swing.JFrame {
             try {
                 RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
                 raf.seek(0);
+                if(raf.length() == 0){
+                    return fin;
+                }
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     if(linea.contains(String.valueOf(busqueda.getNombreDeUsuario())) && cont2 < 2){
