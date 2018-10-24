@@ -25,7 +25,9 @@ import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -1144,6 +1146,12 @@ public class MenuUsuario extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        try{
+            reorganizacionSecuencialListas();
+            reorganizacionIndizado();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         dispose();
         VistaLogin v = new VistaLogin();
         v.setVisible(true);
@@ -1625,29 +1633,41 @@ public class MenuUsuario extends javax.swing.JFrame {
 
     private void btnBuscarUsuarioAsociarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioAsociarActionPerformed
         Usuario usu = new Usuario();
+        int cont = 0;
         try{
             if(!txtBusquedaUsuarioAsociar.getText().trim().equals("")){
+                ArrayList<String> usuarios = buscarUsuariosAsociados(Proyecto1.bitacoraListaUsuario, String.valueOf(lisAs.getNombreLista()));
                 usu = buscarUsuario(txtBusquedaUsuarioAsociar.getText());
+                for(int i = 0; i < usuarios.size(); i++){
+                    if(usuarios.get(i).equals(String.valueOf(usu.getNombreDeUsuario()))){
+                        cont++;
+                    }
+                }
                 if(!String.valueOf(usu.getNombreDeUsuario()).equals(String.valueOf(us.getNombreDeUsuario()))){
-                    if(String.valueOf(usu.getNombreDeUsuario()).equals(txtBusquedaUsuarioAsociar.getText())){
-                        if(usu.isEstatus()){
-                            usAs = usu;
-                            txtBusquedaUsuarioAsociar.setVisible(false);
-                            btnBuscarUsuarioAsociar.setVisible(false);
-                            labelRUsuario.setVisible(true);
-                            labelRUsuario.setText("Usuario Encontrado: " + txtBusquedaUsuarioAsociar.getText());
-                            btnGuardarAsociacion.setVisible(true);
+                    if(cont == 0){
+                        if(String.valueOf(usu.getNombreDeUsuario()).equals(txtBusquedaUsuarioAsociar.getText())){
+                            if(usu.isEstatus()){
+                                usAs = usu;
+                                txtBusquedaUsuarioAsociar.setVisible(false);
+                                btnBuscarUsuarioAsociar.setVisible(false);
+                                labelRUsuario.setVisible(true);
+                                labelRUsuario.setText("Usuario Encontrado: " + txtBusquedaUsuarioAsociar.getText());
+                                btnGuardarAsociacion.setVisible(true);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "El usuario buscado no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                            }
                         }
                         else{
-                            JOptionPane.showMessageDialog(null, "El usuario buscado no se encuentra activa", "InfoBox: " + "Error en Busqueda de Lista", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "No se ha encontrado el Usuario", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "No se ha encontrado el Usuario", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "NO se puede asociar un usuario ya existente en la lista", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "No se puede asociar el propietario a su propia lista", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se puede asociar el propietario de la lista a la lista", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Ingrese el nombre de un usuario a buscar para continuar", "InfoBox: " + "Error en Busqueda de Usuario", JOptionPane.INFORMATION_MESSAGE);
@@ -2278,7 +2298,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 String linea = raf.readLine();
                 while(raf.getFilePointer() < raf.length() + 1){
                     puntero = raf.getFilePointer();
-                    if(linea.contains(String.valueOf(lisAs.getNombreLista())) && cont2 < 2){
+                    if(linea.contains(String.valueOf(lisAs.getNombreLista())) && cont2 < 2 && linea.contains(String.valueOf(lisAs.getUsuario()))){
                         puntero = raf.getFilePointer();
                         raf.seek(cont + pos);
                         raf.writeBytes(texto);
@@ -3105,7 +3125,308 @@ public class MenuUsuario extends javax.swing.JFrame {
         return cont;
     }
     
+    /**
+     * Funcion que lee las listas del archivo enviado 
+     * @param fileName archivo en el que se buscan los usuarios
+     * @return lista con las listas encontrados en el archivo
+     * @throws IOException 
+     */
+    public LinkedList<Lista> leerListas(File fileName) throws IOException{
+        LinkedList<Lista> ls = new LinkedList<>();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return ls;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] listas = contenido[i].split("\\|");
+                    Lista lis = new Lista();
+                    lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
+                    lis.setUsuario(quitarExtra(listas[1]).toCharArray());
+                    lis.setDescripcion(quitarExtra(listas[2]).toCharArray());
+                    lis.setNumeroUsuarios(Integer.parseInt(listas[3]));
+                    lis.setFechaCreacion(date.parse(listas[4]));
+                    if(listas[5].equals("1")){
+                        lis.setEstatus(true);
+                    }
+                    else{
+                        lis.setEstatus(false);
+                    }
+                    ls.add(lis);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return ls;
+        }
+    }
     
+    /**
+     * Funcion que lee las listas del archivo enviado 
+     * @param fileName archivo en el que se buscan los usuarios
+     * @return lista con las listas encontrados en el archivo
+     * @throws IOException 
+     */
+    public LinkedList<ListaUsuario> leerListaUsuarios(File fileName) throws IOException{
+        LinkedList<ListaUsuario> ls = new LinkedList<>();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return ls;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] listas = contenido[i].split("\\|");
+                    ListaUsuario lis = new ListaUsuario();
+                    lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
+                    lis.setUsuario(quitarExtra(listas[1]).toCharArray());
+                    lis.setUsuarioAsociado(quitarExtra(listas[2]).toCharArray());
+                    lis.setDescripcion(quitarExtra(listas[3]).toCharArray());
+                    lis.setFechaCreacion(date.parse(listas[4]));
+                    if(listas[5].equals("1")){
+                        lis.setEstatus(true);
+                    }
+                    else{
+                        lis.setEstatus(false);
+                    }
+                    ls.add(lis);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return ls;
+        }
+    }
+    
+    /**
+     * Metodo que escribe una entrada a la bitacora o maestro de listas
+     * @param archivo File al que se escribira la entrada
+     * @param s Lista con la iformacion para la entrada
+     * @throws IOException 
+     */
+    public void escribirLista(File archivo, Lista s) throws IOException{
+        String texto = "";
+        String div = "|";
+        String fin = "\r\n";
+        String txtCompleto = "";
+        texto += completarTexto(String.valueOf(s.getNombreLista()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getUsuario()), 20);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getDescripcion()), 40);
+        texto += div;
+        if(s.getNumeroUsuarios() < 10){
+            texto += "0";
+            texto += s.getNumeroUsuarios();
+        }
+        else{
+            texto += s.getNumeroUsuarios();
+        }
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        texto += date.format(s.getFechaCreacion());
+        texto += div;
+        if(s.isEstatus()){
+            //Esta activo
+            texto += "1";
+        }
+        else{
+            //Esta Inactivo
+            texto += "0";
+        }
+        texto += fin;
+        if(archivo.exists()){
+            FileOutputStream fos = new FileOutputStream(archivo, true);
+            Writer wr = new OutputStreamWriter(fos, UTF8);
+            wr.write(texto);
+            wr.flush();
+            wr.close();
+            fos.close();
+        }
+    }
+    
+    /**
+     * Funcion que lee las entradas de usuarios asociados del archivo enviado 
+     * @param fileName archivo en el que se buscan los usuarios
+     * @return lista con las listas encontrados en el archivo
+     * @throws IOException 
+     */
+    public LinkedList<IndiceListaUsuario> leerUsuariosAsociados(File fileName) throws IOException{
+        LinkedList<IndiceListaUsuario> ls = new LinkedList<>();
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return ls;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] valores = contenido[i].split("\\|");
+                    IndiceListaUsuario val = new IndiceListaUsuario();
+                    val.setNumeroRegistro(Integer.parseInt(valores[0]));
+                    val.setPosicion(Integer.parseInt(valores[1]));
+                    val.setNombreLista(quitarExtra(valores[2]).toCharArray());
+                    val.setUsuario(quitarExtra(valores[3]).toCharArray());
+                    val.setUsuarioAsociado(quitarExtra(valores[4]).toCharArray());
+                    val.setSiguiente(Integer.parseInt(valores[5]));
+                    val.setEstatus(true);
+                    if(valores[6].equals("1")){
+                        val.setEstatus(true);
+                    }
+                    else{
+                        val.setEstatus(false);
+                    }
+                    ls.add(val);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return ls;
+        }
+    }
+    
+    public void reorganizacionIndizado() throws Exception{
+        LinkedList<ListaUsuario> bitListaUsuario = leerListaUsuarios(Proyecto1.bitacoraListaUsuario);
+        LinkedList<ListaUsuario> nuevoListaUsuario = new LinkedList<>();
+        int contA = 0;
+        int contI = 0;
+        if(bitListaUsuario.size() > 0){
+            for(int i = 0; i < bitListaUsuario.size(); i++){
+                if(bitListaUsuario.get(i).isEstatus()){
+                    contA++;
+                    nuevoListaUsuario.add(bitListaUsuario.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            limpiarArchivo(Proyecto1.bitacoraListaUsuario);
+            for(int i = 0; i < nuevoListaUsuario.size(); i++){
+                escribirListaUsuario(Proyecto1.bitacoraListaUsuario, nuevoListaUsuario.get(i));
+            }
+        }
+        DescUsuario_Lista desM = leerDescriptor(Proyecto1.descBitacoraListaUsuario);
+        limpiarArchivo(Proyecto1.descBitacoraListaUsuario);
+        escribirDescriptor(Proyecto1.descBitacoraListaUsuario, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), contA, contA, 0, desM.getMaxReorganizacion()));
+        LinkedList<IndiceListaUsuario> bitIndiceUsuarios = leerUsuariosAsociados(Proyecto1.IndiceListaUsuario);
+        LinkedList<IndiceListaUsuario> nuevoIndiceUsuarios = new LinkedList<>();
+        contA = 0;
+        contI = 0;
+        DescIndiceListaUsuario descI = leerDescriptorIndice(Proyecto1.descIndiceListaUsuario);
+        if(bitIndiceUsuarios.size() > 0){
+            for(int i = 0; i < bitIndiceUsuarios.size(); i++){
+                if(bitIndiceUsuarios.get(i).isEstatus()){
+                    contA++;
+                    nuevoIndiceUsuarios.add(bitIndiceUsuarios.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            for(int i = 0; i < (nuevoIndiceUsuarios.size()); i++){
+                int val = nuevoIndiceUsuarios.get(i).getNumeroRegistro();
+                for(int y = 0; y < nuevoIndiceUsuarios.size(); y++){
+                    IndiceListaUsuario val1 = nuevoIndiceUsuarios.get(y);
+                    descI = leerDescriptorIndice(Proyecto1.descIndiceListaUsuario);
+                    if(val1.getNumeroRegistro() == val){
+                        val1.setNumeroRegistro(i + 1);
+                    }
+                    if(val1.getPosicion() == val){
+                        val1.setPosicion(i + 1);
+                    }
+                    if(val1.getSiguiente() == val){
+                        val1.setSiguiente(i + 1);
+                    }
+                    if(descI.getRegistroInicial() == val){
+                        descI.setRegistroInicial(i + 1);
+                    }
+                    nuevoIndiceUsuarios.set(y, val1);
+                    limpiarArchivo(Proyecto1.descIndiceListaUsuario);
+                    escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), descI.getNumRegistros(), descI.getRegistrosActivos(), descI.getRegistrosInactivos(), descI.getRegistroInicial()));
+                }
+            }
+            limpiarArchivo(Proyecto1.IndiceListaUsuario);
+            for(int i = 0; i < nuevoListaUsuario.size(); i++){
+                escribirIndiceListaUsuario(Proyecto1.IndiceListaUsuario, nuevoIndiceUsuarios.get(i));
+            }
+            limpiarArchivo(Proyecto1.descIndiceListaUsuario);
+            escribirDescriptor(Proyecto1.descIndiceListaUsuario, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), contA, contA, 0, descI.getRegistroInicial()));
+        }
+    }
+    
+    public void reorganizacionSecuencialListas() throws Exception{
+        LinkedList<Lista> bitLista = leerListas(Proyecto1.bitacoraLista);
+        LinkedList<Lista> masLista = leerListas(Proyecto1.maestroLista);
+        int contA = 0;
+        int contI = 0;
+        LinkedList<Lista> nuevoMasLista = new LinkedList<>();
+        if(masLista.size() > 0){
+            for(int i = 0; i < bitLista.size(); i++){
+                if(bitLista.get(i).isEstatus()){
+                    contA++;
+                    nuevoMasLista.add(bitLista.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            for(int i = 0; i < masLista.size(); i++){
+                if(masLista.get(i).isEstatus()){
+                    contA++;
+                    nuevoMasLista.add(masLista.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            Collections.sort(nuevoMasLista, new ListComparator());
+            limpiarArchivo(Proyecto1.maestroLista);
+            for(int i = 0; i < nuevoMasLista.size(); i++){
+                escribirLista(Proyecto1.maestroLista, nuevoMasLista.get(i));
+            }
+            DescUsuario_Lista desM = leerDescriptor(Proyecto1.descMaestroLista);
+            limpiarArchivo(Proyecto1.descMaestroLista);
+            escribirDescriptor(Proyecto1.descMaestroLista, new DescUsuario_Lista(desM.getNombreSimbolico(), desM.getFechaCreacion(), desM.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), contA, contA, 0, desM.getMaxReorganizacion()));
+        }
+    }
     
     /**
      * @param args the command line arguments
