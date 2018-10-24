@@ -62,6 +62,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         inicio2();
         inicio3();
         inicio4();
+        inicio5();
         btnVer.setVisible(false);
     }
     
