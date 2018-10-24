@@ -53,13 +53,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btnCrearUsuario" pref="127" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnBackUp" min="-2" pref="140" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnLogOut" min="-2" pref="100" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="labelFotoA" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelNombre" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -67,6 +60,16 @@
                                   <Component id="labelLogo1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="btnAgregarLista" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnCrearUsuario" pref="149" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnBackUp" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnLogOut" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -84,7 +87,9 @@
                       <Component id="labelNombre" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="labelRol" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="201" max="32767" attributes="0"/>
+                      <EmptySpace pref="167" max="32767" attributes="0"/>
+                      <Component id="btnAgregarLista" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCrearUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBackUp" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -136,6 +141,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Perfil de Administrador"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAgregarLista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Agregar Lista"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarListaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -189,7 +202,7 @@
                                       <Component id="txtContraseña" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="27" max="32767" attributes="0"/>
+                              <EmptySpace pref="49" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnGuardarContr" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnGuardarFoto" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -791,7 +804,7 @@
                           </Group>
                           <Component id="labelBusqueda" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="82" max="32767" attributes="0"/>
+                      <EmptySpace pref="104" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -832,7 +845,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="jPanelListas">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Listas">
@@ -844,15 +857,475 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="423" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="labelLogo5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="boxOpEditarL" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelDescripcion" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="txtDescripcion" min="-2" pref="200" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnGuardarDescripcion" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="btnCancelarL" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtBusquedaLista" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelEstadoL" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="labelResultado" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnBuscarLista" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnEditarL" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnVerL" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelEstatusL" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="chbActivoL" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="chbInactivoL" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnGuardarEstaL" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="387" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelLogo5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtBusquedaLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBuscarLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelEstadoL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEditarL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnVerL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelResultado" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="boxOpEditarL" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardarDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelEstatusL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chbActivoL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chbInactivoL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardarEstaL" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCancelarL" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="147" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="btnCancelarL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cancelar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarLActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelEstatusL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Estatus:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chbActivoL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Activo"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="chbInactivoL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Inactivo"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnGuardarEstaL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Guardar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarEstaLActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnGuardarDescripcion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Guardar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarDescripcionActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtDescripcion">
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelDescripcion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Descripcion: "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="boxOpEditarL">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="Descripcion"/>
+                    <StringItem index="1" value="Estatus"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxOpEditarLActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelEstadoL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Estado: "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnEditarL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Editar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarLActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnVerL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver Datos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerLActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBuscarLista">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar Lista"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarListaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtBusquedaLista">
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelLogo5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Manejo de Listas"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelResultado">
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Lista - Usuario">
+                <Property name="tabTitle" type="java.lang.String" value="Lista - Usuario"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="jPanelGuardarAsociacion">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Guardar">
+                        <Property name="tabTitle" type="java.lang.String" value="Guardar"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelRLista" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelLogo6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelRUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="btnGuardarAsociacion" min="-2" pref="90" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btnCancelarAsociacion" min="-2" pref="90" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtBusquedaListaAsociacion" alignment="0" min="-2" pref="280" max="-2" attributes="0"/>
+                                          <Component id="txtBusquedaUsuarioAsociar" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="btnBuscarUsuarioAsociar" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnBuscarListaAsociacion" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelLogo6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtBusquedaListaAsociacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarListaAsociacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelRLista" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtBusquedaUsuarioAsociar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarUsuarioAsociar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelRUsuario" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnGuardarAsociacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnCancelarAsociacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="178" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="labelLogo6">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Aplicacion MEIA - Asociacion de Usuarios a Lista"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtBusquedaListaAsociacion">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelRLista">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jLabel1"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtBusquedaUsuarioAsociar">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelRUsuario">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jLabel1"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnGuardarAsociacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Guardar"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarAsociacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnCancelarAsociacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Cancelar"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarAsociacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnBuscarUsuarioAsociar">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Buscar Usuario"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarUsuarioAsociarActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnBuscarListaAsociacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Buscar Lista"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarListaAsociacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanelEliminarAsociacion">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Eliminar">
+                        <Property name="tabTitle" type="java.lang.String" value="Eliminar"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelRListaEliminacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelLogo7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelRUsuarioEliminacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="btnGuardarEliminacion" min="-2" pref="90" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btnCancelarEliminacion" min="-2" pref="90" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtBusquedaListaEliminacion" alignment="0" min="-2" pref="280" max="-2" attributes="0"/>
+                                          <Component id="txtBusquedaUsuarioEliminacion" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="btnBuscarUsuarioEliminacion" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnBuscarListaEliminacion" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelLogo7" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtBusquedaListaEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarListaEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelRListaEliminacion" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtBusquedaUsuarioEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarUsuarioEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="labelRUsuarioEliminacion" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnGuardarEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnCancelarEliminacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="178" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="labelLogo7">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Aplicacion MEIA -Eliminacion de Usuarios de Lista"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtBusquedaListaEliminacion">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelRListaEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jLabel1"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtBusquedaUsuarioEliminacion">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labelRUsuarioEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jLabel1"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnGuardarEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Eliminar"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarEliminacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnCancelarEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Cancelar"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarEliminacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnBuscarUsuarioEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Buscar Usuario"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarUsuarioEliminacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnBuscarListaEliminacion">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Buscar Lista"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarListaEliminacionActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>

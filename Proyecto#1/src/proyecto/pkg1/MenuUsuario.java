@@ -57,6 +57,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelLogo3.setIcon(im);
         labelLogo4.setIcon(im);
         labelLogo5.setIcon(im);
+        labelLogo6.setIcon(im);
         inicio();
         inicio2();
         inicio3();
@@ -975,6 +976,13 @@ public class MenuUsuario extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Metodo de busqueda de una lista en base a un nombre de lista 
+     * @param fileName Archivo donde se buscara la lista
+     * @param lista nombre de la lista que se busca
+     * @return Objeto Lista con los valores encontrados
+     * @throws IOException 
+     */
     public Lista buscarLista(File fileName, String lista) throws IOException{
         Lista lis = new Lista();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -1019,6 +1027,13 @@ public class MenuUsuario extends javax.swing.JFrame {
         return lis;
     }
     
+    /**
+     * Metodo de busqueda de una lista en base a un nombre de lista y el usuario 
+     * @param fileName Archivo donde se buscara la lista
+     * @param lista nombre de la lista que se busca
+     * @return Objeto Lista con los valores encontrados
+     * @throws IOException 
+     */
     public Lista buscarListaAsociacion(File fileName, String lista) throws IOException{
         Lista lis = new Lista();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -1063,6 +1078,13 @@ public class MenuUsuario extends javax.swing.JFrame {
         return lis;
     }
     
+    /**
+     * Bsca todos los usuarios relacionados a una lista de un usuario
+     * @param fileName File donde se buscan los usuarios
+     * @param lista lista a la que se esta buscando
+     * @return ArrayList con los usuarios encontrados para la lista buscada
+     * @throws IOException 
+     */
     public ArrayList<String> buscarUsuariosAsociados(File fileName, String lista) throws IOException{
         ArrayList<String> usuarios = new ArrayList<>();
         BufferedReader br = null;
@@ -1547,9 +1569,14 @@ public class MenuUsuario extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "La lista ya se encuentra inactivo", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
-                        boolean val = editarListaEstado(Proyecto1.bitacoraLista, Proyecto1.descBitacoraLista, texto, 113, false);
-                        if(!val){
-                            editarListaEstado(Proyecto1.maestroLista, Proyecto1.descMaestroLista, texto, 113, false);
+                        if(lis.getNumeroUsuarios() > 0){
+                            JOptionPane.showMessageDialog(null, "Debe eliminar todos los usuarios relacionados a esta lista para eliminarla", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else{
+                            boolean val = editarListaEstado(Proyecto1.bitacoraLista, Proyecto1.descBitacoraLista, texto, 113, false);
+                            if(!val){
+                                editarListaEstado(Proyecto1.maestroLista, Proyecto1.descMaestroLista, texto, 113, false);
+                            }
                         }
                     }
                 }
@@ -2037,6 +2064,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarUsuarioEliminacionActionPerformed
 
+    /**
+     * Metodo de comparacion de llaves Nombre de lista, usuario y usuario asociado
+     * @param obj1 IndiceListaUsuario que se esta comprando 
+     * @param obj2 IndiceListaUsuario con el que se va a comparar
+     * @return 
+     */
     public int comparar(IndiceListaUsuario obj1, IndiceListaUsuario obj2) {
         if (String.valueOf(obj1.getNombreLista()).toUpperCase().equals(String.valueOf(obj2.getNombreLista()).toUpperCase())) {
             if (String.valueOf(obj1.getUsuario()).toUpperCase().equals(String.valueOf(obj2.getUsuario()).toUpperCase())) {
@@ -2068,6 +2101,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         return String.valueOf(obj1.getNombreLista()).toUpperCase().compareTo(String.valueOf(obj2.getNombreLista()).toUpperCase());
     }
     
+    /**
+     * Metodo de comparacion de llaves Nombre de lista, usuario y usuario asociado
+     * @param obj1 IndiceListaUsuario que se esta comprando 
+     * @param obj2 ListaUsuario con el que se va a comparar
+     * @return 
+     */
     public int comparar(IndiceListaUsuario obj1, ListaUsuario obj2) {
         if (String.valueOf(obj1.getNombreLista()).toUpperCase().equals(String.valueOf(obj2.getNombreLista()).toUpperCase())) {
             if (String.valueOf(obj1.getUsuario()).toUpperCase().equals(String.valueOf(obj2.getUsuario()).toUpperCase())) {
@@ -2432,7 +2471,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
     
     /**
-     * Editor de un campo del indice
+     * Editor de estado del indice
      * @param archivo File donde se buscara la lista
      * @param descriptor descriptor que se actualizara al editar la lista
      * @param regB IndiceListaUsuario a comparar que contiene la posicion a modificar
@@ -2489,6 +2528,13 @@ public class MenuUsuario extends javax.swing.JFrame {
         return fin;
     }
     
+    /**
+     * Metodo que lee una entrada en el indice en base a una posicion y archivo
+     * @param archivo File del indice
+     * @param regInicial posicion de entrada que se va a leer
+     * @return Objeto IndiceListaUsuario con los datos de la entrada buscada
+     * @throws IOException 
+     */
     public IndiceListaUsuario leerIndice(File archivo, int regInicial)throws IOException{
         IndiceListaUsuario val = new IndiceListaUsuario();
         RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
@@ -2518,6 +2564,13 @@ public class MenuUsuario extends javax.swing.JFrame {
         return val;
     }
     
+    /**
+     * Lee los datos de una lista de un usuario en una posicion especifica
+     * @param archivo File donde se encuentra la entrada
+     * @param pos Posicion en la que se lee la lista
+     * @return Objeto ListaUsuario donde se encuentran los datos de la entrada
+     * @throws Exception 
+     */
     public ListaUsuario leerListaUsuario(File archivo, int pos)throws Exception{
         ListaUsuario val = new ListaUsuario();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
@@ -2961,6 +3014,12 @@ public class MenuUsuario extends javax.swing.JFrame {
         writer.close();
     }
     
+    /**
+     * Metodo que devuelve el la cantidad de caracteres en un erchivo
+     * @param archivo Archivo que se va a utilizar
+     * @return long con la cantidad de caracteres
+     * @throws IOException 
+     */
     public long tamañoDeArchivo(File archivo)throws IOException{
         long size = 0;
         RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
@@ -3323,6 +3382,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo de reorganizacion/actualizacion de los datos del archivo indizado
+     * @throws Exception 
+     */
     public void reorganizacionIndizado() throws Exception{
         LinkedList<ListaUsuario> bitListaUsuario = leerListaUsuarios(Proyecto1.bitacoraListaUsuario);
         LinkedList<ListaUsuario> nuevoListaUsuario = new LinkedList<>();
@@ -3392,6 +3455,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo de reorganizacion/actualizacion de los datos del archivo secuencial de listas
+     * @throws Exception 
+     */
     public void reorganizacionSecuencialListas() throws Exception{
         LinkedList<Lista> bitLista = leerListas(Proyecto1.bitacoraLista);
         LinkedList<Lista> masLista = leerListas(Proyecto1.maestroLista);
@@ -3419,6 +3486,10 @@ public class MenuUsuario extends javax.swing.JFrame {
             }
             Collections.sort(nuevoMasLista, new ListComparator());
             limpiarArchivo(Proyecto1.maestroLista);
+            limpiarArchivo(Proyecto1.bitacoraLista);
+            DescUsuario_Lista desB = leerDescriptor(Proyecto1.descBitacoraLista);
+            limpiarArchivo(Proyecto1.descBitacoraLista);
+            escribirDescriptor(Proyecto1.descBitacoraLista, new DescUsuario_Lista(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), 0, 0, 0, desB.getMaxReorganizacion()));
             for(int i = 0; i < nuevoMasLista.size(); i++){
                 escribirLista(Proyecto1.maestroLista, nuevoMasLista.get(i));
             }
