@@ -33,6 +33,8 @@ public class Proyecto1 {
     static File descBitacoraLista = new File("C:\\MEIA\\desc_Bitacora_Lista.txt");
     static File maestroLista = new File("C:\\MEIA\\maestro_Lista.txt");
     static File descMaestroLista = new File("C:\\MEIA\\desc_Maestro_Lista.txt");
+    static File arbolCorreos = new File("C:\\MEIA\\arbolCorreos.txt");
+    static File descarbolCorreos = new File("C:\\MEIA\\desc_Maestro_Lista.txt");
     static File bitacoraBackup = new File("C:\\MEIA\\bitacora_Backup.txt");
     static File descBitacoraBackup = new File("C:\\MEIA\\desc_Bitacora_Backup.txt");
     static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");

@@ -21,6 +21,7 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -322,6 +323,22 @@ public class MenuAdmin extends javax.swing.JFrame {
         btnCancelarEliminacion = new javax.swing.JButton();
         btnBuscarUsuarioEliminacion = new javax.swing.JButton();
         btnBuscarListaEliminacion = new javax.swing.JButton();
+        jPanelCorreo = new javax.swing.JPanel();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        txtUsuarioCorreoRed = new javax.swing.JTextField();
+        labelLogo8 = new javax.swing.JLabel();
+        labelAsuntoRed = new javax.swing.JLabel();
+        txtAsuntoRed = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtContenidoCorreoRed = new javax.swing.JTextArea();
+        btnEnviarRed = new javax.swing.JButton();
+        labelUsuarioCorreo = new javax.swing.JLabel();
+        opGrupo = new javax.swing.JComboBox<>();
+        labelGrupo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1189,6 +1206,129 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Lista - Usuario", jPanel1);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 359, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Bandeja de Entrada", jPanel4);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 359, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Bandeja de Salida", jPanel5);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 359, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Envio Correo - Local", jPanel3);
+
+        labelLogo8.setText("Aplicacion MEIA - Envio de Correos a Usuarios de Otros Grupos");
+
+        labelAsuntoRed.setText("Asunto");
+
+        txtContenidoCorreoRed.setColumns(20);
+        txtContenidoCorreoRed.setRows(5);
+        jScrollPane1.setViewportView(txtContenidoCorreoRed);
+
+        btnEnviarRed.setText("Enviar");
+        btnEnviarRed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarRedActionPerformed(evt);
+            }
+        });
+
+        labelUsuarioCorreo.setText("Usuario:");
+
+        opGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" }));
+
+        labelGrupo.setText("Grupo");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(labelLogo8)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelAsuntoRed)
+                                .addComponent(labelUsuarioCorreo)
+                                .addComponent(labelGrupo))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(opGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtUsuarioCorreoRed, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAsuntoRed)))))
+                    .addComponent(btnEnviarRed))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelGrupo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuarioCorreoRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelUsuarioCorreo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAsuntoRed)
+                    .addComponent(txtAsuntoRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEnviarRed)
+                .addContainerGap())
+        );
+
+        jTabbedPane3.addTab("Envio Correo - Grupos", jPanel2);
+
+        javax.swing.GroupLayout jPanelCorreoLayout = new javax.swing.GroupLayout(jPanelCorreo);
+        jPanelCorreo.setLayout(jPanelCorreoLayout);
+        jPanelCorreoLayout.setHorizontalGroup(
+            jPanelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane3)
+        );
+        jPanelCorreoLayout.setVerticalGroup(
+            jPanelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane3)
+        );
+
+        jTabbedPane1.addTab("Correo", jPanelCorreo);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1304,8 +1444,15 @@ public class MenuAdmin extends javax.swing.JFrame {
             e.printStackTrace();
         }
         dispose();
-        VistaLogin v = new VistaLogin();
-        v.setVisible(true);
+        VistaLogin v;
+        try {
+            v = new VistaLogin();
+            v.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     /**
@@ -2512,6 +2659,24 @@ public class MenuAdmin extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnBuscarListaEliminacionActionPerformed
+
+    private void btnEnviarRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarRedActionPerformed
+        if(txtUsuarioCorreoRed.getText().equals("") || (txtAsuntoRed.getText().equals("")) || (txtContenidoCorreoRed.getText().equals(""))){
+            JOptionPane.showMessageDialog(null, "Algun campo del correo se encuentra vacio, por favor ingrese todos los campos", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            try {
+                CorreoRed correo = new CorreoRed(11, Integer.parseInt(opGrupo.getSelectedItem().toString()), admin, txtUsuarioCorreoRed.getText(), txtAsuntoRed.getText(), txtContenidoCorreoRed.getText(), new Date());
+                BDD.getInstancia().conexion();
+                BDD.getInstancia().Insert(correo.getGrupoemisor(), correo.getGruporeceptor(), correo.getEmisor(), correo.getReceptor(), correo.getAsunto(), correo.getMensaje());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_btnEnviarRedActionPerformed
 
     /**
      * Funcion que lee las listas del archivo enviado 
@@ -4372,6 +4537,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEditarL;
+    private javax.swing.JButton btnEnviarRed;
     private javax.swing.JButton btnGuardarAsociacion;
     private javax.swing.JButton btnGuardarContr;
     private javax.swing.JButton btnGuardarContrU;
@@ -4395,15 +4561,23 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbInactivoL;
     private javax.swing.JCheckBox chbInactivoU;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelBuscar;
+    private javax.swing.JPanel jPanelCorreo;
     private javax.swing.JPanel jPanelEditar;
     private javax.swing.JPanel jPanelEliminarAsociacion;
     private javax.swing.JPanel jPanelGuardarAsociacion;
     private javax.swing.JPanel jPanelListas;
     private javax.swing.JPanel jPanelUsuario;
     private javax.swing.JPanel jPanelVerificacion;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JLabel labelAsuntoRed;
     private javax.swing.JLabel labelBusqueda;
     private javax.swing.JLabel labelContraseña;
     private javax.swing.JLabel labelContraseñaU;
@@ -4422,6 +4596,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel labelFoto;
     private javax.swing.JLabel labelFotoA;
     private javax.swing.JLabel labelFotoU;
+    private javax.swing.JLabel labelGrupo;
     private javax.swing.JLabel labelLogo1;
     private javax.swing.JLabel labelLogo2;
     private javax.swing.JLabel labelLogo3;
@@ -4429,6 +4604,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel labelLogo5;
     private javax.swing.JLabel labelLogo6;
     private javax.swing.JLabel labelLogo7;
+    private javax.swing.JLabel labelLogo8;
     private javax.swing.JLabel labelNomUsuario;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPathFoto;
@@ -4441,11 +4617,15 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel labelRol;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JLabel labelTelefonoU;
+    private javax.swing.JLabel labelUsuarioCorreo;
+    private javax.swing.JComboBox<String> opGrupo;
+    private javax.swing.JTextField txtAsuntoRed;
     private javax.swing.JTextField txtBusquedaLista;
     private javax.swing.JTextField txtBusquedaListaAsociacion;
     private javax.swing.JTextField txtBusquedaListaEliminacion;
     private javax.swing.JTextField txtBusquedaUsuarioAsociar;
     private javax.swing.JTextField txtBusquedaUsuarioEliminacion;
+    private javax.swing.JTextArea txtContenidoCorreoRed;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JPasswordField txtContraseñaU;
     private javax.swing.JTextField txtCorreo;
@@ -4457,5 +4637,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtNomUsuario;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTelefonoU;
+    private javax.swing.JTextField txtUsuarioCorreoRed;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,6 +12,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,13 +28,14 @@ public class VistaLogin extends javax.swing.JFrame {
     /**
      * Creates new form VistaLogin
      */
-    public VistaLogin() {
+    public VistaLogin() throws ClassNotFoundException, SQLException {
         initComponents();
         ImageIcon im = new ImageIcon(Proyecto1.logo.getPath());
         Image image = im.getImage(); // transform it 
         Image newimg = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
         im = new ImageIcon(newimg);
         labelImage.setIcon(im);
+        BDD.getInstancia().conexion();
     }
     
     
@@ -341,7 +345,13 @@ public class VistaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaLogin().setVisible(true);
+                try {
+                    new VistaLogin().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(VistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(VistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
