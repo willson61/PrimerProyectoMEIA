@@ -109,6 +109,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         if(correosSalida.size() > 0){
             correosSalida.removeAll(correosSalida);
         }
+
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         try {
             DescIndiceListaUsuario dec = leerDescriptorIndice(Proyecto1.descArbolCorreos);
@@ -1339,6 +1340,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
         btnBuscarCorreo.setText("BuscarCorreo");
+        btnBuscarCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCorreoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -2526,7 +2532,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void btnGuardarAsociacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAsociacionActionPerformed
         try{
-            if((leerArchivo(Proyecto1.bitacoraListaUsuario).equals("")) && (leerArchivo(Proyecto1.IndiceListaUsuario).equals(""))){
+            if((leerArchivo(Proyecto1.bitacoraListaUsuario).trim().equals("")) && (leerArchivo(Proyecto1.IndiceListaUsuario).trim().equals(""))){
                 MenuUsuario.primeraAsociacion = true;
             }
             else{
@@ -3242,27 +3248,27 @@ public class MenuAdmin extends javax.swing.JFrame {
             Lista lis = new Lista();
             try{
                 if(String.valueOf(buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista())).getNombreLista()).equals(String.valueOf(lis.getNombreLista()))){
-                    lis = buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista()));
+                    lis = buscarLista(Proyecto1.bitacoraLista, txtListaCorreoLocal.getText());
                 }
                 else{
-                    lis = buscarLista(Proyecto1.maestroLista, String.valueOf(lis.getNombreLista()));
+                    lis = buscarLista(Proyecto1.maestroLista, txtListaCorreoLocal.getText());
                 }
                 if(lis != null){
                     ArrayList<String> usuarios = buscarUsuariosAsociados(Proyecto1.bitacoraListaUsuario, String.valueOf(lis.getNombreLista()));
-                    Correo c = new Correo();
-                    c.setEmisor(admin.toCharArray());
-                    c.setAsunto(txtAsuntoCorreoLocal.getText().toCharArray());
-                    c.setMensaje(txtContenidoCorreoLocal.getText().toCharArray());
-                    c.setEstatus(true);
-                    c.setFechaTransaccion(new Date());
-                    c.setIzquierdo(-1);
-                    c.setDerecho(-1);
-                    DescIndiceListaUsuario descN;
-                    Correo actual;
-                    long tamaño = tamañoDeArchivo(Proyecto1.arbolCorreos);
-                    int cant = 0;
                     if(usuarios.size() > 0){
                         for(int i = 0; i < usuarios.size(); i++){
+                            Correo c = new Correo();
+                            c.setEmisor(admin.toCharArray());
+                            c.setAsunto(txtAsuntoListaCorreoLocal.getText().toCharArray());
+                            c.setMensaje(txtContenidoListaCorreoLocal.getText().toCharArray());
+                            c.setEstatus(true);
+                            c.setFechaTransaccion(new Date());
+                            c.setIzquierdo(-1);
+                            c.setDerecho(-1);
+                            DescIndiceListaUsuario descN;
+                            Correo actual;
+                            long tamaño = tamañoDeArchivo(Proyecto1.arbolCorreos);
+                            int cant = 0;
                             c.setReceptor(usuarios.get(i).toCharArray());
                             if(tamaño > 0){
                                 cant = (int)tamaño/200;
@@ -3524,6 +3530,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
         iniciarBandejas();
     }//GEN-LAST:event_btnActualizarSalidaActionPerformed
+
+    private void btnBuscarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCorreoActionPerformed
+        VistsaBuscarCorreo v = new VistsaBuscarCorreo();
+        v.setVisible(true);
+    }//GEN-LAST:event_btnBuscarCorreoActionPerformed
 
     /**
      * Funcion que lee las listas del archivo enviado 
@@ -3911,24 +3922,26 @@ public class MenuAdmin extends javax.swing.JFrame {
                     contI++;
                 }
             }
-            reg = bitCorreo.size() - nuevoListaCorreo.size();
-            descI.setRegistroInicial(descI.getRegistroInicial() - reg);
-            for(int y = 0; y < nuevoListaCorreo.size(); y++){
-                Correo val1 = nuevoListaCorreo.get(y);
-                if(val1.getIzquierdo() != -1){
-                    val1.setIzquierdo(val1.getIzquierdo() - reg);
+            if(!(bitCorreo.size() == nuevoListaCorreo.size())){
+                reg = bitCorreo.size() - nuevoListaCorreo.size();
+                descI.setRegistroInicial(descI.getRegistroInicial() - reg);
+                for(int y = 0; y < nuevoListaCorreo.size(); y++){
+                    Correo val1 = nuevoListaCorreo.get(y);
+                    if(val1.getIzquierdo() != -1){
+                        val1.setIzquierdo(val1.getIzquierdo() - reg);
+                    }
+                    if(val1.getDerecho() != -1){
+                        val1.setDerecho(val1.getDerecho() - reg);
+                    }
+                    nuevoListaCorreo.set(y, val1);
                 }
-                if(val1.getDerecho() != -1){
-                    val1.setDerecho(val1.getDerecho() - reg);
+                limpiarArchivo(Proyecto1.arbolCorreos);
+                for(int i = 0; i < nuevoListaCorreo.size(); i++){
+                    escribirCorreo(Proyecto1.arbolCorreos, nuevoListaCorreo.get(i));
                 }
-                nuevoListaCorreo.set(y, val1);
+                limpiarArchivo(Proyecto1.descArbolCorreos);
+                escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, descI.getRegistroInicial()));
             }
-            limpiarArchivo(Proyecto1.arbolCorreos);
-            for(int i = 0; i < nuevoListaCorreo.size(); i++){
-                escribirCorreo(Proyecto1.arbolCorreos, nuevoListaCorreo.get(i));
-            }
-            limpiarArchivo(Proyecto1.descArbolCorreos);
-            escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(adminUs.getNombreDeUsuario()), contA, contA, 0, descI.getRegistroInicial()));
         }
     }
     

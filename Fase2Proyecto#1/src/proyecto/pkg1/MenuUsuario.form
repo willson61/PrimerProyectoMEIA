@@ -1084,6 +1084,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="BuscarCorreo"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarCorreoActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
