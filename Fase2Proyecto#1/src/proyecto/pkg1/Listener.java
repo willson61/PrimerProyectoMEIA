@@ -10,12 +10,19 @@ package proyecto.pkg1;
  */
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +38,7 @@ public class Listener extends Thread {
     private String Asunto;
     private String Mensaje;
     private Notificacion Not;  
+    private static Charset UTF8 = Charset.forName("UTF-8");
 
     Listener(Connection conn) throws SQLException {
 		this.Conexion = conn;
@@ -78,9 +86,22 @@ public class Listener extends Thread {
                                 
                                 //si es para mi enviar el update con la respuesta de que el usuario existe
                                 //Deben de validar cada uno si el usuario existe o no en su ordenador y enviar la respuesta de esta forma al servidor
-                                existe = existeUsuario(Receptor);
+                                existe = existeUsuario(Receptor.replace("\"", ""));
+                                Correo c = new Correo();
+                                c.setIzquierdo(-1);
+                                c.setDerecho(-1);
+                                c.setEmisor(Emisor.replace("\"", "").toCharArray());
+                                c.setReceptor(Receptor.replace("\"", "").toCharArray());
+                                c.setFechaTransaccion(new Date());
+                                c.setAsunto(Asunto.replace("\"", "").toCharArray());
+                                c.setMensaje(Mensaje.replace("\"", "").toCharArray());
+                                c.setEstatus(true);
                                 if(existe){
-                                    
+                                    try {
+                                        escribirCorreo(Proyecto1.arbolCorreos, c);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                     BDD.getInstancia().Update(id, existe);
                                 }else{
                                     BDD.getInstancia().Update(id, existe);
@@ -110,6 +131,20 @@ public class Listener extends Thread {
                                     Not.setVisible(true);
                                  }else{
                                     BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " ha recibido el mensaje." );
+                                    Correo c = new Correo();
+                                    c.setIzquierdo(-1);
+                                    c.setDerecho(-1);
+                                    c.setEmisor(Emisor.replace("\"", "").toCharArray());
+                                    c.setReceptor(Receptor.replace("\"", "").toCharArray());
+                                    c.setFechaTransaccion(new Date());
+                                    c.setAsunto(Asunto.replace("\"", "").toCharArray());
+                                    c.setMensaje(Mensaje.replace("\"", "").toCharArray());
+                                    c.setEstatus(true);
+                                    try {
+                                        escribirCorreo(Proyecto1.arbolCorreos, c);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                     Not = new Notificacion();
                                     Not.setVisible(true);
                                  }
@@ -173,6 +208,76 @@ public class Listener extends Thread {
             e.printStackTrace();
 	}
         return val;
+    }
+    
+    /**
+     * Metodo que escribe una entrada al arbol de correos
+     * @param archivo File al que se escribira la entrada
+     * @param s Correo con la iformacion para la entrada
+     * @throws IOException 
+     */
+    public void escribirCorreo(File archivo, Correo s) throws IOException{
+        String texto = "";
+        String div = "|";
+        String fin = "\r\n";
+        String txtCompleto = "";
+        if (s.getIzquierdo() < 10 && s.getIzquierdo() > 0) {
+            texto += "0";
+            texto += String.valueOf(s.getIzquierdo());
+        }
+        if (s.getIzquierdo() == -1 || s.getIzquierdo() > 10) {
+            texto += String.valueOf(s.getIzquierdo());
+        }
+        texto += div;
+        if (s.getDerecho() < 10 && s.getDerecho() > 0) {
+            texto += "0";
+            texto += String.valueOf(s.getDerecho());
+        }
+        if (s.getDerecho() == -1 || s.getDerecho() > 10) {
+            texto += String.valueOf(s.getDerecho());
+        }
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getEmisor()), 20);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getReceptor()), 20);
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        texto += date.format(s.getFechaTransaccion());
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getAsunto()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getMensaje()), 100);
+        texto += div;
+        if(s.isEstatus()){
+            //Esta activo
+            texto += "1";
+        }
+        else{
+            //Esta Inactivo
+            texto += "0";
+        }
+        texto += fin;
+        if(archivo.exists()){
+            FileOutputStream fos = new FileOutputStream(archivo, true);
+            Writer wr = new OutputStreamWriter(fos, UTF8);
+            wr.write(texto);
+            wr.flush();
+            wr.close();
+            fos.close();
+        }
+    }
+    
+    /**
+     * Funcion que completa una cadena hasta un limite determinado con el caracter especial "~"
+     * @param texto texto original sin agregar caracteres especiales
+     * @param limite numero limite para agregar caracteres especiales
+     * @return texto con caracteres especiales
+     */
+    public String completarTexto(String texto, int limite){
+        while(texto.length() < limite){
+            texto += "~";
+        }
+        return texto;
     }
 }
 

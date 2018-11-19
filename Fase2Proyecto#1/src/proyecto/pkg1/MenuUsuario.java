@@ -22,6 +22,7 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -58,10 +60,16 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelLogo4.setIcon(im);
         labelLogo5.setIcon(im);
         labelLogo6.setIcon(im);
+        labelLogo8.setIcon(im);
+        labelLogo9.setIcon(im);
+        labelLogo10.setIcon(im);
+        labelLogo11.setIcon(im);
+        labelLogo12.setIcon(im);
         inicio();
         inicio2();
         inicio3();
         inicio4();
+        iniciarBandejas();
     }
     
     public void inicio(){
@@ -146,6 +154,73 @@ public class MenuUsuario extends javax.swing.JFrame {
         labelRUsuarioEliminacion.setVisible(false);
     }
     
+    public void iniciarBandejas(){
+        DefaultListModel modelEntrada = new DefaultListModel();
+        DefaultListModel modelSalida = new DefaultListModel();
+        if(correosEntrada.size() > 0){
+            correosEntrada.removeAll(correosEntrada);
+        }
+        if(correosSalida.size() > 0){
+            correosSalida.removeAll(correosSalida);
+        }
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        try {
+            DescIndiceListaUsuario dec = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+            leerBandejaDeEntrada(leerCorreo(Proyecto1.arbolCorreos, dec.getRegistroInicial()));
+            leerBandejaDeSalida(leerCorreo(Proyecto1.arbolCorreos, dec.getRegistroInicial()));
+            if(correosEntrada.size() > 0){
+                for(int i = 0; i < correosEntrada.size(); i++){
+                    Correo c = correosEntrada.get(i);
+                    if(c.isEstatus()){
+                        String linea = "";
+                        linea += "Emisor: ";
+                        linea += String.valueOf(c.getEmisor());
+                        linea += "----";
+                        linea += "Receptor: ";
+                        linea += String.valueOf(c.getReceptor());
+                        linea += "----";
+                        linea += "Asunto: ";
+                        linea += String.valueOf(c.getAsunto());
+                        linea += "----";
+                        linea += "Mensaje: ";
+                        linea += String.valueOf(c.getMensaje());
+                        linea += "----";
+                        linea += "Fecha: ";
+                        linea += date.format(c.getFechaTransaccion());
+                        modelEntrada.addElement(linea);
+                    }
+                }
+                BandejaEntrada.setModel(modelEntrada);
+            }
+            if(correosSalida.size() > 0){
+                for(int i = 0; i < correosSalida.size(); i++){
+                    Correo c = correosSalida.get(i);
+                    if(c.isEstatus()){
+                        String linea = "";
+                        linea += "Emisor: ";
+                        linea += String.valueOf(c.getEmisor());
+                        linea += "----";
+                        linea += "Receptor: ";
+                        linea += String.valueOf(c.getReceptor());
+                        linea += "----";
+                        linea += "Asunto: ";
+                        linea += String.valueOf(c.getAsunto());
+                        linea += "----";
+                        linea += "Mensaje: ";
+                        linea += String.valueOf(c.getMensaje());
+                        linea += "----";
+                        linea += "Fecha: ";
+                        linea += date.format(c.getFechaTransaccion());
+                        modelSalida.addElement(linea);
+                    }
+                }
+                BandejaSalida.setModel(modelSalida);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private static Charset UTF8 = Charset.forName("UTF-8");
     File rutaFoto = new File("C:\\MEIA\\Imagenes");
     File test = new File("C:\\MEIA\\test2.txt");
@@ -153,6 +228,8 @@ public class MenuUsuario extends javax.swing.JFrame {
     static ArrayList<Integer> criterio = new ArrayList<Integer>();
     File archivo1 = new File("C:\\MEIA\\puntuacion.txt");
     File archivo2 = new File("C:\\MEIA\\resultado.txt");
+    public static ArrayList<Correo> correosEntrada = new ArrayList<>();
+    public static ArrayList<Correo> correosSalida = new ArrayList<>();
     
     public static String user;
     public Usuario us;
@@ -247,6 +324,52 @@ public class MenuUsuario extends javax.swing.JFrame {
         btnBuscarListaEliminacion = new javax.swing.JButton();
         btnBuscarUsuarioEliminacion = new javax.swing.JButton();
         labelLogo6 = new javax.swing.JLabel();
+        jPanelCorreo = new javax.swing.JPanel();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        BandejaEntrada = new javax.swing.JList<>();
+        btnEliminarCorreosEntrada = new javax.swing.JButton();
+        labelLogo11 = new javax.swing.JLabel();
+        btnActualizarEntrada = new javax.swing.JButton();
+        btnBuscarCorreo = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        BandejaSalida = new javax.swing.JList<>();
+        labelLogo12 = new javax.swing.JLabel();
+        btnEliminarCorreosSalida = new javax.swing.JButton();
+        btnActualizarSalida = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jPanelEnvioUsuario = new javax.swing.JPanel();
+        labelLogo9 = new javax.swing.JLabel();
+        labelUsuarioCorreoLocal = new javax.swing.JLabel();
+        txtUsuarioCorreoLocal = new javax.swing.JTextField();
+        txtAsuntoCorreoLocal = new javax.swing.JTextField();
+        labelAsuntoCorreoLocal = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtContenidoCorreoLocal = new javax.swing.JTextArea();
+        btnEnviarLocal = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        labelLogo10 = new javax.swing.JLabel();
+        labelListaCorreoLocal = new javax.swing.JLabel();
+        txtListaCorreoLocal = new javax.swing.JTextField();
+        txtAsuntoListaCorreoLocal = new javax.swing.JTextField();
+        labelAsuntoListaCorreoLocal = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtContenidoListaCorreoLocal = new javax.swing.JTextArea();
+        btnEnviarListaLocal = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtUsuarioCorreoRed = new javax.swing.JTextField();
+        labelLogo8 = new javax.swing.JLabel();
+        labelAsuntoRed = new javax.swing.JLabel();
+        txtAsuntoRed = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtContenidoCorreoRed = new javax.swing.JTextArea();
+        btnEnviarRed = new javax.swing.JButton();
+        labelUsuarioCorreo = new javax.swing.JLabel();
+        opGrupo = new javax.swing.JComboBox<>();
+        labelGrupo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -292,7 +415,7 @@ public class MenuUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
                 .addComponent(labelImageFoto)
                 .addGap(37, 37, 37)
                 .addComponent(labelNombre)
@@ -460,7 +583,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 .addComponent(labelLogo2)
                 .addGap(18, 18, 18)
                 .addComponent(boxOpEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addGroup(jPanelEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelContraseña)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -537,7 +660,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                     .addComponent(btnBuscarUs))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelBusqueda)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Buscar", jPanelBuscar);
@@ -672,7 +795,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                     .addComponent(btnGuardarEstaL))
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelarL)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Listas", jPanelListas);
@@ -759,7 +882,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 .addGroup(jPanelGuardarAsociacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarAsociacion)
                     .addComponent(btnCancelarAsociacion))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Guardar", jPanelGuardarAsociacion);
@@ -846,7 +969,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 .addGroup(jPanelEliminarAsociacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarEliminacion)
                     .addComponent(btnCancelarEliminacion))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Eliminar", jPanelEliminarAsociacion);
@@ -863,6 +986,331 @@ public class MenuUsuario extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Lista - Usuario", jPanelListaUsuario);
+
+        BandejaEntrada.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(BandejaEntrada);
+
+        btnEliminarCorreosEntrada.setText("Eliminar");
+        btnEliminarCorreosEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCorreosEntradaActionPerformed(evt);
+            }
+        });
+
+        labelLogo11.setText("Aplicacion MEIA - Bandeja de entrada de Correos");
+
+        btnActualizarEntrada.setText("Actualizar");
+        btnActualizarEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarEntradaActionPerformed(evt);
+            }
+        });
+
+        btnBuscarCorreo.setText("BuscarCorreo");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(labelLogo11)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnEliminarCorreosEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addComponent(btnActualizarEntrada)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnBuscarCorreo)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarCorreosEntrada)
+                    .addComponent(btnBuscarCorreo)
+                    .addComponent(btnActualizarEntrada))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Bandeja de Entrada", jPanel4);
+
+        BandejaSalida.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane5.setViewportView(BandejaSalida);
+
+        labelLogo12.setText("Aplicacion MEIA - Bandeja de entrada de Correos");
+
+        btnEliminarCorreosSalida.setText("Eliminar");
+        btnEliminarCorreosSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCorreosSalidaActionPerformed(evt);
+            }
+        });
+
+        btnActualizarSalida.setText("Actualizar");
+        btnActualizarSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarSalidaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(labelLogo12)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnEliminarCorreosSalida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addComponent(btnActualizarSalida)
+                        .addGap(178, 178, 178)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo12)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarCorreosSalida)
+                    .addComponent(btnActualizarSalida))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("Bandeja de Salida", jPanel5);
+
+        labelLogo9.setText("Aplicacion MEIA - Envio de Correos a Usuarios Locales");
+
+        labelUsuarioCorreoLocal.setText("Usuario:");
+
+        labelAsuntoCorreoLocal.setText("Asunto");
+
+        txtContenidoCorreoLocal.setColumns(20);
+        txtContenidoCorreoLocal.setRows(5);
+        jScrollPane2.setViewportView(txtContenidoCorreoLocal);
+
+        btnEnviarLocal.setText("Enviar");
+        btnEnviarLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarLocalActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelEnvioUsuarioLayout = new javax.swing.GroupLayout(jPanelEnvioUsuario);
+        jPanelEnvioUsuario.setLayout(jPanelEnvioUsuarioLayout);
+        jPanelEnvioUsuarioLayout.setHorizontalGroup(
+            jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnvioUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelLogo9)
+                    .addGroup(jPanelEnvioUsuarioLayout.createSequentialGroup()
+                        .addGroup(jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelAsuntoCorreoLocal)
+                            .addComponent(labelUsuarioCorreoLocal))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtAsuntoCorreoLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                            .addComponent(txtUsuarioCorreoLocal)))
+                    .addComponent(btnEnviarLocal))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jPanelEnvioUsuarioLayout.setVerticalGroup(
+            jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnvioUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo9)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuarioCorreoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelUsuarioCorreoLocal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelEnvioUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAsuntoCorreoLocal)
+                    .addComponent(txtAsuntoCorreoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEnviarLocal)
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+
+        jTabbedPane4.addTab("Usuario", jPanelEnvioUsuario);
+
+        labelLogo10.setText("Aplicacion MEIA - Envio de Correos a Listas Locales");
+
+        labelListaCorreoLocal.setText("Lista:");
+
+        labelAsuntoListaCorreoLocal.setText("Asunto");
+
+        txtContenidoListaCorreoLocal.setColumns(20);
+        txtContenidoListaCorreoLocal.setRows(5);
+        jScrollPane3.setViewportView(txtContenidoListaCorreoLocal);
+
+        btnEnviarListaLocal.setText("Enviar");
+        btnEnviarListaLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarListaLocalActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelLogo10)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelAsuntoListaCorreoLocal)
+                            .addComponent(labelListaCorreoLocal))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtAsuntoListaCorreoLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                            .addComponent(txtListaCorreoLocal)))
+                    .addComponent(btnEnviarListaLocal))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo10)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtListaCorreoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelListaCorreoLocal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAsuntoListaCorreoLocal)
+                    .addComponent(txtAsuntoListaCorreoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEnviarListaLocal)
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+
+        jTabbedPane4.addTab("Lista Distribucion", jPanel8);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane4)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane4)
+        );
+
+        jTabbedPane3.addTab("Envio Correo - Local", jPanel6);
+
+        labelLogo8.setText("Aplicacion MEIA - Envio de Correos a Usuarios de Otros Grupos");
+
+        labelAsuntoRed.setText("Asunto");
+
+        txtContenidoCorreoRed.setColumns(20);
+        txtContenidoCorreoRed.setRows(5);
+        jScrollPane1.setViewportView(txtContenidoCorreoRed);
+
+        btnEnviarRed.setText("Enviar");
+        btnEnviarRed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarRedActionPerformed(evt);
+            }
+        });
+
+        labelUsuarioCorreo.setText("Usuario:");
+
+        opGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" }));
+
+        labelGrupo.setText("Grupo");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(labelLogo8)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelAsuntoRed)
+                                .addComponent(labelUsuarioCorreo)
+                                .addComponent(labelGrupo))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(opGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtUsuarioCorreoRed, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAsuntoRed)))))
+                    .addComponent(btnEnviarRed))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogo8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelGrupo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuarioCorreoRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelUsuarioCorreo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAsuntoRed)
+                    .addComponent(txtAsuntoRed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEnviarRed)
+                .addContainerGap())
+        );
+
+        jTabbedPane3.addTab("Envio Correo - Grupos", jPanel2);
+
+        javax.swing.GroupLayout jPanelCorreoLayout = new javax.swing.GroupLayout(jPanelCorreo);
+        jPanelCorreo.setLayout(jPanelCorreoLayout);
+        jPanelCorreoLayout.setHorizontalGroup(
+            jPanelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane3)
+        );
+        jPanelCorreoLayout.setVerticalGroup(
+            jPanelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane3)
+        );
+
+        jTabbedPane1.addTab("Correo", jPanelCorreo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -977,54 +1425,65 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
     
     /**
-     * Metodo de busqueda de una lista en base a un nombre de lista 
+     * Metodo de busqueda de una lista en base a un nombre de lista y el usuario 
      * @param fileName Archivo donde se buscara la lista
      * @param lista nombre de la lista que se busca
      * @return Objeto Lista con los valores encontrados
      * @throws IOException 
      */
-    public Lista buscarLista(File fileName, String lista) throws IOException{
+    public Lista buscarLista(File fileName, String lista){
         Lista lis = new Lista();
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         BufferedReader br = null;
 	FileReader fr = null;
-	fr = new FileReader(fileName);
-        br = new BufferedReader(fr);
-        StringBuilder texto = new StringBuilder();
-        int line = 0;
-        while ((line = br.read()) != -1) {
-            char val = (char)line;
-            texto.append(val);
+	try{
+            fr = new FileReader(fileName);
+            br = new BufferedReader(fr);
+            StringBuilder texto = new StringBuilder();
+            int line = 0;
+            while ((line = br.read()) != -1) {
+                char val = (char)line;
+                texto.append(val);
+            }
+            fr.close();
+            br.close();
+            if(texto.toString().equals("")){
+                lis = null;
+                return lis;
+            }
+            else{
+                String[] contenido = texto.toString().split("\\r?\\n");
+                for(int i = 0; i < contenido.length; i++){
+                    try{
+                        String[] listas = contenido[i].split("\\|");
+                        if(quitarExtra(listas[0]).equals(lista) && quitarExtra(listas[1]).equals(user)){
+                            lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
+                            lis.setUsuario(quitarExtra(listas[1]).toCharArray());
+                            lis.setDescripcion(quitarExtra(listas[2]).toCharArray());
+                            lis.setNumeroUsuarios(Integer.parseInt(listas[3]));
+                            lis.setFechaCreacion(date.parse(listas[4]));
+                            if(listas[5].equals("1")){
+                                lis.setEstatus(true);
+                            }
+                            else{
+                                lis.setEstatus(false);
+                            }
+                        }
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        fr.close();
-        br.close();
-        if(texto.toString().equals("")){
+        if(String.valueOf(lis.getNombreLista()).equals(lista)){
             return lis;
         }
         else{
-            String[] contenido = texto.toString().split("\\r?\\n");
-            for(int i = 0; i < contenido.length; i++){
-                try{
-                    String[] listas = contenido[i].split("\\|");
-                    if(quitarExtra(listas[0]).equals(lista)){
-                        lis.setNombreLista(quitarExtra(listas[0]).toCharArray());
-                        lis.setUsuario(quitarExtra(listas[1]).toCharArray());
-                        lis.setDescripcion(quitarExtra(listas[2]).toCharArray());
-                        lis.setNumeroUsuarios(Integer.parseInt(listas[3]));
-                        lis.setFechaCreacion(date.parse(listas[4]));
-                        if(listas[5].equals("1")){
-                            lis.setEstatus(true);
-                        }
-                        else{
-                            lis.setEstatus(false);
-                        }
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
+            lis = null;
+            return lis;
         }
-        return lis;
     }
     
     /**
@@ -1175,8 +1634,15 @@ public class MenuUsuario extends javax.swing.JFrame {
             e.printStackTrace();
         }
         dispose();
-        VistaLogin v = new VistaLogin();
-        v.setVisible(true);
+        VistaLogin v;
+        try {
+            v = new VistaLogin();
+            v.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     /**
@@ -1268,8 +1734,14 @@ public class MenuUsuario extends javax.swing.JFrame {
                             editarUsuarioEstado(Proyecto1.maestroUsuario, Proyecto1.descMaestroUsuario, texto, 388, true);
                         }
                         dispose();
-                        VistaLogin v = new VistaLogin();
-                        v.setVisible(true);
+                        VistaLogin v;
+                        try {
+                            v = new VistaLogin();
+                            v.setVisible(true);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 if(chbInactivo.isSelected()){
@@ -1286,6 +1758,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 }
             }
         }
+        }
         else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar alguna opcion para continuar", "InfoBox: " + "Error en Edicion de Usuario", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1294,6 +1767,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btnGuardarEstaActionPerformed
 
     /**
@@ -2065,6 +2539,915 @@ public class MenuUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarUsuarioEliminacionActionPerformed
 
+    private void btnEliminarCorreosEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCorreosEntradaActionPerformed
+        if(BandejaEntrada.isSelectionEmpty()){
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado un correo a eliminar", "InfoBox: " + "Error en eliminacion de corre", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            try{
+                DescIndiceListaUsuario descN;
+                Correo raiz;
+                Correo eliminar;
+                Correo padre;
+                descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                raiz = leerCorreo(Proyecto1.arbolCorreos, descN.getRegistroInicial());
+                String datos = BandejaEntrada.getSelectedValue();
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+                Correo c = new Correo();
+                String[] valores = datos.split("----");
+                String[] val = valores[0].split(":");
+                c.setEmisor(val[1].trim().toCharArray());
+                val = valores[1].split(":");
+                c.setReceptor(val[1].trim().toCharArray());
+                val = valores[2].split(":");
+                c.setAsunto(val[1].trim().toCharArray());
+                val = valores[3].split(":");
+                c.setMensaje(val[1].trim().toCharArray());
+                val = valores[4].split(":");
+                c.setFechaTransaccion(date.parse(val[1].concat(":" + val[2]).replace(" ", "")));
+                eliminar = buscarCorreo(raiz, c);
+                padre = buscarPadre(raiz, c);
+                if(padre != null){
+                    if(comparar(eliminar, padre) < 0){
+                        if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() == -1){
+                            padre.setIzquierdo(-1);
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() != -1){
+                            padre.setIzquierdo(eliminar.getDerecho());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() == -1){
+                            padre.setIzquierdo(eliminar.getIzquierdo());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() != -1){
+                            padre.setIzquierdo(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                    }
+                    if(comparar(eliminar, padre) > 0){
+                        if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() == -1){
+                            padre.setDerecho(-1);
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() != -1){
+                            padre.setDerecho(eliminar.getDerecho());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() == -1){
+                            padre.setDerecho(eliminar.getIzquierdo());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() != -1){
+                            padre.setDerecho(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                    }
+                    limpiarArchivo(Proyecto1.descArbolCorreos);
+                    escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros(), descN.getRegistrosActivos() - 1, descN.getRegistrosInactivos() + 1, descN.getRegistroInicial()));
+                }
+                else{
+                    descN.setRegistroInicial(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                    limpiarArchivo(Proyecto1.descArbolCorreos);
+                    escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros(), descN.getRegistrosActivos() - 1, descN.getRegistrosInactivos() + 1, descN.getRegistroInicial()));
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        iniciarBandejas();
+    }//GEN-LAST:event_btnEliminarCorreosEntradaActionPerformed
+
+    private void btnActualizarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEntradaActionPerformed
+        try{
+            reorganizacionArbol();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        iniciarBandejas();
+    }//GEN-LAST:event_btnActualizarEntradaActionPerformed
+
+    private void btnEliminarCorreosSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCorreosSalidaActionPerformed
+        if(BandejaSalida.isSelectionEmpty()){
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado un correo a eliminar", "InfoBox: " + "Error en eliminacion de corre", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            try{
+                DescIndiceListaUsuario descN;
+                Correo raiz;
+                Correo eliminar;
+                Correo padre;
+                descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                raiz = leerCorreo(Proyecto1.arbolCorreos, descN.getRegistroInicial());
+                String datos = BandejaSalida.getSelectedValue();
+                SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+                Correo c = new Correo();
+                String[] valores = datos.split("----");
+                String[] val = valores[0].split(":");
+                c.setEmisor(val[1].trim().toCharArray());
+                val = valores[1].split(":");
+                c.setReceptor(val[1].trim().toCharArray());
+                val = valores[2].split(":");
+                c.setAsunto(val[1].trim().toCharArray());
+                val = valores[3].split(":");
+                c.setMensaje(val[1].trim().toCharArray());
+                val = valores[4].split(":");
+                c.setFechaTransaccion(date.parse(val[1].concat(":" + val[2]).replace(" ", "")));
+                eliminar = buscarCorreo(raiz, c);
+                padre = buscarPadre(raiz, c);
+                if(padre != null){
+                    if(comparar(eliminar, padre) < 0){
+                        if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() == -1){
+                            padre.setIzquierdo(-1);
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() != -1){
+                            padre.setIzquierdo(eliminar.getDerecho());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() == -1){
+                            padre.setIzquierdo(eliminar.getIzquierdo());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() != -1){
+                            padre.setIzquierdo(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                    }
+                    if(comparar(eliminar, padre) > 0){
+                        if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() == -1){
+                            padre.setDerecho(-1);
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() == -1 && eliminar.getDerecho() != -1){
+                            padre.setDerecho(eliminar.getDerecho());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() == -1){
+                            padre.setDerecho(eliminar.getIzquierdo());
+                            eliminar.setEstatus(false);
+                            editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), eliminar);
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                        else if(eliminar.getIzquierdo() != -1 && eliminar.getDerecho() != -1){
+                            padre.setDerecho(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                            editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), padre);
+                        }
+                    }
+                    limpiarArchivo(Proyecto1.descArbolCorreos);
+                    escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros(), descN.getRegistrosActivos() - 1, descN.getRegistrosInactivos() + 1, descN.getRegistroInicial()));
+                }
+                else{
+                    descN.setRegistroInicial(buscarMasIzquierdoDeLadoDerecho(eliminar));
+                    limpiarArchivo(Proyecto1.descArbolCorreos);
+                    escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros(), descN.getRegistrosActivos() - 1, descN.getRegistrosInactivos() + 1, descN.getRegistroInicial()));
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        iniciarBandejas();
+    }//GEN-LAST:event_btnEliminarCorreosSalidaActionPerformed
+
+    private void btnActualizarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarSalidaActionPerformed
+        try{
+            reorganizacionArbol();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        iniciarBandejas();
+    }//GEN-LAST:event_btnActualizarSalidaActionPerformed
+
+    private void btnEnviarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarLocalActionPerformed
+        if(txtUsuarioCorreoLocal.getText().equals("") || (txtAsuntoCorreoLocal.getText().equals("")) || (txtContenidoCorreoLocal.getText().equals(""))){
+            JOptionPane.showMessageDialog(null, "Algun campo del correo se encuentra vacio, por favor ingrese todos los campos", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            if(existeUsuario(txtUsuarioCorreoLocal.getText())){
+                Correo c = new Correo();
+                c.setEmisor(user.toCharArray());
+                c.setReceptor(txtUsuarioCorreoLocal.getText().toCharArray());
+                c.setAsunto(txtAsuntoCorreoLocal.getText().toCharArray());
+                c.setMensaje(txtContenidoCorreoLocal.getText().toCharArray());
+                c.setEstatus(true);
+                c.setFechaTransaccion(new Date());
+                c.setIzquierdo(-1);
+                c.setDerecho(-1);
+                DescIndiceListaUsuario descN;
+                Correo actual;
+                try{
+                    long tamaño = tamañoDeArchivo(Proyecto1.arbolCorreos);
+                    int cant = 0;
+                    if(tamaño > 0){
+                        cant = (int)tamaño/200;
+                    }
+                    if(cant == 0){
+                        escribirCorreo(Proyecto1.arbolCorreos, c);
+                        descN = new DescIndiceListaUsuario("bitacora_de_correos", c.getFechaTransaccion(), user, c.getFechaTransaccion(), user, 1, 1, 0, 1);
+                        escribirDescriptor(Proyecto1.descArbolCorreos, descN);
+                        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if(cant < 2){
+                        descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                        actual = leerCorreo(Proyecto1.arbolCorreos, descN.getRegistroInicial());
+                        if(comparar(c, actual) < 0){
+                            if(actual.getIzquierdo() == -1){
+                                escribirCorreo(Proyecto1.arbolCorreos, c);
+                                actual.setIzquierdo(cant + 1);
+                                editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), actual);
+                                limpiarArchivo(Proyecto1.descArbolCorreos);
+                                escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                                JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                        else if(comparar(c, actual) > 0){
+                            if(actual.getDerecho() == -1){
+                                escribirCorreo(Proyecto1.arbolCorreos, c);
+                                actual.setDerecho(cant + 1);
+                                editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), actual);
+                                limpiarArchivo(Proyecto1.descArbolCorreos);
+                                escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                                JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }
+                    else if (cant >= 2){
+                        descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                        editarRecursivo(descN.getRegistroInicial(), c, cant, descN.getRegistroInicial());
+                        limpiarArchivo(Proyecto1.descArbolCorreos);
+                        escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                txtUsuarioCorreoLocal.setText("");
+                txtAsuntoCorreoLocal.setText("");
+                txtContenidoCorreoLocal.setText("");
+                iniciarBandejas();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El usuario al que dese enviar correo no existe", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEnviarLocalActionPerformed
+
+    private void btnEnviarListaLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarListaLocalActionPerformed
+        if(txtListaCorreoLocal.getText().equals("") || (txtAsuntoListaCorreoLocal.getText().equals("")) || (txtContenidoListaCorreoLocal.getText().equals(""))){
+            JOptionPane.showMessageDialog(null, "Algun campo del correo se encuentra vacio, por favor ingrese todos los campos", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            Lista lis = new Lista();
+            try{
+                if(String.valueOf(buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista())).getNombreLista()).equals(String.valueOf(lis.getNombreLista()))){
+                    lis = buscarLista(Proyecto1.bitacoraLista, String.valueOf(lis.getNombreLista()));
+                }
+                else{
+                    lis = buscarLista(Proyecto1.maestroLista, String.valueOf(lis.getNombreLista()));
+                }
+                if(lis != null){
+                    ArrayList<String> usuarios = buscarUsuariosAsociados(Proyecto1.bitacoraListaUsuario, String.valueOf(lis.getNombreLista()));
+                    Correo c = new Correo();
+                    c.setEmisor(user.toCharArray());
+                    c.setAsunto(txtAsuntoCorreoLocal.getText().toCharArray());
+                    c.setMensaje(txtContenidoCorreoLocal.getText().toCharArray());
+                    c.setEstatus(true);
+                    c.setFechaTransaccion(new Date());
+                    c.setIzquierdo(-1);
+                    c.setDerecho(-1);
+                    DescIndiceListaUsuario descN;
+                    Correo actual;
+                    long tamaño = tamañoDeArchivo(Proyecto1.arbolCorreos);
+                    int cant = 0;
+                    if(usuarios.size() > 0){
+                        for(int i = 0; i < usuarios.size(); i++){
+                            c.setReceptor(usuarios.get(i).toCharArray());
+                            if(tamaño > 0){
+                                cant = (int)tamaño/200;
+                            }
+                            if(cant == 0){
+                                escribirCorreo(Proyecto1.arbolCorreos, c);
+                                descN = new DescIndiceListaUsuario("bitacora_de_correos", c.getFechaTransaccion(), user, c.getFechaTransaccion(), user, 1, 1, 0, 1);
+                                escribirDescriptor(Proyecto1.descArbolCorreos, descN);
+                                JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else if(cant < 2){
+                                descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                                actual = leerCorreo(Proyecto1.arbolCorreos, descN.getRegistroInicial());
+                                if(comparar(c, actual) < 0){
+                                    if(actual.getIzquierdo() == -1){
+                                        escribirCorreo(Proyecto1.arbolCorreos, c);
+                                        actual.setIzquierdo(cant + 1);
+                                        editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), actual);
+                                        limpiarArchivo(Proyecto1.descArbolCorreos);
+                                        escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                                        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                                    }
+                                }
+                                else if(comparar(c, actual) > 0){
+                                    if(actual.getDerecho() == -1){
+                                        escribirCorreo(Proyecto1.arbolCorreos, c);
+                                        actual.setDerecho(cant + 1);
+                                        editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), actual);
+                                        limpiarArchivo(Proyecto1.descArbolCorreos);
+                                        escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                                        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                                    }
+                                }
+                            }
+                            else if (cant >= 2){
+                                descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+                                editarRecursivo(descN.getRegistroInicial(), c, cant, descN.getRegistroInicial());
+                                limpiarArchivo(Proyecto1.descArbolCorreos);
+                                escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descN.getNombreSimbolico(), descN.getFechaCreacion(), descN.getUsuarioCreacion(), new Date(), user, descN.getNumRegistros() + 1, descN.getRegistrosActivos() + 1, descN.getRegistrosInactivos(), descN.getRegistroInicial()));
+                                JOptionPane.showMessageDialog(null, "Correo enviado exitosamente", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "La lista que selecciono no posee ningun usuario asociado", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "La lista a la que desea enviar un correo no existe", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            txtListaCorreoLocal.setText("");
+            txtAsuntoListaCorreoLocal.setText("");
+            txtContenidoListaCorreoLocal.setText("");
+            iniciarBandejas();
+        }
+    }//GEN-LAST:event_btnEnviarListaLocalActionPerformed
+
+    private void btnEnviarRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarRedActionPerformed
+        if(txtUsuarioCorreoRed.getText().equals("") || (txtAsuntoRed.getText().equals("")) || (txtContenidoCorreoRed.getText().equals(""))){
+            JOptionPane.showMessageDialog(null, "Algun campo del correo se encuentra vacio, por favor ingrese todos los campos", "InfoBox: " + "Error en Envio de Correo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            try {
+                CorreoRed correo = new CorreoRed(12, Integer.parseInt(opGrupo.getSelectedItem().toString()), user, txtUsuarioCorreoRed.getText(), txtAsuntoRed.getText(), txtContenidoCorreoRed.getText(), new Date());
+                BDD.getInstancia().Insert(correo.getGrupoemisor(), correo.getGruporeceptor(), correo.getEmisor(), correo.getReceptor(), correo.getAsunto(), correo.getMensaje());
+                txtAsuntoRed.setText("");
+                txtUsuarioCorreoRed.setText("");
+                txtContenidoCorreoRed.setText("");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_btnEnviarRedActionPerformed
+
+    /**
+     * Obtiener lista de mensajes recibidos por el usuario
+     * @param actual correo raiz del arbol de correos
+     * @return ArrayList de correos
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public void leerBandejaDeEntrada(Correo actual) throws IOException, ParseException{
+        if(actual != null){
+            leerBandejaDeEntrada(leerCorreo(Proyecto1.arbolCorreos, actual.getIzquierdo()));
+            if(String.valueOf(actual.getReceptor()).equals(user)){
+                correosEntrada.add(actual);
+            }
+            leerBandejaDeEntrada(leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho()));
+        }
+    }
+    
+    /**
+     * Obtiener lista de mensajes enviados por el usuario
+     * @param actual correo raiz del arbol de correos
+     * @return ArrayList de correos
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public void leerBandejaDeSalida(Correo actual) throws IOException, ParseException{
+        if(actual != null){
+            leerBandejaDeSalida(leerCorreo(Proyecto1.arbolCorreos, actual.getIzquierdo()));
+            if(String.valueOf(actual.getEmisor()).equals(user)){
+                correosSalida.add(actual);
+            }
+            leerBandejaDeSalida(leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho()));
+        }
+    }
+    
+    /**
+     * Busca el elemento correo en base a datos del receptor, emisor y fecha de transaccion
+     * @param actual Correo inical de la bitacora de arboles
+     * @param busqueda Correo con los parametros de busqueda
+     * @return
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public Correo buscarCorreo(Correo actual, Correo busqueda) throws IOException, ParseException{
+        Correo c = null;
+        if(actual != null){
+            c = buscarCorreo(leerCorreo(Proyecto1.arbolCorreos, actual.getIzquierdo()), busqueda);
+            if(comparar(actual, busqueda) == 0){
+                return actual;
+            }
+            c = buscarCorreo(leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho()), busqueda);
+        }
+        return c;
+    }
+    
+    /**
+     * Busca el elemento padre de un correo especifica
+     * @param actual Correo inical de la bitacora de arboles
+     * @param busqueda Correo con los parametros de busqueda
+     * @return
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public Correo buscarPadre(Correo actual, Correo busqueda) throws IOException, ParseException{
+        Correo c = null;
+        if(actual != null){
+            if(comparar(actual, busqueda) == 0){
+                return null;
+            }
+            buscarCorreo(leerCorreo(Proyecto1.arbolCorreos, actual.getIzquierdo()), busqueda);
+            if(actual.getIzquierdo() != -1){
+                if(comparar(leerCorreo(Proyecto1.arbolCorreos, actual.getIzquierdo()), busqueda) == 0){
+                    return actual;
+                }
+            }
+            if(actual.getDerecho() != -1){
+                if(comparar(leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho()), busqueda) == 0){
+                    return actual;
+                }
+            }
+            buscarCorreo(leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho()), busqueda);
+        }
+        return c;
+    }
+    
+    /**
+     * Busca el nodo mas pequeño a la izquierda del nodo derecho del correo
+     * @param actual Correo de inicio de busqueda
+     * @return
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public int buscarMasIzquierdoDeLadoDerecho(Correo actual) throws IOException, ParseException{
+        Correo c = null;
+        int posicion = 0;
+        DescIndiceListaUsuario descN = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+        if(actual != null){
+            Correo cParent = null;
+            Correo aux = leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho());
+            while(aux != null){
+                cParent = c;
+                c = aux;
+                aux = leerCorreo(Proyecto1.arbolCorreos, aux.getIzquierdo());
+            }
+            if(c != null){
+                posicion = cParent.getIzquierdo();
+                actual.setEstatus(false);
+                editarEstadoIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), actual);
+                if(comparar(c, leerCorreo(Proyecto1.arbolCorreos, actual.getDerecho())) != 0){
+                    cParent.setIzquierdo(c.getDerecho());
+                    c.setDerecho(actual.getDerecho());
+                    c.setIzquierdo(actual.getIzquierdo());
+                    editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), c);
+                    editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), cParent);
+                }
+                else{
+                    c.setDerecho(actual.getDerecho());
+                    c.setIzquierdo(actual.getIzquierdo());
+                    editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, descN.getRegistroInicial(), c);
+                }
+            }
+        }
+        return posicion;
+    }
+    
+    /**
+     * Metodo recursivo para la edicion de correos
+     * @param pos posicion de correo de inicio
+     * @param reg Correo que se busca editar
+     * @param cant Canitdad de nodos en la bitacora del arbol
+     * @param raiz posicion de la raiz de la bitacora de correos
+     * @return 
+     */
+    public boolean editarRecursivo(int pos, Correo reg, int cant, int raiz){
+        Correo actual;
+        try{
+            actual = leerCorreo(Proyecto1.arbolCorreos, pos);
+            if(comparar(reg, actual) < 0){
+                if(actual.getIzquierdo() == -1){
+                    escribirCorreo(Proyecto1.arbolCorreos, reg);
+                    actual.setIzquierdo(cant + 1);
+                    editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, raiz, actual);
+                    return true;
+                }
+                else{
+                    editarRecursivo(actual.getIzquierdo(), reg, cant, raiz);
+                }
+            }
+            else if(comparar(reg, actual) > 0){
+                if(actual.getDerecho() == -1){
+                    escribirCorreo(Proyecto1.arbolCorreos, reg);
+                    actual.setDerecho(cant + 1);
+                    editarPosicionIndiceArbol(Proyecto1.arbolCorreos, Proyecto1.descArbolCorreos, raiz, actual);
+                    return true;
+                }
+                else{
+                    editarRecursivo(actual.getDerecho(), reg, cant, raiz);
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    /**
+     * Funcion que lee las listas del archivo enviado 
+     * @param fileName archivo en el que se buscan los usuarios
+     * @return lista con las listas encontrados en el archivo
+     * @throws IOException 
+     */
+    public LinkedList<Correo> leerCorreos(File fileName) throws IOException{
+        LinkedList<Correo> ls = new LinkedList<>();
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        BufferedReader br = null;
+	FileReader fr = null;
+	fr = new FileReader(fileName);
+        br = new BufferedReader(fr);
+        StringBuilder texto = new StringBuilder();
+        int line = 0;
+        while ((line = br.read()) != -1) {
+            char val = (char)line;
+            texto.append(val);
+        }
+        fr.close();
+        br.close();
+        if(texto.toString().equals("")){
+            return ls;
+        }
+        else{
+            String[] contenido = texto.toString().split("\\r?\\n");
+            for(int i = 0; i < contenido.length; i++){
+                try{
+                    String[] listas = contenido[i].split("\\|");
+                    Correo c = new Correo();
+                    c.setIzquierdo(Integer.parseInt(listas[0]));
+                    c.setDerecho(Integer.parseInt(listas[1]));
+                    c.setEmisor(quitarExtra(listas[2]).toCharArray());
+                    c.setReceptor(quitarExtra(listas[3]).toCharArray());
+                    c.setFechaTransaccion(date.parse(listas[4]));
+                    c.setAsunto(quitarExtra(listas[5]).toCharArray());
+                    c.setMensaje(quitarExtra(listas[6]).toCharArray());
+                    if(listas[7].equals("1")){
+                        c.setEstatus(true);
+                    }
+                    else{
+                        c.setEstatus(false);
+                    }
+                    ls.add(c);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return ls;
+        }
+    }
+    
+    /**
+     * Metodo de reorganizacion/actualizacion de los datos del archivo indizado arbol
+     * @throws Exception 
+     */
+    public void reorganizacionArbol() throws Exception{
+        LinkedList<Correo> bitCorreo = leerCorreos(Proyecto1.arbolCorreos);
+        LinkedList<Correo> nuevoListaCorreo = new LinkedList<>();
+        int contA = 0;
+        int contI = 0;
+        int reg = 0;
+        DescIndiceListaUsuario descI = leerDescriptorIndice(Proyecto1.descArbolCorreos);
+        if(bitCorreo.size() > 0){
+            for(int i = 0; i < bitCorreo.size(); i++){
+                if(bitCorreo.get(i).isEstatus()){
+                    contA++;
+                    nuevoListaCorreo.add(bitCorreo.get(i));
+                }
+                else{
+                    contI++;
+                }
+            }
+            reg = bitCorreo.size() - nuevoListaCorreo.size();
+            descI.setRegistroInicial(descI.getRegistroInicial() - reg);
+            for(int y = 0; y < nuevoListaCorreo.size(); y++){
+                Correo val1 = nuevoListaCorreo.get(y);
+                if(val1.getIzquierdo() != -1){
+                    val1.setIzquierdo(val1.getIzquierdo() - reg);
+                }
+                if(val1.getDerecho() != -1){
+                    val1.setDerecho(val1.getDerecho() - reg);
+                }
+                nuevoListaCorreo.set(y, val1);
+            }
+            limpiarArchivo(Proyecto1.arbolCorreos);
+            for(int i = 0; i < nuevoListaCorreo.size(); i++){
+                escribirCorreo(Proyecto1.arbolCorreos, nuevoListaCorreo.get(i));
+            }
+            limpiarArchivo(Proyecto1.descArbolCorreos);
+            escribirDescriptor(Proyecto1.descArbolCorreos, new DescIndiceListaUsuario(descI.getNombreSimbolico(), descI.getFechaCreacion(), descI.getUsuarioCreacion(), new Date(), String.valueOf(us.getNombreDeUsuario()), contA, contA, 0, descI.getRegistroInicial()));
+        }
+    }
+    
+    /**
+     * Editor de las pocisiones de nodos hijos en bitacora de arbol
+     * @param archivo Archivo de la bitacora de correo
+     * @param descriptor Descriptor de la bitacora de correos
+     * @param pos Numero de entrada en la bitacora de correos
+     * @param regB Correo a editor
+     * @return 
+     */
+    public boolean editarPosicionIndiceArbol(File archivo, File descriptor, int pos, Correo regB){         
+        int cont = 0;      
+        int cont2 = 0;     
+        long puntero = 0;     
+        long size = 0;       
+        int reg = 0;
+        boolean fin2 = true;
+        boolean fin = false;
+        try {    
+            DescIndiceListaUsuario desB = leerDescriptorIndice(descriptor);        
+            reg = pos;      
+            RandomAccessFile raf = new RandomAccessFile(archivo, "rw");          
+            size = raf.length();         
+            raf.seek(0);           
+            String linea = "";           
+            Correo val = leerCorreo(archivo, reg);           
+            if(regB.getIzquierdo() < 10 && regB.getIzquierdo() > 0){          
+                linea += "0";
+                linea += regB.getIzquierdo();
+            }           
+            else{           
+                linea += regB.getIzquierdo();       
+            }
+            linea += "|";
+            if(regB.getDerecho() < 10 && regB.getDerecho() > 0){          
+                linea += "0";
+                linea += regB.getDerecho();
+            }           
+            else{           
+                linea += regB.getDerecho();       
+            } 
+            puntero = raf.getFilePointer();                      
+            if(comparar(regB, val) == 0){                          
+                if(reg > 1){                                 
+                    raf.seek((reg - 1) * 200);                        
+                    }                                     
+                else{                                   
+                    raf.seek(0);                                           
+                }                                   
+                puntero = raf.getFilePointer();                                    
+                raf.writeBytes(linea);                                   
+                limpiarArchivo(descriptor);                                    
+                escribirDescriptor(descriptor, new DescIndiceListaUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(regB.getEmisor()), desB.getNumRegistros(), desB.getRegistrosActivos(), desB.getRegistrosInactivos(), desB.getRegistroInicial()));                
+                return true;
+            }                
+            else{
+                if(val.getIzquierdo() != -1){
+                   editarPosicionIndiceArbol(archivo, descriptor, val.getIzquierdo(), regB);
+                }
+                if(val.getDerecho() != -1){
+                    editarPosicionIndiceArbol(archivo, descriptor, val.getDerecho(), regB);
+                }             
+            }           
+        } catch (Exception ex) {  
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);  
+        }
+        return false;
+    }
+    
+    /**
+     * Editor de estado del indice de correos
+     * @param archivo File donde se buscara el correo
+     * @param descriptor descriptor que se actualizara al editar el correo
+     * @param regB Correo a comparar que contiene la posicion a modificar
+     * @param pos posicion en la linea del campo a editar
+     * @return valor booleano de si se econtro y edito la lista o no
+     */
+    public boolean editarEstadoIndiceArbol(File archivo, File descriptor, int pos, Correo regB){         
+        int cont = 0;      
+        int cont2 = 0;     
+        long puntero = 0;     
+        long size = 0;       
+        int reg = 0;
+        boolean fin2 = true;
+        boolean fin = false;
+        try {    
+            DescIndiceListaUsuario desB = leerDescriptorIndice(descriptor);        
+            reg = pos;      
+            RandomAccessFile raf = new RandomAccessFile(archivo, "rw");          
+            size = raf.length();         
+            raf.seek(0);           
+            String linea = "";           
+            Correo val = leerCorreo(archivo, reg);           
+            if(regB.isEstatus()){
+                linea += "1";
+            }
+            else{
+                linea += "0";
+            }
+            puntero = raf.getFilePointer();                      
+            if(comparar(regB, val) == 0){                          
+                if(reg > 1){                                 
+                    raf.seek(((reg - 1) * 200) + 197);                        
+                    }                                     
+                else{                                   
+                    raf.seek(197);                                           
+                }                                   
+                puntero = raf.getFilePointer();                                    
+                raf.writeBytes(linea);                                   
+                limpiarArchivo(descriptor);                                    
+                escribirDescriptor(descriptor, new DescIndiceListaUsuario(desB.getNombreSimbolico(), desB.getFechaCreacion(), desB.getUsuarioCreacion(), new Date(), String.valueOf(regB.getEmisor()), desB.getNumRegistros(), desB.getRegistrosActivos() - 1, desB.getRegistrosInactivos() + 1, desB.getRegistroInicial()));                
+                return true;
+            }                
+            else{
+                if(val.getIzquierdo() != -1){
+                    editarEstadoIndiceArbol(archivo, descriptor, val.getIzquierdo(), regB);
+                }
+                if(val.getDerecho() != -1){
+                    editarEstadoIndiceArbol(archivo, descriptor, val.getDerecho(), regB);
+                }             
+            }           
+        } catch (Exception ex) {  
+            Logger.getLogger(MenuUsuario.class.getName()).log(Level.SEVERE, null, ex);  
+        }
+        return false;
+    }
+    
+    /**
+     * Metodo de comparacion de llaves emisor, receptor y fecha de transaccion
+     * @param obj1 Correo que se esta comprando 
+     * @param obj2 Correo con el que se va a comparar
+     * @return 
+     */
+    public int comparar(Correo obj1, Correo obj2) {
+        if (String.valueOf(obj1.getEmisor()).toUpperCase().equals(String.valueOf(obj2.getEmisor()).toUpperCase())) {
+            if (String.valueOf(obj1.getReceptor()).toUpperCase().equals(String.valueOf(obj2.getReceptor()).toUpperCase())) {
+                if (obj1.getFechaTransaccion().equals(obj2.getFechaTransaccion())) {
+                    return 0;
+                }
+                if (String.valueOf(obj1.getFechaTransaccion()).equals("")) {
+                    return -1;
+                }
+                if (String.valueOf(obj2.getFechaTransaccion()).equals("")) {
+                    return 1;
+                }
+                return obj1.getFechaTransaccion().compareTo(obj2.getFechaTransaccion());
+            }
+            if (String.valueOf(obj1.getReceptor()).equals("")) {
+                return -1;
+            }
+            if (String.valueOf(obj2.getReceptor()).equals("")) {
+                return 1;
+            }
+            return String.valueOf(obj1.getReceptor()).toUpperCase().compareTo(String.valueOf(obj2.getReceptor()).toUpperCase());
+        }
+        if (String.valueOf(obj1.getEmisor()).equals("")) {
+            return -1;
+        }
+        if (String.valueOf(obj2.getEmisor()).equals("")) {
+            return 1;
+        }
+        return String.valueOf(obj1.getEmisor()).toUpperCase().compareTo(String.valueOf(obj2.getEmisor()).toUpperCase());
+    }
+    
+    /**
+     * Metodo que escribe una entrada al arbol de correos
+     * @param archivo File al que se escribira la entrada
+     * @param s Correo con la iformacion para la entrada
+     * @throws IOException 
+     */
+    public void escribirCorreo(File archivo, Correo s) throws IOException{
+        String texto = "";
+        String div = "|";
+        String fin = "\r\n";
+        String txtCompleto = "";
+        if (s.getIzquierdo() < 10 && s.getIzquierdo() > 0) {
+            texto += "0";
+            texto += String.valueOf(s.getIzquierdo());
+        }
+        if (s.getIzquierdo() == -1 || s.getIzquierdo() > 10) {
+            texto += String.valueOf(s.getIzquierdo());
+        }
+        texto += div;
+        if (s.getDerecho() < 10 && s.getDerecho() > 0) {
+            texto += "0";
+            texto += String.valueOf(s.getDerecho());
+        }
+        if (s.getDerecho() == -1 || s.getDerecho() > 10) {
+            texto += String.valueOf(s.getDerecho());
+        }
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getEmisor()), 20);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getReceptor()), 20);
+        texto += div;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        texto += date.format(s.getFechaTransaccion());
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getAsunto()), 30);
+        texto += div;
+        texto += completarTexto(String.valueOf(s.getMensaje()), 100);
+        texto += div;
+        if(s.isEstatus()){
+            //Esta activo
+            texto += "1";
+        }
+        else{
+            //Esta Inactivo
+            texto += "0";
+        }
+        texto += fin;
+        if(archivo.exists()){
+            FileOutputStream fos = new FileOutputStream(archivo, true);
+            Writer wr = new OutputStreamWriter(fos, UTF8);
+            wr.write(texto);
+            wr.flush();
+            wr.close();
+            fos.close();
+        }
+    }
+    
+    /**
+     * Metodo que lee una entrada en la bitacora de correos n bas e a una posicoin especifica
+     * @param archivo archivo de la bitacora de correos
+     * @param posicion posicion de la que se lee la entrada
+     * @return Objeto correo con los datos de la entrada
+     * @throws IOException
+     * @throws ParseException 
+     */
+    public Correo leerCorreo(File archivo, int posicion) throws IOException, ParseException{
+        Correo c = new Correo();
+        RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
+        if(posicion > 1){
+            raf.seek((posicion - 1) * 200);
+        }
+        else{
+            if(posicion == -1){
+                c = null;
+                return c;
+            }
+            else{
+                raf.seek(0);
+            }
+        }
+        String line = raf.readLine();
+        if(!line.equals("")){
+            String[] contenido = line.split("\\|");
+            c.setIzquierdo(Integer.parseInt(contenido[0]));
+            c.setDerecho(Integer.parseInt(contenido[1]));
+            c.setEmisor(quitarExtra(contenido[2]).toCharArray());
+            c.setReceptor(quitarExtra(contenido[3]).toCharArray());
+            c.setFechaTransaccion(date.parse(contenido[4]));
+            c.setAsunto(quitarExtra(contenido[5]).toCharArray());
+            c.setMensaje(quitarExtra(contenido[6]).toCharArray());
+            if(contenido[7].equals("1")){
+                c.setEstatus(true);
+            }
+            else{
+                c.setEstatus(false);
+            }
+        }
+        else{
+            c = null;
+        }
+        return c;
+    }
+    
     /**
      * Metodo de comparacion de llaves Nombre de lista, usuario y usuario asociado
      * @param obj1 IndiceListaUsuario que se esta comprando 
@@ -3574,9 +4957,14 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> BandejaEntrada;
+    private javax.swing.JList<String> BandejaSalida;
     private javax.swing.JComboBox<String> boxOpEditar;
     private javax.swing.JComboBox<String> boxOpEditarL;
+    private javax.swing.JButton btnActualizarEntrada;
+    private javax.swing.JButton btnActualizarSalida;
     private javax.swing.JButton btnAgregarLista;
+    private javax.swing.JButton btnBuscarCorreo;
     private javax.swing.JButton btnBuscarFoto;
     private javax.swing.JButton btnBuscarLista;
     private javax.swing.JButton btnBuscarListaAsociacion;
@@ -3589,6 +4977,11 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarEliminacion;
     private javax.swing.JButton btnCancelarL;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminarCorreosEntrada;
+    private javax.swing.JButton btnEliminarCorreosSalida;
+    private javax.swing.JButton btnEnviarListaLocal;
+    private javax.swing.JButton btnEnviarLocal;
+    private javax.swing.JButton btnEnviarRed;
     private javax.swing.JButton btnGuardarAsociacion;
     private javax.swing.JButton btnGuardarContr;
     private javax.swing.JButton btnGuardarCorreo;
@@ -3605,15 +4998,32 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbActivoL;
     private javax.swing.JCheckBox chbInactivo;
     private javax.swing.JCheckBox chbInactivoL;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelBuscar;
+    private javax.swing.JPanel jPanelCorreo;
     private javax.swing.JPanel jPanelEditar;
     private javax.swing.JPanel jPanelEliminarAsociacion;
+    private javax.swing.JPanel jPanelEnvioUsuario;
     private javax.swing.JPanel jPanelGuardarAsociacion;
     private javax.swing.JPanel jPanelListaUsuario;
     private javax.swing.JPanel jPanelListas;
     private javax.swing.JPanel jPanelUsuario;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JLabel labelAsuntoCorreoLocal;
+    private javax.swing.JLabel labelAsuntoListaCorreoLocal;
+    private javax.swing.JLabel labelAsuntoRed;
     private javax.swing.JLabel labelBusqueda;
     private javax.swing.JLabel labelContraseña;
     private javax.swing.JLabel labelCorreo;
@@ -3624,13 +5034,20 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelFechaN;
     private javax.swing.JLabel labelFormatoFecha;
     private javax.swing.JLabel labelFoto;
+    private javax.swing.JLabel labelGrupo;
     private javax.swing.JLabel labelImageFoto;
+    private javax.swing.JLabel labelListaCorreoLocal;
     private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelLogo10;
+    private javax.swing.JLabel labelLogo11;
+    private javax.swing.JLabel labelLogo12;
     private javax.swing.JLabel labelLogo2;
     private javax.swing.JLabel labelLogo3;
     private javax.swing.JLabel labelLogo4;
     private javax.swing.JLabel labelLogo5;
     private javax.swing.JLabel labelLogo6;
+    private javax.swing.JLabel labelLogo8;
+    private javax.swing.JLabel labelLogo9;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPathFoto;
     private javax.swing.JLabel labelRLista;
@@ -3640,16 +5057,28 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelResultado;
     private javax.swing.JLabel labelRol;
     private javax.swing.JLabel labelTelefono;
+    private javax.swing.JLabel labelUsuarioCorreo;
+    private javax.swing.JLabel labelUsuarioCorreoLocal;
+    private javax.swing.JComboBox<String> opGrupo;
+    private javax.swing.JTextField txtAsuntoCorreoLocal;
+    private javax.swing.JTextField txtAsuntoListaCorreoLocal;
+    private javax.swing.JTextField txtAsuntoRed;
     private javax.swing.JTextField txtBusquedaLista;
     private javax.swing.JTextField txtBusquedaListaAsociacion;
     private javax.swing.JTextField txtBusquedaListaEliminacion;
     private javax.swing.JTextField txtBusquedaUsuarioAsociar;
     private javax.swing.JTextField txtBusquedaUsuarioEliminacion;
+    private javax.swing.JTextArea txtContenidoCorreoLocal;
+    private javax.swing.JTextArea txtContenidoCorreoRed;
+    private javax.swing.JTextArea txtContenidoListaCorreoLocal;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtListaCorreoLocal;
     private javax.swing.JTextField txtNom;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtUsuarioCorreoLocal;
+    private javax.swing.JTextField txtUsuarioCorreoRed;
     // End of variables declaration//GEN-END:variables
 }

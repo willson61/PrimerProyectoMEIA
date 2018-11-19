@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,15 +34,15 @@ public class Proyecto1 {
     static File descBitacoraLista = new File("C:\\MEIA\\desc_Bitacora_Lista.txt");
     static File maestroLista = new File("C:\\MEIA\\maestro_Lista.txt");
     static File descMaestroLista = new File("C:\\MEIA\\desc_Maestro_Lista.txt");
-    static File arbolCorreos = new File("C:\\MEIA\\arbolCorreos.txt");
-    static File descarbolCorreos = new File("C:\\MEIA\\desc_Maestro_Lista.txt");
+    static File arbolCorreos = new File("C:\\MEIA\\arbol_Correos.txt");
+    static File descArbolCorreos = new File("C:\\MEIA\\desc_Arbol_Correos.txt");
     static File bitacoraBackup = new File("C:\\MEIA\\bitacora_Backup.txt");
     static File descBitacoraBackup = new File("C:\\MEIA\\desc_Bitacora_Backup.txt");
     static File logo = new File("C:\\MEIA\\Imagenes\\logoProyecto.png");
     static File root = new File("C:\\MEIA");
     static File rootImg = new File("C:\\MEIA\\Imagenes");
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
         VistaLogin main = new VistaLogin();
         main.setVisible(true);
         root.mkdirs();
@@ -82,6 +83,12 @@ public class Proyecto1 {
             }
             if(!descIndiceListaUsuario.exists()){
                 descIndiceListaUsuario.createNewFile();
+            }
+            if(!arbolCorreos.exists()){
+                arbolCorreos.createNewFile();
+            }
+            if(!descArbolCorreos.exists()){
+                descArbolCorreos.createNewFile();
             }
             if(!(descBitacoraBackup.exists())){
                 descBitacoraBackup.createNewFile();

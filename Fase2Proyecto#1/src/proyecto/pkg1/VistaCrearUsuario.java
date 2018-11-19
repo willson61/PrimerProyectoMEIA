@@ -22,12 +22,15 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -444,8 +447,15 @@ public class VistaCrearUsuario extends javax.swing.JFrame {
                 }
                 dispose();
                 if(firstUser){
-                    VistaLogin v = new VistaLogin();
-                    v.setVisible(true);
+                    VistaLogin v;
+                    try {
+                        v = new VistaLogin();
+                        v.setVisible(true);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(VistaCrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(VistaCrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     firstUser = false;
                 }
                 JOptionPane.showMessageDialog(null, "Usuario creado Exitosamente", "InfoBox: " + "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
